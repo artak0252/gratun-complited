@@ -1,0 +1,79 @@
+.contactContainer {
+          max-width: 700px;
+          margin: 80px auto;
+          padding: 60px;
+          background: #ffffff;
+          border-radius: 24px;
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+          text-align: center;
+}
+
+.contactContainer h1 {
+          font-size: 2.8rem;
+          color: #1a1a1a;
+          margin-bottom: 20px;
+          font-weight: 700;
+}
+
+.contactContainer>p {
+          font-size: 1.1rem;
+          color: #666;
+          line-height: 1.6;
+          margin-bottom: 50px;
+          max-width: 500px;
+          margin-left: auto;
+          margin-right: auto;
+}
+
+.contactInfo {
+          background: #fdfdfd;
+          border: 1px solid #eee;
+          padding: 40px;
+          border-radius: 20px;
+          display: inline-block;
+          /* Տուփը փոքրացրինք, որ կենտրոնում լինի */
+          text-align: left;
+}
+
+.contactInfo h3 {
+          color: #333;
+          margin-bottom: 25px;
+          font-size: 1.4rem;
+}
+
+.contactInfo p {
+          font-size: 1.05rem;
+          color: #444;
+          margin: 15px 0;
+          display: flex;
+          align-items: center;
+          gap: 15px;
+}
+
+.socialLinks {
+          margin-top: 30px;
+          padding-top: 25px;
+          border-top: 1px solid #eee;
+          display: flex;
+          justify-content: center;
+          gap: 20px;
+}
+
+.socialLinks a {
+          text-decoration: none;
+          color: #007bff;
+          font-weight: 600;
+          font-size: 1.1rem;
+          transition: color 0.3s;
+}
+
+.socialLinks a:hover {
+          color: #0056b3;
+}
+
+@media (max-width: 600px) {
+          .contactContainer {
+                    padding: 30px;
+                    margin: 20px;
+          }
+}

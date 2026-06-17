@@ -1,0 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Noto+Sans+Armenian:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap');
+
+.headerContainer {
+          background: #e0e0db;
+          padding: 20px 40px;
+          border-bottom: 5px solid rgb(217, 214, 214);
+}
+
+.headerTop {
+          max-width: 1200px;
+          margin: 0 auto;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+}
+
+.headerLogo a {
+          font-family: "Playwrite AU VIC Guides", cursive;
+          font-size: 36px;
+          font-weight: 900;
+          color: #38021da3;
+          text-transform: uppercase;
+          padding: 5px 15px;
+          border-left: 4px solid #38021da3;
+          text-decoration: none;
+          transition: 0.3s;
+}
+
+/* --- Աջ կողմի միավորված խումբ --- */
+.headerRight {
+          display: flex;
+          align-items: center;
+          gap: 25px;
+}
+
+.menuToggle {
+          display: none;
+          font-size: 2rem;
+          background: none;
+          border: none;
+          cursor: pointer;
+          color: #2b2a2a;
+}
+
+.headerMenu {
+          display: flex;
+          gap: 25px;
+}
+
+.navLink {
+          text-decoration: none;
+          color: #565353;
+          font-family: "Rubik", sans-serif;
+          font-size: 21px;
+          transition: color 0.3s;
+}
+
+.cartIcon {
+          font-size: 2.3rem;
+          color: #0f0f0f;
+          display: flex;
+          align-items: center;
+}
+
+/* --- Ռեսպոնսիվություն --- */
+@media (max-width: 768px) {
+          .menuToggle {
+                    display: block;
+          }
+
+          .headerMenu {
+                    position: absolute;
+                    top: 85px;
+                    left: 0;
+                    width: 100%;
+                    flex-direction: column;
+                    background: #E0DEDC;
+                    align-items: center;
+                    padding: 20px 0;
+                    display: none;
+                    z-index: 1000;
+                    border-bottom: 2px solid #ccc;
+          }
+
+          .headerMenu.active {
+                    display: flex;
+          }
+
+          .headerRight {
+                    gap: 15px;
+                    /* Ավելի մոտիկ կլինեն իրար փոքր էկրանին */
+          }
+}

@@ -1,0 +1,18 @@
+
+.adminSelect {
+          width: 100%;
+          padding: 12px 16px;
+          margin-top: 10px;
+          border: 2px solid #ddd;
+          border-radius: 8px;
+          background-color: white;
+          font-size: 16px;
+          color: #333;
+          cursor: pointer;
+          transition: border-color 0.3s;
+}
+
+.adminSelect:focus {
+          border-color: #007bff;
+          outline: none;
+}
