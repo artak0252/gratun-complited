@@ -7,6 +7,9 @@ const Login = () => {
           const [credentials, setCredentials] = useState({ username: '', password: '' });
           const navigate = useNavigate();
 
+          // Render-ի բեքենդի հասցեն
+          const API_URL = 'https://gratun-backend.onrender.com';
+
           const handleChange = (e) => {
                     const { name, value } = e.target;
                     setCredentials(prev => ({ ...prev, [name]: value }));
@@ -15,7 +18,8 @@ const Login = () => {
           const handleLogin = async (e) => {
                     e.preventDefault();
                     try {
-                              const res = await axios.post('https://gratun-backend.onrender.com', credentials);
+                              // Ավելացրել ենք /api/login հասցեն
+                              const res = await axios.post(`${API_URL}/api/login`, credentials);
                               localStorage.setItem('token', res.data.token);
                               alert('Մուտքը հաջողված է');
                               navigate('/blog');
@@ -50,7 +54,6 @@ const Login = () => {
                                         <button type="submit" className={styles.loginButton}>Մուտք</button>
                               </form>
 
-                              {/* Ավելացված հղումը դեպի գրանցման էջ */}
                               <div className={styles.registerLink} style={{ marginTop: '20px', fontSize: '0.9rem' }}>
                                         <p>Դեռ գրանցվա՞ծ չեք։
                                                   <Link to="/register" style={{ color: '#FF6600', textDecoration: 'none', marginLeft: '5px', fontWeight: 'bold' }}>
