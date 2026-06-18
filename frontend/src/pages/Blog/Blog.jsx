@@ -139,12 +139,14 @@ const Blog = () => {
                         <img
                             src={
                                 post.image
-                                    ? (post.image.includes('http') ? post.image : `https://ik.imagekit.io/hmtd5pr9d/${post.image}`)
+                                    ? (post.image.startsWith('http')
+                                        ? post.image
+                                        : `https://ik.imagekit.io/hmtd5pr9d/${post.image}`)
                                     : null
                             }
                             alt={post.title}
-                            style={{ display: post.image ? 'block' : 'none' }} // Եթե նկար չկա, ընդհանրապես մի ցուցադրիր
-                            onError={(e) => { e.target.style.display = 'none'; }} // Եթե բեռնման սխալ կա, թաքցրու
+                            style={{ display: post.image ? 'block' : 'none' }}
+                            onError={(e) => { e.target.style.display = 'none'; }}
                         />
                         <h2>{post.title}</h2>
                         <p>{post.excerpt}</p>
