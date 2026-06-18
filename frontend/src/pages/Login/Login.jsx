@@ -15,7 +15,7 @@ const Login = () => {
           const handleLogin = async (e) => {
                     e.preventDefault();
                     try {
-                              const res = await axios.post('http://localhost:5000/api/login', credentials);
+                              const res = await axios.post('https://gratun-backend.onrender.com', credentials);
                               localStorage.setItem('token', res.data.token);
                               alert('Մուտքը հաջողված է');
                               navigate('/blog');

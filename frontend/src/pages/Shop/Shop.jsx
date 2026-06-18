@@ -1,9 +1,12 @@
 import React, { useReducer, useEffect, useContext } from 'react';
 import axios from 'axios';
-import { jwtDecode } from 'jwt-decode'; // Ավելացված է
+import { jwtDecode } from 'jwt-decode';
 import { CartContext } from '../../context/CartContext';
 import toast from 'react-hot-toast';
 import styles from './Shop.module.css';
+
+// Փոխարինել ենք localhost-ը դիփլոյ եղած հասցեով
+const API_BASE_URL = 'https://gratun-backend.onrender.com';
 
 const initialState = {
     books: [],
@@ -28,7 +31,6 @@ const Shop = () => {
     const [state, dispatch] = useReducer(shopReducer, initialState);
     const { addToCart } = useContext(CartContext);
 
-    // Ֆունկցիա՝ ստուգելու ադմին լինելը
     const isAdmin = () => {
         const token = localStorage.getItem('token');
         if (!token) return false;
@@ -42,14 +44,11 @@ const Shop = () => {
 
     const handleAddToCart = (book) => {
         addToCart(book);
-        toast.success(`${book.title} գիրքը ավելացվեց զամբյուղի մեջ!`, {
-            icon: '🛒',
-            duration: 2000,
-        });
+        toast.success(`${book.title} գիրքը ավելացվեց զամբյուղի մեջ!`, { icon: '🛒', duration: 2000 });
     };
 
     useEffect(() => {
-        axios.get('http://localhost:5000/api/books')
+        axios.get(`${API_BASE_URL}/api/books`)
             .then(res => dispatch({ type: 'SET_BOOKS', payload: res.data }))
             .catch(err => console.error(err));
     }, []);
@@ -58,17 +57,25 @@ const Shop = () => {
         e.preventDefault();
         const token = localStorage.getItem('token');
         const formData = new FormData();
-        Object.keys(state.formData).forEach(key => formData.append(key, state.formData[key]));
+
+        formData.append('title', state.formData.title);
+        formData.append('author', state.formData.author);
+        formData.append('price', state.formData.price);
+        formData.append('image', state.formData.image);
 
         try {
-            const res = await axios.post('http://localhost:5000/api/books', formData, {
-                headers: { 'Authorization': `Bearer ${token}` }
+            const res = await axios.post(`${API_BASE_URL}/api/books`, formData, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'multipart/form-data'
+                }
             });
             dispatch({ type: 'ADD_BOOK', payload: res.data });
             dispatch({ type: 'RESET_FORM' });
             toast.success('Գիրքը հաջողությամբ ավելացվեց');
         } catch (error) {
-            toast.error('Սխալ՝ միայն ադմինները կարող են ավելացնել');
+            console.error("FULL ERROR RESPONSE:", error.response?.data);
+            toast.error(error.response?.data?.message || 'Սխալ գրքի ավելացման ժամանակ');
         }
     };
 
@@ -76,7 +83,7 @@ const Shop = () => {
         const token = localStorage.getItem('token');
         if (window.confirm('Վստա՞հ եք, որ ցանկանում եք ջնջել այս գիրքը։')) {
             try {
-                await axios.delete(`http://localhost:5000/api/books/${id}`, {
+                await axios.delete(`${API_BASE_URL}/api/books/${id}`, {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 dispatch({ type: 'DELETE_BOOK', payload: id });
@@ -96,7 +103,6 @@ const Shop = () => {
 
     return (
         <div className={styles.shopContainer}>
-            {/* Ավելացնելու բաժինը նույնպես կարող ենք թաքցնել սովորական օգտատերերից */}
             {isAdmin() && (
                 <div className={styles.adminFormContainer}>
                     <h3>Ավելացնել Նոր Գիրք</h3>
@@ -118,11 +124,10 @@ const Shop = () => {
             <div className={styles.booksGrid}>
                 {filteredBooks.map(book => (
                     <div key={book._id} className={styles.bookCard}>
-                        {/* Օգտագործում ենք isAdmin() */}
                         {isAdmin() && (
                             <button className={styles.deleteBtn} onClick={() => handleDelete(book._id)}>🗑️</button>
                         )}
-                        <img src={book.image.startsWith('http') ? book.image : `http://localhost:5000/${book.image}`} alt={book.title} />
+                        <img src={book.image} alt={book.title} />
                         <h3>{book.title}</h3>
                         <p>{book.author}</p>
                         <span>{book.price} ֏</span>

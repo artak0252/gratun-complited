@@ -2,7 +2,7 @@ import React, { useReducer, useEffect, useState } from 'react';
 import { blogCategories } from './constants';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { jwtDecode } from 'jwt-decode'; // Ավելացված
+import { jwtDecode } from 'jwt-decode';
 import styles from './Blog.module.css';
 import CategoryFilter from './CategoryFilter';
 import adminStyles from './AdminFilter.module.css';
@@ -33,7 +33,9 @@ const Blog = () => {
     const [isFormVisible, setIsFormVisible] = useState(false);
     const { posts, loading, formData, searchTerm, selectedCategory } = state;
 
-    // Ստուգում ենք իրական ադմին լինելը
+    // Օգտագործում ենք Render-ի բեքենդի հղումը
+    const API_URL = 'https://gratun-backend.onrender.com';
+
     const isAdmin = () => {
         const token = localStorage.getItem('token');
         if (!token) return false;
@@ -45,7 +47,7 @@ const Blog = () => {
     useEffect(() => {
         const fetchPosts = async () => {
             try {
-                const res = await axios.get('http://localhost:5000/api/posts');
+                const res = await axios.get(`${API_URL}/api/posts`);
                 dispatch({ type: 'FETCH_SUCCESS', payload: res.data });
             } catch (err) { dispatch({ type: 'SET_LOADING', payload: false }); }
         };
@@ -56,7 +58,7 @@ const Blog = () => {
         if (!window.confirm('Ջնջե՞լ այս հոդվածը:')) return;
         const token = localStorage.getItem('token');
         try {
-            await axios.delete(`http://localhost:5000/api/posts/${id}`, {
+            await axios.delete(`${API_URL}/api/posts/${id}`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             dispatch({ type: 'DELETE_POST', payload: id });
@@ -71,13 +73,19 @@ const Blog = () => {
         Object.keys(formData).forEach(key => data.append(key, formData[key]));
 
         try {
-            const res = await axios.post('http://localhost:5000/api/posts', data, {
-                headers: { 'Authorization': `Bearer ${token}` }
+            const res = await axios.post(`${API_URL}/api/posts`, data, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'multipart/form-data'
+                }
             });
             dispatch({ type: 'ADD_POST', payload: res.data });
             setIsFormVisible(false);
             alert('Հոդվածը հաջողությամբ ավելացվեց!');
-        } catch (err) { alert('Սխալ՝ միայն ադմինները կարող են ավելացնել'); }
+        } catch (err) {
+            console.error(err);
+            alert('Սխալ՝ միայն ադմինները կարող են ավելացնել');
+        }
     };
 
     if (loading) return <div className={styles.loading}>Բեռնվում է...</div>;
@@ -127,7 +135,8 @@ const Blog = () => {
                         {isAdmin() && (
                             <button className={styles.deletePostBtn} onClick={() => handleDelete(post._id)}>🗑️</button>
                         )}
-                        <img src={`http://localhost:5000/${post.image.replace(/\\/g, '/')}`} alt={post.title} />
+                        {/* Ուղղակի օգտագործում ենք post.image-ը, որը արդեն ImageKit-ի URL է */}
+                        <img src={post.image} alt={post.title} />
                         <h2>{post.title}</h2>
                         <p>{post.excerpt}</p>
                         <Link to={`/blog/${post._id}`}>Կարդալ ավելին →</Link>

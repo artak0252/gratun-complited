@@ -2,13 +2,7 @@ import React, { useState } from 'react';
 import styles from './Contact.module.css'; // Փոխված իմպորտը
 
 const Contact = () => {
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    alert(`Շնորհակալություն, ${formData.name}: Ձեր հաղորդագրությունն ուղարկված է:`);
-    setFormData({ name: '', email: '', message: '' });
-  };
+  
 
   return (
     <div className={styles.contactContainer}>
@@ -18,12 +12,16 @@ const Contact = () => {
       <div className={styles.contactContent}>
         {/* Կոնտակտային տվյալներ */}
         <div className={styles.contactInfo}>
-          <h3>Մեր կոնտակտները</h3>
-          <p>📍 Հասցե՝ Երևան, Կենտրոն, Տերյան փողոց 1</p>
-          <p>📞 Հեռ՝ +374 10 000 000</p>
-          <p>📧 Էլ. փոստ՝ info@yourblog.am</p>
+          <h2>Մեր կոնտակտները</h2>
+         
+          <p>📞 Հեռ՝ +374 41736074</p>
+          <p>📧 Էլ. փոստ՝ gratun2026@gmail.com</p>
+         
+          <h3>✅Քո վաճառքի գիրքը կարող է լինել այս հարթակում</h3>
+          <h3>✅Քո կղմից տրամադրվող նյութերը կարող են լինել մեր բլոգում</h3>
+          <h3>😊Կապվիր մեզ հետ մանրամասների համար</h3>
           <div className={styles.socialLinks}>
-            <a href="#">Instagram</a> | <a href="#">Facebook</a> 
+            <a  href="https://www.facebook.com/grk.i.tun">Facebook</a> 
           </div>
         </div>
       </div>

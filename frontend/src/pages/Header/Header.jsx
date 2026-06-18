@@ -29,7 +29,7 @@ const Header = () => {
             <Link to="/" className={styles.navLink} onClick={() => setIsOpen(false)}>Գլխավոր</Link>
             <Link to="/shop" className={styles.navLink} onClick={() => setIsOpen(false)}>Գրքեր</Link>
             <Link to="/blog" className={styles.navLink} onClick={() => setIsOpen(false)}>Բլոգ</Link>
-            <Link to="/contact" className={styles.navLink} onClick={() => setIsOpen(false)}>Կոնտակտ</Link>
+            <Link to="/contact" className={styles.navLink} onClick={() => setIsOpen(false)}>Հետադարձ կապ</Link>
             <Link to="/about" className={styles.navLink} onClick={() => setIsOpen(false)}>Մեր մասին</Link>
 
             {isLoggedIn ? (

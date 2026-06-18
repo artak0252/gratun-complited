@@ -1,9 +1,9 @@
-
-
 import React, { useContext, useState } from 'react';
 import { CartContext } from '../../context/CartContext';
 import toast from 'react-hot-toast';
-import styles from './Cart.module.css'; // Փոխեցինք իմպորտը
+import styles from './Cart.module.css';
+
+const API_BASE_URL = 'https://gratun-backend.onrender.com';
 
 const Cart = () => {
     const { cartItems, removeFromCart, updateQuantity, clearCart } = useContext(CartContext);
@@ -22,7 +22,7 @@ const Cart = () => {
         setIsSubmitting(true);
 
         try {
-            const response = await fetch('http://localhost:5000/api/orders', {
+            const response = await fetch(`${API_BASE_URL}/api/orders`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -66,7 +66,7 @@ const Cart = () => {
                         <div className={styles.cartItemsList}>
                             {cartItems.map((item) => (
                                 <div key={item._id} className={styles.cartItemCard}>
-                                    <img src={item.image?.startsWith('http') ? item.image : `http://localhost:5000/${item.image}`} alt={item.title} className={styles.cartItemImage} />
+                                    <img src={item.image} alt={item.title} className={styles.cartItemImage} />
                                     <div className={styles.cartItemDetails}>
                                         <h3>{item.title}</h3>
                                         <p>{item.author}</p>

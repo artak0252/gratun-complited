@@ -29,11 +29,14 @@ const SinglePost = () => {
     const [state, dispatch] = useReducer(postReducer, initialState);
     const { post, loading, error } = state;
 
+    // Render-ի բեքենդի հասցեն
+    const API_URL = 'https://gratun-backend.onrender.com';
+
     useEffect(() => {
         const fetchPost = async () => {
             dispatch({ type: 'FETCH_START' });
             try {
-                const response = await axios.get(`http://localhost:5000/api/posts/${id}`);
+                const response = await axios.get(`${API_URL}/api/posts/${id}`);
                 dispatch({ type: 'FETCH_SUCCESS', payload: response.data });
             } catch (err) {
                 dispatch({ type: 'FETCH_ERROR', payload: 'Հոդվածը չգտնվեց' });
@@ -51,13 +54,13 @@ const SinglePost = () => {
 
             <article className={styles.fullPost}>
                 <div className={styles.fullPostHeader}>
+                    {/* ImageKit-ի հղումը աշխատում է անմիջապես post.image-ով */}
                     <img
-                        src={`http://localhost:5000/${post.image.replace(/\\/g, '/')}`}
+                        src={post.image}
                         alt={post.title}
                         className={styles.fullPostImg}
                     />
                     <div className={styles.fullPostMeta}>
-                        {/* Այստեղ են ցուցադրվում կատեգորիաները */}
                         <span className={styles.postCategory}>{post.category}</span>
                         <span className={styles.postDate}>
                             {new Date(post.date).toLocaleDateString('hy-AM')}
