@@ -136,7 +136,10 @@ const Blog = () => {
                             <button className={styles.deletePostBtn} onClick={() => handleDelete(post._id)}>🗑️</button>
                         )}
                         {/* Ուղղակի օգտագործում ենք post.image-ը, որը արդեն ImageKit-ի URL է */}
-                        <img src={post.image} alt={post.title} />
+                        <img
+                            src={post.image.startsWith('http') ? post.image : `https://ik.imagekit.io/hmtd5pr9d/${post.image}`}
+                            alt={post.title}
+                        />
                         <h2>{post.title}</h2>
                         <p>{post.excerpt}</p>
                         <Link to={`/blog/${post._id}`}>Կարդալ ավելին →</Link>
