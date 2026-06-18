@@ -137,9 +137,14 @@ const Blog = () => {
                         )}
                         {/* Ուղղակի օգտագործում ենք post.image-ը, որը արդեն ImageKit-ի URL է */}
                         <img
-                            src={`https://ik.imagekit.io/hmtd5pr9d/${post.image ? post.image.split('/').pop() : 'default-image.jpg'}`}
+                            src={
+                                post.image
+                                    ? (post.image.includes('http') ? post.image : `https://ik.imagekit.io/hmtd5pr9d/${post.image}`)
+                                    : null
+                            }
                             alt={post.title}
-                            onError={(e) => { e.target.src = 'https://ik.imagekit.io/hmtd5pr9d/default-image.jpg'; }}
+                            style={{ display: post.image ? 'block' : 'none' }} // Եթե նկար չկա, ընդհանրապես մի ցուցադրիր
+                            onError={(e) => { e.target.style.display = 'none'; }} // Եթե բեռնման սխալ կա, թաքցրու
                         />
                         <h2>{post.title}</h2>
                         <p>{post.excerpt}</p>
