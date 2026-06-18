@@ -137,13 +137,7 @@ const Blog = () => {
                         )}
                         {/* Ուղղակի օգտագործում ենք post.image-ը, որը արդեն ImageKit-ի URL է */}
                         <img
-                            src={
-                                post.image
-                                    ? (post.image.startsWith('http')
-                                        ? post.image
-                                        : `https://ik.imagekit.io/hmtd5pr9d/${post.image.replace('uploads/', '')}`)
-                                    : 'https://ik.imagekit.io/hmtd5pr9d/default-image.jpg'
-                            }
+                            src={`https://ik.imagekit.io/hmtd5pr9d/${post.image ? post.image.split('/').pop() : 'default-image.jpg'}`}
                             alt={post.title}
                             onError={(e) => { e.target.src = 'https://ik.imagekit.io/hmtd5pr9d/default-image.jpg'; }}
                         />
