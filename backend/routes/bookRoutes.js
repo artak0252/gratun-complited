@@ -1,56 +1,51 @@
 import express from 'express';
 import multer from 'multer';
-import path from 'path';
-import fs from 'fs';
+import ImageKit from 'imagekit';
 import Book from '../models/Book.js';
-import { adminOnly } from '../middleware/adminMiddleware.js'; // Ներմուծում ենք ադմինի պահակին
+import { adminOnly } from '../middleware/adminMiddleware.js';
 
 const router = express.Router();
 
-// Ճիշտ ստուգում և ստեղծում ենք uploads թղթապանակը
-const uploadDir = path.join(process.cwd(), 'uploads');
-if (!fs.existsSync(uploadDir)) {
-    fs.mkdirSync(uploadDir);
-}
 
-// Multer-ի կոնֆիգուրացիա
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'uploads/');
-    },
-    filename: (req, file, cb) => {
-        cb(null, `${Date.now()}${path.extname(file.originalname)}`);
-    }
+const imagekit = new ImageKit({
+    publicKey: process.env.IMAGEKIT_PUBLIC_KEY || "fallback_key",
+    privateKey: process.env.IMAGEKIT_PRIVATE_KEY || "fallback_key",
+    urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT || "https://ik.imagekit.io/fallback"
 });
+console.log("PUBLIC KEY:", process.env.IMAGEKIT_PUBLIC_KEY);
 
-const upload = multer({ storage });
+// Multer (memoryStorage-ը կարևոր է, որպեսզի ֆայլը չպահվի սերվերի վրա)
+const upload = multer({ storage: multer.memoryStorage() });
 
-// 1. GET: Ստանալ բոլոր գրքերը (Բոլորի համար)
+// 1. GET: Ստանալ բոլոր գրքերը
 router.get('/', async (req, res) => {
     try {
         const books = await Book.find();
         res.status(200).json(books);
     } catch (error) {
-        res.status(500).json({ message: 'Սերվերի սխալ գրքերը ստանալիս', error: error.message });
+        res.status(500).json({ message: 'Սերվերի սխալ', error: error.message });
     }
 });
 
-// 2. POST: Ավելացնել նոր գիրք (Միայն ադմինը)
+// 2. POST: Ավելացնել նոր գիրք
 router.post('/', adminOnly, upload.single('image'), async (req, res) => {
     try {
         const { title, author, price } = req.body;
-
         if (!title || !author || !price || !req.file) {
-            return res.status(400).json({ message: 'Խնդրում ենք լրացնել բոլոր դաշտերը և ընտրել նկար' });
+            return res.status(400).json({ message: 'Լրացրու բոլոր դաշտերը' });
         }
 
-        const imagePath = `uploads/${req.file.filename}`;
+        // Վերբեռնում ենք ImageKit
+        const uploadResponse = await imagekit.upload({
+            file: req.file.buffer,
+            fileName: `${Date.now()}_${req.file.originalname}`
+        });
 
         const newBook = new Book({
             title,
             author,
             price,
-            image: imagePath
+            image: uploadResponse.url // Պահում ենք ImageKit-ի ուղիղ հղումը
         });
 
         const savedBook = await newBook.save();
@@ -60,28 +55,15 @@ router.post('/', adminOnly, upload.single('image'), async (req, res) => {
     }
 });
 
-// 3. DELETE: Ջնջել գիրքը (Միայն ադմինը)
+// 3. DELETE: Ջնջել գիրքը
 router.delete('/:id', adminOnly, async (req, res) => {
     try {
-        const { id } = req.params;
-        const book = await Book.findById(id);
+        const book = await Book.findByIdAndDelete(req.params.id);
+        if (!book) return res.status(404).json({ message: 'Գիրքը չգտնվեց' });
 
-        if (!book) {
-            return res.status(404).json({ message: 'Գիրքը չգտնվեց' });
-        }
-
-        // Ջնջում ենք նկարը
-        if (book.image && book.image.startsWith('uploads/')) {
-            const absoluteImagePath = path.join(process.cwd(), book.image);
-            if (fs.existsSync(absoluteImagePath)) {
-                fs.unlinkSync(absoluteImagePath);
-            }
-        }
-
-        await Book.findByIdAndDelete(id);
-        res.status(200).json({ message: 'Գիրքը հաջողությամբ ջնջվեց' });
+        res.status(200).json({ message: 'Գիրքը ջնջվեց' });
     } catch (error) {
-        res.status(500).json({ message: 'Սերվերի սխալ ջնջելիս', error: error.message });
+        res.status(500).json({ message: 'Սերվերի սխալ', error: error.message });
     }
 });
 
