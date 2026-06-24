@@ -3,8 +3,6 @@ import dotenv from 'dotenv';
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
-
-
 import path from 'path';
 import { fileURLToPath } from 'url';
 import jwt from 'jsonwebtoken';
@@ -33,12 +31,15 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 const transporter = nodemailer.createTransport({
     service: 'gmail',
+    host: 'smtp.gmail.com', // Ավելացրու host-ը
+    port: 465,              // Ավելացրու port-ը
+    secure: true,           // Ավելացրու secure-ը
+    family: 4,              // <--- ԱՅՍ ՏՈՂԸ ԱՎԵԼԱՑՐՈՒ
     auth: {
-        user: 'safaryanartak81@gmail.com',
+        user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS
     }
 });
-
 const connectDB = async () => {
     try {
         await mongoose.connect(process.env.MONGO_URI);
