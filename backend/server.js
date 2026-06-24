@@ -107,9 +107,11 @@ app.use((err, req, res, next) => {
 });
 
 if (process.env.NODE_ENV === 'production') {
+    // Փորձիր սա առաջինը (սա ամենահավանականն է)
     app.use(express.static(path.join(__dirname, '../frontend/build')));
 
     app.get('*', (req, res) => {
+        // Համապատասխանեցրու նույն ուղին
         res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
     });
 }
