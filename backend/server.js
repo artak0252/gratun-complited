@@ -54,32 +54,30 @@ app.use('/api/books', bookRoutes);
 app.use('/api/posts', postRoutes);
 
 app.post('/api/orders', async (req, res) => {
-    const { name, phone, address, cartItems, total } = req.body;
+    try {
+        const { name, phone, address, cartItems, total } = req.body;
+        const orderDetails = cartItems.map(item => `- ${item.title} | ${item.quantity} հատ | ${item.price} ֏`).join('\n');
 
-    // Ստուգում ենք, որ տվյալները գալիս են
-    if (!cartItems || cartItems.length === 0) {
-        return res.status(400).json({ message: "Զամբյուղը դատարկ է" });
+        const mailOptions = {
+            from: 'safaryanartak81@gmail.com',
+            to: "safaryanartak81@gmail.com",
+            subject: "Նոր պատվեր!",
+            text: `Հաճախորդ՝ ${name}\nՀեռախոս՝ ${phone}\nՀասցե՝ ${address}\nԸնդհանուր՝ ${total} ֏\n\nՊատվերներ՝\n${orderDetails}`
+        };
+
+        // Նամակի ուղարկում առանց սպասելու (non-blocking)
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error) console.error("SMTP Error:", error);
+            else console.log("Email sent successfully");
+        });
+
+        // ԿԱՐԵՎՈՐ՝ ՄԻԱՆԳԱՄԻՑ պատասխանում ենք ֆրոնտենդին, որ չկախվի
+        res.status(200).json({ message: 'Պատվերն ընդունված է!' });
+
+    } catch (error) {
+        console.error("Order Error:", error);
+        res.status(500).json({ message: "Սխալ պատվերի ժամանակ" });
     }
-
-    const orderDetails = cartItems.map(item => `- ${item.title} | ${item.quantity} հատ | ${item.price} ֏`).join('\n');
-
-    const mailOptions = {
-        from: 'safaryanartak81@gmail.com', // Այս հասցեն պետք է հաստատված լինի SendGrid-ում
-        to: "safaryanartak81@gmail.com",
-        subject: "Նոր պատվեր!",
-        text: `Հաճախորդ՝ ${name}\nՀեռախոս՝ ${phone}\nՀասցե՝ ${address}\nԸնդհանուր՝ ${total} ֏\n\nՊատվերներ՝\n${orderDetails}`
-    };
-
-    transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-            console.error("Նամակի ուղարկման սխալ:", error);
-            // Նամակը չուղարկվեց, բայց հաճախորդին ասում ենք հաջող, որ չանհանգստանա
-            return res.status(200).json({ message: 'Պատվերն ընդունված է!' });
-        } else {
-            console.log("Նամակը հաջողությամբ ուղարկվեց:", info.messageId);
-            res.status(200).json({ message: 'Պատվերն ընդունված է!' });
-        }
-    });
 });
 
 // ... Մնացած մասը (register, login, static) թողնում ես նույնը
