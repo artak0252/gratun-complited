@@ -7,8 +7,8 @@ const Login = () => {
           const [credentials, setCredentials] = useState({ username: '', password: '' });
           const navigate = useNavigate();
 
-          // Render-ի բեքենդի հասցեն
-          const API_URL = 'https://gratun-backend.onrender.com';
+          // Օգտագործում ենք հարաբերական հասցե՝ /api/login
+          const API_URL = '/api';
 
           const handleChange = (e) => {
                     const { name, value } = e.target;
@@ -18,8 +18,8 @@ const Login = () => {
           const handleLogin = async (e) => {
                     e.preventDefault();
                     try {
-                              // Ավելացրել ենք /api/login հասցեն
-                              const res = await axios.post(`${API_URL}/api/login`, credentials);
+                              // Հարաբերական հասցե
+                              const res = await axios.post(`${API_URL}/login`, credentials);
                               localStorage.setItem('token', res.data.token);
                               alert('Մուտքը հաջողված է');
                               navigate('/blog');

@@ -33,8 +33,8 @@ const Blog = () => {
     const [isFormVisible, setIsFormVisible] = useState(false);
     const { posts, loading, formData, searchTerm, selectedCategory } = state;
 
-    // Օգտագործում ենք Render-ի բեքենդի հղումը
-    const API_URL = 'https://gratun-backend.onrender.com';
+    // Օգտագործում ենք հարաբերական հասցե՝ առանց բեքենդի դոմենի, որպեսզի CORS չլինի
+    const API_URL = '/api';
 
     const isAdmin = () => {
         const token = localStorage.getItem('token');
@@ -47,7 +47,7 @@ const Blog = () => {
     useEffect(() => {
         const fetchPosts = async () => {
             try {
-                const res = await axios.get(`${API_URL}/api/posts`);
+                const res = await axios.get(`${API_URL}/posts`);
                 dispatch({ type: 'FETCH_SUCCESS', payload: res.data });
             } catch (err) { dispatch({ type: 'SET_LOADING', payload: false }); }
         };
@@ -58,7 +58,7 @@ const Blog = () => {
         if (!window.confirm('Ջնջե՞լ այս հոդվածը:')) return;
         const token = localStorage.getItem('token');
         try {
-            await axios.delete(`${API_URL}/api/posts/${id}`, {
+            await axios.delete(`${API_URL}/posts/${id}`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             dispatch({ type: 'DELETE_POST', payload: id });
@@ -73,7 +73,7 @@ const Blog = () => {
         Object.keys(formData).forEach(key => data.append(key, formData[key]));
 
         try {
-            const res = await axios.post(`${API_URL}/api/posts`, data, {
+            const res = await axios.post(`${API_URL}/posts`, data, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'multipart/form-data'
@@ -135,18 +135,12 @@ const Blog = () => {
                         {isAdmin() && (
                             <button className={styles.deletePostBtn} onClick={() => handleDelete(post._id)}>🗑️</button>
                         )}
-                        {/* Ուղղակի օգտագործում ենք post.image-ը, որը արդեն ImageKit-ի URL է */}
                         <img
-                            src={
-                                post.image
-                                    ? (post.image.startsWith('http')
-                                        ? post.image
-                                        : `https://ik.imagekit.io/hmtd5pr9d/${post.image}`)
-                                    : null
-                            }
+                            src={post.image.startsWith('http') ? post.image : `https://ik.imagekit.io/hmtd5pr9d/${post.image}`}
                             alt={post.title}
-                            style={{ display: post.image ? 'block' : 'none' }}
-                            onError={(e) => { e.target.style.display = 'none'; }}
+                            onError={(e) => {
+                                e.target.src = "https://via.placeholder.com/150"; // Այլընտրանքային նկար, եթե հղումը սխալ է
+                            }}
                         />
                         <h2>{post.title}</h2>
                         <p>{post.excerpt}</p>

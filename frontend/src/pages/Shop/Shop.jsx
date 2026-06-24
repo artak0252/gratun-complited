@@ -5,9 +5,6 @@ import { CartContext } from '../../context/CartContext';
 import toast from 'react-hot-toast';
 import styles from './Shop.module.css';
 
-// Փոխարինել ենք localhost-ը դիփլոյ եղած հասցեով
-const API_BASE_URL = 'https://gratun-backend.onrender.com';
-
 const initialState = {
     books: [],
     loading: true,
@@ -31,6 +28,9 @@ const Shop = () => {
     const [state, dispatch] = useReducer(shopReducer, initialState);
     const { addToCart } = useContext(CartContext);
 
+    // Քո բեքենդի հասցեն՝ նկարները ճիշտ բեռնելու համար
+    const BACKEND_URL = 'https://gratun-backend.onrender.com';
+
     const isAdmin = () => {
         const token = localStorage.getItem('token');
         if (!token) return false;
@@ -48,7 +48,7 @@ const Shop = () => {
     };
 
     useEffect(() => {
-        axios.get(`${API_BASE_URL}/api/books`)
+        axios.get(`/api/books`)
             .then(res => dispatch({ type: 'SET_BOOKS', payload: res.data }))
             .catch(err => console.error(err));
     }, []);
@@ -64,7 +64,7 @@ const Shop = () => {
         formData.append('image', state.formData.image);
 
         try {
-            const res = await axios.post(`${API_BASE_URL}/api/books`, formData, {
+            const res = await axios.post(`/api/books`, formData, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'multipart/form-data'
@@ -83,7 +83,7 @@ const Shop = () => {
         const token = localStorage.getItem('token');
         if (window.confirm('Վստա՞հ եք, որ ցանկանում եք ջնջել այս գիրքը։')) {
             try {
-                await axios.delete(`${API_BASE_URL}/api/books/${id}`, {
+                await axios.delete(`/api/books/${id}`, {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 dispatch({ type: 'DELETE_BOOK', payload: id });
@@ -127,7 +127,14 @@ const Shop = () => {
                         {isAdmin() && (
                             <button className={styles.deleteBtn} onClick={() => handleDelete(book._id)}>🗑️</button>
                         )}
-                        <img src={book.image} alt={book.title} />
+                    
+                        <img
+                            src={book.image.startsWith('http') ? book.image : `https://ik.imagekit.io/hmtd5pr9d/${book.image}`}
+                            alt={book.title}
+                            onError={(e) => {
+                                e.target.style.display = 'none'; // Եթե նկարը չկա, պարզապես թաքցրու այն
+                            }}
+                        />
                         <h3>{book.title}</h3>
                         <p>{book.author}</p>
                         <span>{book.price} ֏</span>

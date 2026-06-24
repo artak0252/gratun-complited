@@ -3,8 +3,6 @@ import { CartContext } from '../../context/CartContext';
 import toast from 'react-hot-toast';
 import styles from './Cart.module.css';
 
-const API_BASE_URL = 'https://gratun-backend.onrender.com';
-
 const Cart = () => {
     const { cartItems, removeFromCart, updateQuantity, clearCart } = useContext(CartContext);
     const [showForm, setShowForm] = useState(false);
@@ -22,14 +20,16 @@ const Cart = () => {
         setIsSubmitting(true);
 
         try {
-            const response = await fetch(`${API_BASE_URL}/api/orders`, {
+            // Օգտագործում ենք հարաբերական հասցե՝ /api/orders
+            const response = await fetch('/api/orders', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
                     ...formData,
-                    cartItems
+                    cartItems,
+                    total: totalPrice
                 }),
             });
 
