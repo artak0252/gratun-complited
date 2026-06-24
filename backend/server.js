@@ -30,19 +30,12 @@ app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    host: 'smtp.gmail.com', // Ավելացրու host-ը
-    port: 465,              // Ավելացրու port-ը
-    secure: true,           // Ավելացրու secure-ը
-    family: 4,              // <--- ԱՅՍ ՏՈՂԸ ԱՎԵԼԱՑՐՈՒ
+    host: 'smtp.sendgrid.net',
+    port: 587,
     auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-    },
-    socketTimeout: 10000,
-    logger: true,
-    debug: true,
-    dnsResolutionOrder: 'ipv4first'
+        user: 'apikey', // Հաստատ այսպես
+        pass: process.env.EMAIL_PASS // Սա կկարդա քո նոր դրած API Key-ը
+    }
 });
 const connectDB = async () => {
     try {
