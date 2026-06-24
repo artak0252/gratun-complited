@@ -106,6 +106,14 @@ app.use((err, req, res, next) => {
     res.status(500).json({ message: "Սերվերում սխալ տեղի ունեցավ", error: err.message });
 });
 
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, '../frontend/build')));
+
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
+    });
+}
+
 app.listen(PORT, () => {
     console.log(`Սերվերը պտտվում է ${PORT} պորտի վրա... 🚀`);
 });
