@@ -41,7 +41,8 @@ const transporter = nodemailer.createTransport({
     },
     socketTimeout: 10000,
     logger: true,
-    debug: true
+    debug: true,
+    dnsResolutionOrder: 'ipv4first'
 });
 const connectDB = async () => {
     try {
