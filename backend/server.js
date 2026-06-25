@@ -29,13 +29,13 @@ app.use(cors({
 app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// 1. Ստեղծել ենք transporter-ը այստեղ
+// Brevo-ի կարգավորումներ
 const transporter = nodemailer.createTransport({
-    host: 'smtp.sendgrid.net',
+    host: 'smtp-relay.brevo.com',
     port: 587,
     auth: {
-        user: 'apikey',
-        pass: process.env.EMAIL_PASS
+        user: process.env.EMAIL_USER, // Քո Brevo էլփոստը
+        pass: process.env.EMAIL_PASS  // Քո Brevo SMTP Key-ը
     }
 });
 
@@ -54,33 +54,34 @@ app.use('/api/books', bookRoutes);
 app.use('/api/posts', postRoutes);
 
 app.post('/api/orders', async (req, res) => {
+    console.log("--- Պատվեր ստացվեց, սկսում եմ մշակումը ---");
     try {
         const { name, phone, address, cartItems, total } = req.body;
         const orderDetails = cartItems.map(item => `- ${item.title} | ${item.quantity} հատ | ${item.price} ֏`).join('\n');
 
         const mailOptions = {
-            from: 'safaryanartak81@gmail.com',
+            from: process.env.EMAIL_USER, // Օգտագործում ենք էլփոստը որպես ուղարկող
             to: "safaryanartak81@gmail.com",
             subject: "Նոր պատվեր!",
             text: `Հաճախորդ՝ ${name}\nՀեռախոս՝ ${phone}\nՀասցե՝ ${address}\nԸնդհանուր՝ ${total} ֏\n\nՊատվերներ՝\n${orderDetails}`
         };
 
-        // Նամակի ուղարկում առանց սպասելու (non-blocking)
+        console.log("Փորձում եմ ուղարկել նամակ Brevo-ի միջոցով...");
+
         transporter.sendMail(mailOptions, (error, info) => {
-            if (error) console.error("SMTP Error:", error);
-            else console.log("Email sent successfully");
+            if (error) {
+                console.error("!!! SMTP ERROR (Brevo):", error);
+            } else {
+                console.log("!!! EMAIL SENT SUCCESSFULLY (Brevo) - ID:", info.messageId);
+            }
         });
 
-        // ԿԱՐԵՎՈՐ՝ ՄԻԱՆԳԱՄԻՑ պատասխանում ենք ֆրոնտենդին, որ չկախվի
         res.status(200).json({ message: 'Պատվերն ընդունված է!' });
-
     } catch (error) {
-        console.error("Order Error:", error);
+        console.error("!!! ORDER CATCH ERROR:", error);
         res.status(500).json({ message: "Սխալ պատվերի ժամանակ" });
     }
 });
-
-// ... Մնացած մասը (register, login, static) թողնում ես նույնը
 
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, '../frontend/build')));
