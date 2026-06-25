@@ -32,10 +32,10 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // Brevo-ի կարգավորումներ
 const transporter = nodemailer.createTransport({
     host: 'smtp-relay.brevo.com',
-    port: 587,
+    port: 2525, // Փորձիր այս պորտը
     auth: {
-        user: process.env.EMAIL_USER, // Քո Brevo էլփոստը
-        pass: process.env.EMAIL_PASS  // Քո Brevo SMTP Key-ը
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
     }
 });
 
