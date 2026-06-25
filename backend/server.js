@@ -60,7 +60,7 @@ app.post('/api/orders', async (req, res) => {
         const orderDetails = cartItems.map(item => `- ${item.title} | ${item.quantity} հատ | ${item.price} ֏`).join('\n');
 
         const mailOptions = {
-            from: process.env.EMAIL_USER, // Օգտագործում ենք էլփոստը որպես ուղարկող
+            from: "safaryanartak81@gmail.com", // Օգտագործում ենք էլփոստը որպես ուղարկող
             to: "safaryanartak81@gmail.com",
             subject: "Նոր պատվեր!",
             text: `Հաճախորդ՝ ${name}\nՀեռախոս՝ ${phone}\nՀասցե՝ ${address}\nԸնդհանուր՝ ${total} ֏\n\nՊատվերներ՝\n${orderDetails}`
