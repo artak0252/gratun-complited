@@ -50,7 +50,7 @@ const connectDB = async () => {
 };
 connectDB();
 
-app.post('/login', async (req, res) => {
+app.post('/api/login', async (req, res) => {
     const { username, password } = req.body;
 
     try {
