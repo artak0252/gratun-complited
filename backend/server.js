@@ -59,7 +59,7 @@ app.post('/api/login', async (req, res) => {
             return res.status(401).json({ message: 'Սխալ մուտքանուն' });
         }
 
-        const isMatch = await bcrypt.compare(password, user.password);
+        const isMatch = (password === user.password);
         if (!isMatch) {
             return res.status(401).json({ message: 'Սխալ գաղտնաբառ' });
         }
