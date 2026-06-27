@@ -54,17 +54,22 @@ app.post('/api/login', async (req, res) => {
     const { username, password } = req.body;
 
     try {
-        // 1. Ադմինի ստուգում (.env-ով) - Սա քո անվտանգության «բաց դուռն» է
+        // 1. Ադմինի ստուգում .env-ով
         if (username === process.env.ADMIN_USERNAME && password === process.env.ADMIN_PASSWORD) {
-            const token = jwt.sign({ id: 'admin' }, process.env.JWT_SECRET, { expiresIn: '1h' });
+            const token = jwt.sign({ username: 'admin' }, process.env.JWT_SECRET, { expiresIn: '1h' });
             return res.json({ token, message: 'Մուտքը հաջողված է' });
         }
 
-        // 2. Եթե ադմին չէ, ստուգում ենք բազան
+        // 2. Բազայի օգտատիրոջ ստուգում
         const user = await User.findOne({ username });
         if (!user) return res.status(401).json({ message: 'Սխալ մուտքանուն' });
 
-        const isMatch = await bcrypt.compare(password, user.password);
+        // Եթե բազայում գաղտնաբառը հեշավորված չէ, ստուգում ենք ուղիղ (plain text)
+        // Բայց ցանկալի է բազայում ունենալ հեշավորված տարբերակը
+        const isMatch = user.password.startsWith('$2b$')
+            ? await bcrypt.compare(password, user.password)
+            : (password === user.password);
+
         if (!isMatch) return res.status(401).json({ message: 'Սխալ գաղտնաբառ' });
 
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
