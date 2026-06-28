@@ -1,28 +1,23 @@
 import jwt from 'jsonwebtoken';
 
 export const adminOnly = (req, res, next) => {
-          // Ստանում ենք թոքենը header-ից
           const authHeader = req.headers.authorization;
-          const token = authHeader && authHeader.split(' ')[1];
 
-          if (!token) {
-                    return res.status(403).json({ message: "Մուտքը մերժված է, թոքենը բացակայում է" });
+          if (!authHeader || !authHeader.startsWith('Bearer ')) {
+                    return res.status(401).json({ message: "Մուտքը մերժված է, տոկեն չկա" });
           }
 
+          const token = authHeader.split(' ')[1];
+
           try {
-                    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'secret123');
-
-                    // Ստուգում ենք՝ արդյո՞ք դերը 'admin' է
-                    if (decoded.role !== 'admin') {
-                              return res.status(403).json({ message: "Միայն ադմինը կարող է կատարել այս գործողությունը" });
+                    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+                    // Այստեղ ստուգում ենք role-ը
+                    if (decoded.role === 'admin') {
+                              next(); // Ամեն ինչ նորմալ է, թույլատրում ենք
+                    } else {
+                              return res.status(403).json({ message: "Միայն ադմինները կարող են" });
                     }
-
-                    // Պահում ենք օգտատիրոջ տվյալները req-ի մեջ, որպեսզի հասանելի լինի հաջորդ ֆունկցիաներին
-                    req.user = decoded;
-
-                    // Եթե ադմին է, շարունակում ենք
-                    next();
           } catch (err) {
-                    return res.status(401).json({ message: "Անվավեր կամ ժամկետանց թոքեն" });
+                    return res.status(403).json({ message: "Անվավեր տոկեն" });
           }
 };
