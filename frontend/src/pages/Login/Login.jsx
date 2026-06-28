@@ -50,6 +50,7 @@ const Login = () => {
                                                   placeholder="Գաղտնաբառ"
                                                   className={styles.loginInput}
                                                   required
+                                                  autoComplete="current-password"
                                         />
                                         <button type="submit" className={styles.loginButton}>Մուտք</button>
                               </form>
