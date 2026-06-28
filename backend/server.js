@@ -8,10 +8,12 @@ import { fileURLToPath } from 'url';
 import jwt from 'jsonwebtoken';
 import nodemailer from 'nodemailer';
 import bcrypt from 'bcrypt';
-
 import User from './models/User.js';
 import bookRoutes from './routes/bookRoutes.js';
 import postRoutes from './routes/postRoutes.js';
+import { adminOnly } from './middleware/adminMiddleware.js'; 
+
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -56,7 +58,7 @@ app.post('/api/login', async (req, res) => {
     try {
         // 1. Ադմինի ստուգում .env-ով
         if (username === process.env.ADMIN_USERNAME && password === process.env.ADMIN_PASSWORD) {
-            const token = jwt.sign({ username: 'admin' }, process.env.JWT_SECRET, { expiresIn: '1h' });
+            const token = jwt.sign({ role: 'admin' }, process.env.JWT_SECRET, { expiresIn: '1h' });
             return res.json({ token, message: 'Մուտքը հաջողված է' });
         }
 
@@ -72,15 +74,16 @@ app.post('/api/login', async (req, res) => {
 
         if (!isMatch) return res.status(401).json({ message: 'Սխալ գաղտնաբառ' });
 
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        // Փոխիր այս տողը (մոտավորապես 67-րդ տողում)
+        const token = jwt.sign({ id: user._id, role: 'admin' }, process.env.JWT_SECRET, { expiresIn: '1h' });
         res.json({ token, message: 'Մուտքը հաջողված է' });
     } catch (error) {
         res.status(500).json({ message: 'Սերվերի սխալ' });
     }
 });
 
-app.use('/api/books', bookRoutes);
-app.use('/api/posts', postRoutes);
+app.use('/api/books', adminOnly, bookRoutes);
+app.use('/api/posts', adminOnly, postRoutes);
 
 app.post('/api/orders', async (req, res) => {
     console.log("--- Պատվեր ստացվեց, սկսում եմ մշակումը ---");
