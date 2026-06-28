@@ -31,14 +31,42 @@ const Shop = () => {
     // Քո բեքենդի հասցեն՝ նկարները ճիշտ բեռնելու համար
     const BACKEND_URL = 'https://gratun-backend.onrender.com';
 
+    // 1. Սա մաքուր isAdmin ֆունկցիան է
     const isAdmin = () => {
         const token = localStorage.getItem('token');
         if (!token) return false;
         try {
             const decoded = jwtDecode(token);
+            // Համոզվիր, որ տոկենի մեջ կա role: 'admin'
             return decoded.role === 'admin';
         } catch (e) {
             return false;
+        }
+    };
+
+    // 2. handleSubmit-ը մնում է նույնը (դու արդեն ճիշտ էիր գրել այստեղ)
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const token = localStorage.getItem('token');
+        const formData = new FormData();
+        formData.append('title', state.formData.title);
+        formData.append('author', state.formData.author);
+        formData.append('price', state.formData.price);
+        formData.append('image', state.formData.image);
+
+        try {
+            // Հենց այստեղ էլ ուղարկում ենք header-ը
+            const res = await axios.post(`/api/books`, formData, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+            dispatch({ type: 'ADD_BOOK', payload: res.data });
+            dispatch({ type: 'RESET_FORM' });
+            toast.success('Գիրքը հաջողությամբ ավելացվեց');
+        } catch (error) {
+            toast.error(error.response?.data?.message || 'Սխալ գրքի ավելացման ժամանակ');
         }
     };
 
