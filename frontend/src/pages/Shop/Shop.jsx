@@ -70,8 +70,9 @@ const Shop = () => {
         try {
             const res = await axios.post(`/api/books`, formData, {
                 headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'multipart/form-data'
+                    'Authorization': `Bearer ${token}`
+                    // !!! ՀԵՌԱՑՐՈՒ 'Content-Type': 'multipart/form-data'-ը, 
+                    // axios-ը ինքն է այն ճիշտ դնում, երբ տեսնում է FormData
                 }
             });
             dispatch({ type: 'ADD_BOOK', payload: res.data });
@@ -79,6 +80,7 @@ const Shop = () => {
             toast.success('Գիրքը հաջողությամբ ավելացվեց');
         } catch (error) {
             console.error("FULL ERROR RESPONSE:", error.response?.data);
+            // Ավելացրու ավելի մանրամասն տեքստ
             toast.error(error.response?.data?.message || 'Սխալ գրքի ավելացման ժամանակ');
         }
     };
