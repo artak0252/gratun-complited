@@ -200,8 +200,9 @@ app.post('/api/login', async (req, res) => {
     }
 });
 
-app.use('/api/books', adminOnly, bookRoutes);
-app.use('/api/posts', adminOnly, postRoutes);
+// Փոխիր այսպես
+app.use('/api/books', bookRoutes);
+app.use('/api/posts', postRoutes);
 
 app.post('/api/orders', async (req, res) => {
     try {
