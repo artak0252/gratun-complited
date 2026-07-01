@@ -146,7 +146,7 @@
           align-items: center;
           gap: 14px;
           font-family: Georgia, 'Times New Roman', serif;
-          font-size: 26px;
+          font-size: 32px;
           font-weight: 700;
           letter-spacing: 0.5px;
           color: var(--color-accent);
@@ -185,7 +185,7 @@
 }
 
 .navLink {
-          font-size: 29px;
+          font-size: 20px;
           font-weight: 500;
           letter-spacing: 0.3px;
           color: var(--color-text);
