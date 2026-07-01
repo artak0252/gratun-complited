@@ -99,6 +99,17 @@
 
 
 /* Գլոբալ կարգավորումներ */
+
+h1,
+h2,
+.headerLogo {
+          font-family: 'Playfair Display', serif;
+}
+
+body,
+.navLink {
+          font-family: 'Montserrat', sans-serif;
+}
 .headerContainer {
           background-color: #ffffff;
           /* Մաքուր սպիտակ ֆոն */
