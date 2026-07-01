@@ -103,7 +103,8 @@
 h1,
 h2,
 .headerLogo {
-          font-family: 'Playfair Display', serif;
+          font-family: 'Playfair Display', serif, Arial, Helvetica, sans-serif;
+          
 }
 
 body,
