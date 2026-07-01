@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FiShoppingBag, FiMenu, FiX } from "react-icons/fi";
+import { VscAccount } from "react-icons/vsc";
 import styles from './Header.module.css';
 
 const Header = () => {
@@ -52,10 +53,10 @@ const Header = () => {
 
           {isLoggedIn ? (
             <button onClick={handleLogout} className={styles.navLink} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '21px' }}>
-              Դուրս գալ
+              <VscAccount />  ➡️
             </button>
           ) : (
-            <Link to="/login" className={styles.navLink} onClick={() => setIsOpen(false)}>Մուտք</Link>
+            <Link to="/login" className={styles.navLink} onClick={() => setIsOpen(false)}><VscAccount />   ⬅️</Link>
           )}
 
         </div>
