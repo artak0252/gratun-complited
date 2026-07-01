@@ -102,10 +102,28 @@
 
 /* ===== Header.module.css ===== */
 
+/* ===== Header.module.css =====
+   Design tokens (warm library palette) — defined on .headerContainer
+   and inherited by all children via CSS custom property cascade.
+   --color-bg:      #F1ECE3  warm cream background
+   --color-text:    #3A322C  dark brown-gray (primary text)
+   --color-accent:  #6B3245  deep plum/wine (brand accent)
+   --color-accent-light: #8A4E63  lighter plum (hover states)
+   --color-cta:     #D6A73B  muted gold (buttons / CTA)
+   --color-border:  #DCD5C8  soft warm divider
+*/
+
 .headerContainer {
+          --color-bg: #F1ECE3;
+          --color-text: #3A322C;
+          --color-accent: #6B3245;
+          --color-accent-light: #8A4E63;
+          --color-cta: #D6A73B;
+          --color-border: #DCD5C8;
+
           width: 100%;
-          background-color: #ffffff;
-          border-bottom: 1px solid #f0f0f0;
+          background-color: var(--color-bg);
+          border-bottom: 1px solid var(--color-border);
           padding: 18px 40px;
           box-sizing: border-box;
 }
@@ -117,26 +135,31 @@
           margin: 0 auto;
 }
 
-/* ===== Logo ===== */
+/* ===== Logo =====
+   Vertical accent bar + serif wordmark, no boxed border
+   (a full rectangle around the logo read as an unfinished
+   placeholder in the screenshots, so it's dropped here). */
 
 .headerLogo a {
           display: flex;
           align-items: center;
-          gap: 8px;
-          font-size: 24px;
+          gap: 14px;
+          font-family: Georgia, 'Times New Roman', serif;
+          font-size: 26px;
           font-weight: 700;
-          color: #3a3a3a;
+          letter-spacing: 0.5px;
+          color: var(--color-accent);
           text-decoration: none;
           white-space: nowrap;
 }
 
 .headerLogo a::before {
           content: "";
-          width: 36px;
-          height: 36px;
-          background-color: #f4b969;
-          border-radius: 6px;
+          width: 3px;
+          height: 30px;
+          background-color: var(--color-accent);
           display: inline-block;
+          border-radius: 2px;
 }
 
 /* ===== Right side wrapper (nav + icons) ===== */
@@ -164,14 +187,14 @@
           font-size: 18px;
           font-weight: 500;
           letter-spacing: 0.3px;
-          color: #3a3a3a;
+          color: var(--color-text);
           text-decoration: none;
           white-space: nowrap;
           transition: color 0.2s ease;
 }
 
 .navLink:hover {
-          color: #f4b969;
+          color: var(--color-accent);
 }
 
 /* ===== Cart icon ===== */
@@ -183,23 +206,25 @@
           justify-content: center;
           width: 40px;
           height: 40px;
-          border: 1.5px solid #3a3a3a;
-          border-radius: 6px;
-          color: #3a3a3a;
+          border: 1.5px solid var(--color-accent);
+          border-radius: 8px;
+          color: var(--color-accent);
           text-decoration: none;
           font-size: 19px;
+          transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-.cartIcon::after {
-          content: attr(data-count);
+.cartIcon:hover {
+          background-color: var(--color-accent);
+          color: #ffffff;
 }
 
 .cartBadge {
           position: absolute;
           top: -8px;
           right: -8px;
-          background-color: #3a3a3a;
-          color: #ffffff;
+          background-color: var(--color-cta);
+          color: var(--color-text);
           font-size: 10px;
           font-weight: 700;
           width: 18px;
@@ -210,15 +235,20 @@
           justify-content: center;
 }
 
-/* ===== Account icon (optional, to match screenshot) ===== */
+/* ===== Account icon ===== */
 
 .accountIcon {
           display: flex;
           align-items: center;
           justify-content: center;
           font-size: 22px;
-          color: #3a3a3a;
+          color: var(--color-accent);
           text-decoration: none;
+          transition: color 0.2s ease;
+}
+
+.accountIcon:hover {
+          color: var(--color-accent-light);
 }
 
 /* ===== Mobile menu toggle button ===== */
@@ -228,7 +258,7 @@
           background: none;
           border: none;
           font-size: 28px;
-          color: #3a3a3a;
+          color: var(--color-accent);
           cursor: pointer;
           padding: 4px;
 }
@@ -275,9 +305,9 @@
                     flex-direction: column;
                     align-items: flex-start;
                     gap: 0;
-                    background-color: #ffffff;
-                    border-top: 1px solid #f0f0f0;
-                    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.06);
+                    background-color: var(--color-bg);
+                    border-top: 1px solid var(--color-border);
+                    box-shadow: 0 8px 16px rgba(58, 50, 44, 0.08);
 
                     max-height: 0;
                     overflow: hidden;
@@ -295,7 +325,7 @@
           .navLink {
                     width: 100%;
                     padding: 14px 24px;
-                    border-bottom: 1px solid #f5f5f5;
+                    border-bottom: 1px solid var(--color-border);
                     font-size: 16px;
           }
 
@@ -312,12 +342,12 @@
           }
 
           .headerLogo a {
-                    font-size: 18px;
+                    font-size: 19px;
+                    gap: 10px;
           }
 
           .headerLogo a::before {
-                    width: 28px;
-                    height: 28px;
+                    height: 22px;
           }
 
           .cartIcon,
