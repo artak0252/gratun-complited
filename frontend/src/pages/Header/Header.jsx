@@ -52,16 +52,14 @@ const Header = () => {
             <FiShoppingBag />
 
           </Link>
-
-          {isLoggedIn ? (
-            <button onClick={handleLogout} className={styles.cartIcon} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '21px' }}>
-              <VscAccount />  <IoIosLogOut />
-            </button>
-          ) : (
-              <Link to="/login" className={styles.cartIcon} onClick={() => setIsOpen(false)}><VscAccount />   <CiLogout /></Link>
-          )}
-
         </div>
+        {isLoggedIn ? (
+          <button onClick={handleLogout} className={styles.cartIcon} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '21px' }}>
+            <VscAccount />  <IoIosLogOut />
+          </button>
+        ) : (
+          <Link to="/login" className={styles.cartIcon} onClick={() => setIsOpen(false)}><VscAccount />   <CiLogout /></Link>
+        )}
       </div>
     </header>
   );
