@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Noto+Sans+Armenian:wght@400;500;600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap');
-
+/*
 .headerContainer {
           background: #e0e0db;
           padding: 20px 40px;
@@ -27,7 +27,7 @@
           transition: 0.3s;
 }
 
-/* --- Աջ կողմի միավորված խումբ --- */
+
 .headerRight {
           display: flex;
           align-items: center;
@@ -63,7 +63,7 @@
           align-items: center;
 }
 
-/* --- Ռեսպոնսիվություն --- */
+
 @media (max-width: 768px) {
           .menuToggle {
                     display: block;
@@ -89,6 +89,116 @@
 
           .headerRight {
                     gap: 15px;
-                    /* Ավելի մոտիկ կլինեն իրար փոքր էկրանին */
+                   
+          }
+}
+
+*/
+
+/* Օգտագործում ենք գլոբալ փոփոխականներ հեշտ կառավարման համար */
+:root {
+          --bg-color: #121212;
+          --text-color: #F5F5F5;
+          --accent-color: #DAA520;
+          /* Ոսկեգույն */
+          --transition: all 0.3s ease;
+}
+
+.headerContainer {
+          background-color: var(--bg-color);
+          padding: 1.5rem 5%;
+          position: sticky;
+          top: 0;
+          z-index: 1000;
+          border-bottom: 1px solid rgba(218, 165, 32, 0.2);
+}
+
+.headerTop {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          max-width: 1400px;
+          margin: 0 auto;
+}
+
+.headerLogo a {
+          font-family: 'Playfair Display', serif;
+          /* Նրբագեղ սերիֆային տառատեսակ */
+          font-size: 2rem;
+          color: var(--accent-color);
+          text-decoration: none;
+          font-weight: bold;
+          letter-spacing: 2px;
+}
+
+.headerRight {
+          display: flex;
+          align-items: center;
+          gap: 2rem;
+}
+
+.headerMenu {
+          display: flex;
+          gap: 1.5rem;
+}
+
+.navLink {
+          color: var(--text-color);
+          text-decoration: none;
+          font-size: 1.1rem;
+          transition: var(--transition);
+}
+
+.navLink:hover {
+          color: var(--accent-color);
+}
+
+.cartIcon {
+          color: var(--text-color);
+          font-size: 1.5rem;
+          transition: var(--transition);
+}
+
+.cartIcon:hover {
+          color: var(--accent-color);
+}
+
+/* Մենյուի կոճակը (բջջայինի համար) */
+.menuToggle {
+          display: none;
+          background: none;
+          border: none;
+          color: var(--text-color);
+          font-size: 2rem;
+          cursor: pointer;
+}
+
+/* ՌԵՍՊՈՆՍԻՎՈՒԹՅՈՒՆ (Mobile-First) */
+@media (max-width: 768px) {
+          .menuToggle {
+                    display: block;
+          }
+
+          .headerMenu {
+                    position: fixed;
+                    top: 80px;
+                    right: -100%;
+                    /* Սկզբում թաքնված է */
+                    width: 100%;
+                    height: calc(100vh - 80px);
+                    background-color: var(--bg-color);
+                    flex-direction: column;
+                    align-items: center;
+                    padding-top: 50px;
+                    transition: var(--transition);
+          }
+
+          .headerMenu.active {
+                    right: 0;
+          }
+
+          .navLink {
+                    font-size: 1.5rem;
+                    padding: 1rem;
           }
 }
