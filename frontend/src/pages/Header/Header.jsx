@@ -47,6 +47,13 @@ const Header = () => {
 
           <Link to="/cart" aria-label="Զամբյուղ" className={styles.cartIcon}>
             <FiShoppingBag />
+            {isLoggedIn ? (
+              <button onClick={handleLogout} className={styles.navLink} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '21px' }}>
+                Դուրս գալ
+              </button>
+            ) : (
+              <Link to="/login" className={styles.navLink} onClick={() => setIsOpen(false)}>Մուտք</Link>
+            )}
           </Link>
         </div>
       </div>
