@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { FiShoppingBag, FiMenu, FiX } from "react-icons/fi";
 import { VscAccount } from "react-icons/vsc";
 import styles from './Header.module.css';
+import { CiLogout } from "react-icons/ci";
+import { IoIosLogOut } from "react-icons/io";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -32,14 +34,14 @@ const Header = () => {
             <Link to="/blog" className={styles.navLink} onClick={() => setIsOpen(false)}>Բլոգ</Link>
             <Link to="/contact" className={styles.navLink} onClick={() => setIsOpen(false)}>Հետադարձ կապ</Link>
             <Link to="/about" className={styles.navLink} onClick={() => setIsOpen(false)}>Մեր մասին</Link>
-
-            {isLoggedIn ? (
+            {/* Սա հին լոգիկան է */}
+            {/* {isLoggedIn ? (
               <button onClick={handleLogout} className={styles.navLink} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '21px' }}>
                 Դուրս գալ
               </button>
             ) : (
               <Link to="/login" className={styles.navLink} onClick={() => setIsOpen(false)}>Մուտք</Link>
-            )}
+            )} */}
           </nav>
 
           <button className={styles.menuToggle} onClick={() => setIsOpen(!isOpen)}>
@@ -53,10 +55,10 @@ const Header = () => {
 
           {isLoggedIn ? (
             <button onClick={handleLogout} className={styles.navLink} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '21px' }}>
-              <VscAccount />  ➡️
+              <VscAccount />  <IoIosLogOut />
             </button>
           ) : (
-            <Link to="/login" className={styles.navLink} onClick={() => setIsOpen(false)}><VscAccount />   ⬅️</Link>
+              <Link to="/login" className={styles.navLink} onClick={() => setIsOpen(false)}><VscAccount />   <CiLogout /></Link>
           )}
 
         </div>
