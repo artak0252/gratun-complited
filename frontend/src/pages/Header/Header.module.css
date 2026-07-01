@@ -105,12 +105,14 @@
 }
 
 .headerContainer {
-          background-color: var(--bg-color);
-          padding: 1.5rem 5%;
+          /* Ավելի խորը, պրեմիում մուգ ֆոն */
+          background-color: #0a0a0a;
+          padding: 1.2rem 5%;
           position: sticky;
           top: 0;
           z-index: 1000;
-          border-bottom: 1px solid rgba(218, 165, 32, 0.2);
+          /* Նուրբ ոսկեգույն եզրագիծ ներքևից՝ որակը ընդգծելու համար */
+          border-bottom: 1px solid #2a2a2a;
 }
 
 .headerTop {
@@ -123,44 +125,42 @@
 
 .headerLogo a {
           font-family: 'Playfair Display', serif;
-          /* Նրբագեղ սերիֆային տառատեսակ */
-          font-size: 2rem;
-          color: var(--accent-color);
+          font-size: 1.8rem;
+          color: #c5a059;
+          /* Ավելի հանգիստ, ազնիվ ոսկեգույն */
           text-decoration: none;
-          font-weight: bold;
-          letter-spacing: 2px;
+          letter-spacing: 1px;
+          transition: 0.3s;
 }
 
-.headerRight {
-          display: flex;
-          align-items: center;
-          gap: 2rem;
-}
-
-.headerMenu {
-          display: flex;
-          gap: 1.5rem;
+.headerLogo a:hover {
+          color: #ffffff;
 }
 
 .navLink {
-          color: var(--text-color);
+          color: #e0e0e0;
+          /* Մի փոքր բաց սպիտակ՝ աչքին հաճելի ընթերցանության համար */
           text-decoration: none;
-          font-size: 1.1rem;
-          transition: var(--transition);
+          font-size: 1rem;
+          font-weight: 500;
+          transition: 0.3s;
+          margin-left: 25px;
 }
 
 .navLink:hover {
-          color: var(--accent-color);
+          color: #c5a059;
+          /* Հովերի ժամանակ դառնում է ոսկեգույն */
 }
 
 .cartIcon {
-          color: var(--text-color);
-          font-size: 1.5rem;
-          transition: var(--transition);
+          color: #c5a059;
+          font-size: 1.4rem;
+          margin-left: 25px;
+          transition: 0.3s;
 }
 
 .cartIcon:hover {
-          color: var(--accent-color);
+          color: #ffffff;
 }
 
 /* Մենյուի կոճակը (բջջայինի համար) */
