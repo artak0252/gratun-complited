@@ -163,6 +163,10 @@
           border-radius: 2px;
 }
 
+.headerLogo a:hover{
+          color: var(--color-accent);
+}
+
 /* ===== Right side wrapper (nav + icons) ===== */
 /* Fills the remaining space after the logo, so the nav (flex:1 below)
    ends up visually centered in the header */
