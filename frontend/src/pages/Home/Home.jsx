@@ -5,10 +5,10 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import styles from './Home.module.css';
-
 import SlideOne from './SlideOne';
 import SlideTwo from './SlideTwo';
 import SlideThree from './SlideThree';
+import RecommendedBooks from '../RecommendedBooks/RecommendedBooks';
 
 const Home = () => {
   return (
@@ -23,6 +23,8 @@ const Home = () => {
         <SwiperSlide><SlideTwo/></SwiperSlide>
         <SwiperSlide><SlideThree/></SwiperSlide>
       </Swiper>
+
+      <RecommendedBooks />
   </>
   );
 };
