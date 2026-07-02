@@ -17,6 +17,7 @@
    --color-border: #DCD5C8;
 
    width: 100%;
+   height: 600px;
    background: var(--color-bg);
    border-bottom: 5px solid white;
    box-sizing: border-box;
