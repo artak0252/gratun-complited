@@ -23,11 +23,12 @@
 }
 
 .contentWrapper {
-   max-width: 1400px;
+   max-width: 1200px;
    margin: 0 auto;
    display: flex;
    align-items: flex-start;
-   gap: 48px;
+   justify-content: center;
+   gap: 56px;
 }
 
 .sectionHeader {
@@ -43,6 +44,7 @@
    color: var(--color-accent);
    margin: 0 0 14px 0;
    line-height: 1.2;
+   text-shadow: 0 3px 8px rgba(107, 50, 69, 0.18);
 }
 
 .sectionSubtitle {
@@ -54,8 +56,7 @@
 }
 
 .booksRow {
-   flex: 1;
-   min-width: 0;
+   flex: 0 0 auto;
    display: grid;
    grid-template-columns: repeat(3, minmax(0, 200px));
    justify-content: start;
@@ -64,19 +65,20 @@
 
 .bookCard {
    background-color: #ffffff;
-   border: 1px solid var(--color-border);
+   border: 1px solid rgba(220, 213, 200, 0.5);
    border-radius: 10px;
    padding: 12px;
    display: flex;
    flex-direction: column;
    align-items: center;
    text-align: center;
-   transition: transform 0.2s ease, box-shadow 0.2s ease;
+   box-shadow: 0 8px 20px rgba(58, 50, 44, 0.1);
+   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .bookCard:hover {
-   transform: translateY(-4px);
-   box-shadow: 0 12px 24px rgba(58, 50, 44, 0.1);
+   transform: translateY(-6px);
+   box-shadow: 0 18px 32px rgba(58, 50, 44, 0.16);
 }
 
 .imageWrapper {
@@ -169,12 +171,13 @@
 @media (max-width: 768px) {
    .contentWrapper {
       flex-direction: column;
+      align-items: center;
       gap: 24px;
    }
 
    .sectionHeader {
       flex-basis: auto;
-      text-align: left;
+      text-align: center;
    }
 
    .sectionTitle {
