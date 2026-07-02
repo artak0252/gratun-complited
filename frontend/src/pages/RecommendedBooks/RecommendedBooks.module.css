@@ -18,7 +18,7 @@
 
    width: 100%;
    background: var(--color-bg);
-   border-bottom: 5px solid rgb(217, 214, 214);
+   border-bottom: white;
    box-sizing: border-box;
 }
 

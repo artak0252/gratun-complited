@@ -4,10 +4,7 @@ import { CartContext } from '../../context/CartContext';
 import toast from 'react-hot-toast';
 import styles from './RecommendedBooks.module.css';
 
-// Փուլ 1. Առանց backend փոփոխության՝ վերցնում ենք վերջին ավելացված
-// գրքերը՝ sort անելով _id-ով (MongoDB ObjectId-ն ինքնին կրում է
-// ստեղծման ամսաթիվը, այնպես որ սա միշտ ճիշտ է աշխատում, նույնիսկ
-// եթե Book մոդելը createdAt դաշտ չունի)։
+
 const RECOMMENDED_COUNT = 3;
 
 const RecommendedBooks = () => {
