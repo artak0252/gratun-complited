@@ -13,6 +13,7 @@ import RecommendedBooks from '../RecommendedBooks/RecommendedBooks';
 const Home = () => {
   return (
     <>
+      <RecommendedBooks />
       <Swiper
         autoplay={{ delay: 5000, disableOnInteraction: false }}
         pagination={{ clickable: true }}
@@ -24,7 +25,7 @@ const Home = () => {
         <SwiperSlide><SlideThree/></SwiperSlide>
       </Swiper>
 
-      <RecommendedBooks />
+    
   </>
   );
 };

@@ -22,33 +22,42 @@
           box-sizing: border-box;
 }
 
-.sectionHeader {
+.contentWrapper {
           max-width: 1400px;
-          margin: 0 auto 40px auto;
-          text-align: center;
+          margin: 0 auto;
+          display: flex;
+          align-items: flex-start;
+          gap: 48px;
+}
+
+.sectionHeader {
+          flex: 0 0 260px;
+          text-align: left;
+          padding-top: 8px;
 }
 
 .sectionTitle {
           font-family: Georgia, 'Times New Roman', serif;
-          font-size: 32px;
+          font-size: 30px;
           font-weight: 700;
           color: var(--color-accent);
-          margin: 0 0 8px 0;
+          margin: 0 0 10px 0;
+          line-height: 1.25;
 }
 
 .sectionSubtitle {
-          font-size: 16px;
+          font-size: 15px;
           color: var(--color-text);
           opacity: 0.75;
           margin: 0;
 }
 
 .booksRow {
-          max-width: 1400px;
-          margin: 0 auto;
+          flex: 1;
+          min-width: 0;
           display: grid;
-          grid-template-columns: repeat(4, 1fr);
-          gap: 28px;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 24px;
 }
 
 .bookCard {
@@ -137,20 +146,39 @@
                     padding: 48px 24px;
           }
 
+          .contentWrapper {
+                    gap: 32px;
+          }
+
+          .sectionHeader {
+                    flex-basis: 200px;
+          }
+
           .booksRow {
-                    grid-template-columns: repeat(3, 1fr);
+                    grid-template-columns: repeat(2, 1fr);
                     gap: 20px;
           }
 
           .sectionTitle {
-                    font-size: 26px;
+                    font-size: 24px;
           }
 }
 
 @media (max-width: 768px) {
+          .contentWrapper {
+                    flex-direction: column;
+                    gap: 24px;
+          }
+
+          .sectionHeader {
+                    flex-basis: auto;
+                    text-align: left;
+          }
+
           .booksRow {
                     grid-template-columns: repeat(2, 1fr);
                     gap: 16px;
+                    width: 100%;
           }
 }
 
