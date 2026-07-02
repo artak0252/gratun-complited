@@ -7,8 +7,8 @@
           margin: 0 auto;
           min-height: 80vh;
           gap: 30px;
-          background: rgb(241, 232, 232);
-          border-bottom: 5px solid rgb(217, 214, 214);
+          background: #e0e0db;
+          border-bottom: 5px solid white;
           line-height: 2;
 }
 
@@ -42,7 +42,7 @@
           margin-bottom: 20px;
           letter-spacing: -1px;
           line-height: 1.4;
-          
+
 
 }
 

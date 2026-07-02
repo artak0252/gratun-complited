@@ -9,7 +9,7 @@
 */
 
 .recommendedSection {
-   --color-bg: #F1ECE3;
+   --color-bg: #e0e0db;
    --color-text: #3A322C;
    --color-accent: #6B3245;
    --color-accent-light: #8A4E63;
@@ -17,7 +17,7 @@
    --color-border: #DCD5C8;
 
    width: 100%;
-   background: rgb(241, 232, 232);
+   background: var(--color-bg);
    border-bottom: 5px solid rgb(217, 214, 214);
    box-sizing: border-box;
 }

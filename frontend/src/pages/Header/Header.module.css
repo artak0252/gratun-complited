@@ -124,7 +124,7 @@
 
    width: 100%;
    background: rgb(241, 232, 232);
-   border-bottom: 5px solid rgb(217, 214, 214);
+   border-bottom: 5px solid white;
    padding: 18px 40px;
    box-sizing: border-box;
 }
