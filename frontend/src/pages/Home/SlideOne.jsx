@@ -26,7 +26,7 @@ const SlideOne = () => (
                                         alt="Գրքերի հավաքածու"
                                         className={styles.mainBookImg}
                               />
-                    </div> *
+                    </div> 
           </div>
 );
 export default SlideOne;

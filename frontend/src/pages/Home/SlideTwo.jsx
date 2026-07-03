@@ -24,7 +24,7 @@ const SlideTwo = () => (
                                               alt="Գրքերի հավաքածու"
                                               className={styles.mainBookImg}
                                     />
-                          </div> *
+                          </div> 
                 </div>
 );
 export default SlideTwo;

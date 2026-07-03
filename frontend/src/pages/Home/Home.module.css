@@ -1,3 +1,14 @@
+/* Swiper's own classes (.swiper, .swiper-wrapper, .swiper-slide) are global,
+   not part of this CSS module — they have no background by default, so on
+   wide screens the dark body background (#3e3c39, set in index.css) shows
+   through around the centered 1400px-wide .heroContainer. Matching their
+   background to the hero's own background fixes that. */
+:global(.swiper),
+:global(.swiper-wrapper),
+:global(.swiper-slide) {
+          background-color: #e0e0db;
+}
+
 .heroContainer {
           display: flex;
           align-items: center;
