@@ -10,6 +10,10 @@
           background: #e0e0db;
           border-bottom: 5px solid white;
           line-height: 2;
+          width: 100%;
+          height: auto;
+          overflow-x: hidden;
+          box-sizing: border-box;
 }
 
 .heroContent {
@@ -22,28 +26,24 @@
 .badge {
           display: inline-block;
           color: #d35400;
-          font-family: "Playwrite AU VIC Guides", cursive;
-          font-weight: 400;
+          font-family: "Playwrite AU VIC Guides", "Noto Sans Armenian", cursive, sans-serif;
+          font-weight: 700;
           font-style: normal;
           font-size: 13px;
-          font-weight: 700;
           text-transform: uppercase;
           letter-spacing: 2px;
           margin-bottom: 20px;
 }
 
 .heroTitle {
-          font-family: "Playwrite AU VIC Guides", cursive;
+          font-family: "Playwrite AU VIC Guides", "Noto Sans Armenian", cursive, sans-serif;
           font-weight: 400;
           font-style: normal;
           font-size: 50px;
-          line-height: 1.1;
           color: #525252;
           margin-bottom: 20px;
           letter-spacing: -1px;
           line-height: 1.4;
-
-
 }
 
 .highlight {
@@ -54,16 +54,14 @@
 }
 
 .heroDesc {
-          font-family: sans-serif;
+          font-family: "Playwrite AU VIC Guides", "Noto Sans Armenian", cursive, sans-serif;
+          font-weight: 400;
+          font-style: normal;
           font-size: 18px;
           color: #4a4a4a;
           line-height: 1.6;
           margin-bottom: 30px;
           max-width: 500px;
-          font-weight: bolder;
-          font-family: "Playwrite AU VIC Guides", cursive;
-          font-weight: 400;
-          font-style: normal;
 }
 
 .ctaButton {
@@ -98,20 +96,13 @@
           pointer-events: none;
 }
 
-.heroContainer {
-          width: 100%;
-          height: auto;
-          background: #e0e0db;
-          border-bottom: 5px solid white;
-          overflow-x: hidden;
-}
-
 @media (max-width: 768px) {
           .heroContainer {
                     flex-direction: column;
                     text-align: center;
                     padding: 20px;
                     overflow: hidden;
+                    min-height: auto;
           }
 
           .heroTitle {
@@ -124,5 +115,6 @@
 
           .mainBookImg {
                     max-width: 300px;
+                    width: 100%;
           }
 }
