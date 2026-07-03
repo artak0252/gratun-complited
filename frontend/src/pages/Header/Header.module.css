@@ -1,15 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Noto+Sans+Armenian:wght@400;500;600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap');
-/* ===== Header.module.css =====
-   Design tokens (warm library palette) — defined on .headerContainer
-   and inherited by all children via CSS custom property cascade.
-   --color-bg:      #F1ECE3  warm cream background
-   --color-text:    #3A322C  dark brown-gray (primary text)
-   --color-accent:  #6B3245  deep plum/wine (brand accent)
-   --color-accent-light: #8A4E63  lighter plum (hover states)
-   --color-cta:     #D6A73B  muted gold (buttons / CTA)
-   --color-border:  #DCD5C8  soft warm divider
-*/
+
 /* ===== Header.module.css =====
    Design tokens (warm library palette) — defined on .headerContainer
    and inherited by all children via CSS custom property cascade.
@@ -42,6 +33,7 @@
    position: relative;
    display: flex;
    align-items: center;
+   gap: 28px;
    max-width: 1400px;
    margin: 0 auto;
 }
@@ -182,6 +174,7 @@
 
 .menuToggle {
    display: none;
+   margin-left: auto;
    background: none;
    border: none;
    font-size: 28px;
