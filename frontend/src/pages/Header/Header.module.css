@@ -10,6 +10,16 @@
    --color-cta:     #D6A73B  muted gold (buttons / CTA)
    --color-border:  #DCD5C8  soft warm divider
 */
+/* ===== Header.module.css =====
+   Design tokens (warm library palette) — defined on .headerContainer
+   and inherited by all children via CSS custom property cascade.
+   --color-bg:      #F1ECE3  warm cream background
+   --color-text:    #3A322C  dark brown-gray (primary text)
+   --color-accent:  #6B3245  deep plum/wine (brand accent)
+   --color-accent-light: #8A4E63  lighter plum (hover states)
+   --color-cta:     #D6A73B  muted gold (buttons / CTA)
+   --color-border:  #DCD5C8  soft warm divider
+*/
 
 .headerContainer {
    --color-bg: #F1ECE3;
@@ -71,7 +81,7 @@
    display: flex;
    align-items: center;
    flex: 1;
-   gap: 32px;
+   gap: 20px;
 }
 
 /* ===== Navigation ===== */
@@ -134,6 +144,38 @@
    display: flex;
    align-items: center;
    justify-content: center;
+}
+
+/* ===== Account / login-logout icon group ===== */
+
+.accountAction {
+   display: flex;
+   align-items: center;
+   gap: 6px;
+   height: 40px;
+   padding: 0 12px;
+   border: 1.5px solid var(--color-accent);
+   border-radius: 8px;
+   color: var(--color-accent);
+   background: none;
+   text-decoration: none;
+   font-size: 18px;
+   line-height: 1;
+   cursor: pointer;
+   transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.accountAction:hover {
+   background-color: var(--color-accent);
+   color: #ffffff;
+}
+
+.accountAction svg {
+   display: block;
+}
+
+.accountAction svg:last-child {
+   font-size: 0.85em;
 }
 
 /* ===== Mobile menu toggle button ===== */
@@ -238,6 +280,13 @@
       width: 34px;
       height: 34px;
       font-size: 16px;
+   }
+
+   .accountAction {
+      height: 34px;
+      padding: 0 8px;
+      font-size: 15px;
+      gap: 4px;
    }
 
    .headerRight {
