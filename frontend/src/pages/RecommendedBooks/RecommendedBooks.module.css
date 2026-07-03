@@ -20,6 +20,7 @@
    background-color: var(--color-bg);
    padding: 56px 40px;
    box-sizing: border-box;
+   border-bottom: 5px solid white;
 }
 
 .contentWrapper {

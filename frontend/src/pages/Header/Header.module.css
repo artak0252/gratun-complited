@@ -18,13 +18,13 @@
    --color-accent: #6B3245;
    --color-accent-light: #8A4E63;
    --color-cta: #D6A73B;
-   --color-border: #DCD5C8;
+   --color-border: white;
 
    position: relative;
    z-index: 1000;
    width: 100%;
    background-color: var(--color-bg);
-   border-bottom: 1px solid var(--color-border);
+   border-bottom: 5px solid var(--color-border);
    padding: 18px 40px;
    box-sizing: border-box;
 }
