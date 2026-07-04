@@ -28,8 +28,7 @@ const Shop = () => {
     const [state, dispatch] = useReducer(shopReducer, initialState);
     const { addToCart } = useContext(CartContext);
 
-    // Քո բեքենդի հասցեն՝ նկարները ճիշտ բեռնելու համար
-    const BACKEND_URL = 'https://gratun-backend.onrender.com';
+
 
     // 1. Սա մաքուր isAdmin ֆունկցիան է
     const isAdmin = () => {

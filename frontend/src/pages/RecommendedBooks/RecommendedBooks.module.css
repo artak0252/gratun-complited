@@ -24,7 +24,7 @@
 }
 
 .contentWrapper {
-   max-width: 1200px;
+   max-width: 1450px;
    margin: 0 auto;
    display: flex;
    align-items: flex-start;
@@ -60,7 +60,7 @@
 .booksRow {
    flex: 0 0 auto;
    display: grid;
-   grid-template-columns: repeat(3, minmax(0, 270px));
+   grid-template-columns: repeat(3, minmax(0, 340px));
    justify-content: start;
    gap: 28px;
 }
