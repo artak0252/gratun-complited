@@ -34,6 +34,12 @@ app.use(cors({
 app.use(helmet({
     crossOriginResourcePolicy: { policy: 'cross-origin' },
     crossOriginEmbedderPolicy: false,
+    contentSecurityPolicy: {
+        directives: {
+            ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+            "img-src": ["'self'", "data:", "https://ik.imagekit.io"],
+        },
+    },
 }));
 
 app.use(express.json());
