@@ -1,3 +1,4 @@
+
 // import 'dotenv/config';
 // import dotenv from 'dotenv';
 // import express from 'express';
@@ -12,8 +13,6 @@
 // import bookRoutes from './routes/bookRoutes.js';
 // import postRoutes from './routes/postRoutes.js';
 // import { adminOnly } from './middleware/adminMiddleware.js';
-
-
 
 // const __filename = fileURLToPath(import.meta.url);
 // const __dirname = path.dirname(__filename);
@@ -31,10 +30,9 @@
 // app.use(express.json());
 // app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// // Brevo-ի կարգավորումներ
 // const transporter = nodemailer.createTransport({
 //     host: 'smtp-relay.brevo.com',
-//     port: 2525, // Փորձիր այս պորտը
+//     port: 2525,
 //     auth: {
 //         user: process.env.EMAIL_USER,
 //         pass: process.env.EMAIL_PASS
@@ -44,7 +42,7 @@
 // const connectDB = async () => {
 //     try {
 //         await mongoose.connect(process.env.MONGO_URI);
-//         console.log('MongoDB միացված է հաջողությամբ... 🌱');
+//         console.log('MongoDB միացված է հաջողությամբ...');
 //     } catch (error) {
 //         console.error('Բազայի միացման սխալ:', error.message);
 //         process.exit(1);
@@ -54,27 +52,20 @@
 
 // app.post('/api/login', async (req, res) => {
 //     const { username, password } = req.body;
-
 //     try {
-//         // 1. Ադմինի ստուգում .env-ով
 //         if (username === process.env.ADMIN_USERNAME && password === process.env.ADMIN_PASSWORD) {
 //             const token = jwt.sign({ role: 'admin' }, process.env.JWT_SECRET, { expiresIn: '1h' });
 //             return res.json({ token, message: 'Մուտքը հաջողված է' });
 //         }
-
-//         // 2. Բազայի օգտատիրոջ ստուգում
 //         const user = await User.findOne({ username });
 //         if (!user) return res.status(401).json({ message: 'Սխալ մուտքանուն' });
 
-//         // Եթե բազայում գաղտնաբառը հեշավորված չէ, ստուգում ենք ուղիղ (plain text)
-//         // Բայց ցանկալի է բազայում ունենալ հեշավորված տարբերակը
 //         const isMatch = user.password.startsWith('$2b$')
 //             ? await bcrypt.compare(password, user.password)
 //             : (password === user.password);
 
 //         if (!isMatch) return res.status(401).json({ message: 'Սխալ գաղտնաբառ' });
 
-//         // Փոխիր այս տողը (մոտավորապես 67-րդ տողում)
 //         const token = jwt.sign({ id: user._id, role: 'admin' }, process.env.JWT_SECRET, { expiresIn: '1h' });
 //         res.json({ token, message: 'Մուտքը հաջողված է' });
 //     } catch (error) {
@@ -82,35 +73,23 @@
 //     }
 // });
 
-// app.use('/api/books', adminOnly, bookRoutes);
-// app.use('/api/posts', adminOnly, postRoutes);
+// // Փոխիր այսպես
+// app.use('/api/books', bookRoutes);
+// app.use('/api/posts', postRoutes);
 
 // app.post('/api/orders', async (req, res) => {
-//     console.log("--- Պատվեր ստացվեց, սկսում եմ մշակումը ---");
 //     try {
 //         const { name, phone, address, cartItems, total } = req.body;
 //         const orderDetails = cartItems.map(item => `- ${item.title} | ${item.quantity} հատ | ${item.price} ֏`).join('\n');
-
 //         const mailOptions = {
-//             from: "safaryanartak81@gmail.com", // Օգտագործում ենք էլփոստը որպես ուղարկող
+//             from: "safaryanartak81@gmail.com",
 //             to: "safaryanartak81@gmail.com",
 //             subject: "Նոր պատվեր!",
 //             text: `Հաճախորդ՝ ${name}\nՀեռախոս՝ ${phone}\nՀասցե՝ ${address}\nԸնդհանուր՝ ${total} ֏\n\nՊատվերներ՝\n${orderDetails}`
 //         };
-
-//         console.log("Փորձում եմ ուղարկել նամակ Brevo-ի միջոցով...");
-
-//         transporter.sendMail(mailOptions, (error, info) => {
-//             if (error) {
-//                 console.error("!!! SMTP ERROR (Brevo):", error);
-//             } else {
-//                 console.log("!!! EMAIL SENT SUCCESSFULLY (Brevo) - ID:", info.messageId);
-//             }
-//         });
-
+//         transporter.sendMail(mailOptions);
 //         res.status(200).json({ message: 'Պատվերն ընդունված է!' });
 //     } catch (error) {
-//         console.error("!!! ORDER CATCH ERROR:", error);
 //         res.status(500).json({ message: "Սխալ պատվերի ժամանակ" });
 //     }
 // });
@@ -123,7 +102,7 @@
 // }
 
 // app.listen(PORT, () => {
-//     console.log(`Սերվերը պտտվում է ${PORT} պորտի վրա... 🚀`);
+//     console.log(`Սերվերը պտտվում է ${PORT} պորտի վրա...`);
 // });
 
 import 'dotenv/config';
@@ -193,10 +172,34 @@ app.post('/api/login', async (req, res) => {
 
         if (!isMatch) return res.status(401).json({ message: 'Սխալ գաղտնաբառ' });
 
-        const token = jwt.sign({ id: user._id, role: 'admin' }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        // Կարևոր. token-ի role-ը վերցնում ենք user-ի իրական role-ից, ոչ թե hardcoded 'admin'
+        const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
         res.json({ token, message: 'Մուտքը հաջողված է' });
     } catch (error) {
         res.status(500).json({ message: 'Սերվերի սխալ' });
+    }
+});
+
+// Գրանցման route (Register.jsx-ը սպասում է սրան)
+app.post('/api/register', async (req, res) => {
+    const { username, email, password } = req.body;
+    try {
+        if (!username || !email || !password) {
+            return res.status(400).json({ message: 'Լրացրու բոլոր դաշտերը' });
+        }
+
+        const existingUser = await User.findOne({ $or: [{ username }, { email }] });
+        if (existingUser) {
+            return res.status(409).json({ message: 'Այս օգտանունով կամ էլ. փոստով օգտատեր արդեն կա' });
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const newUser = new User({ username, email, password: hashedPassword });
+        await newUser.save();
+
+        res.status(201).json({ message: 'Գրանցումը հաջողվեց' });
+    } catch (error) {
+        res.status(500).json({ message: 'Սերվերի սխալ գրանցման ժամանակ' });
     }
 });
 
