@@ -47,3 +47,43 @@
           text-align: justify;
 }
 
+/* Planşet */
+@media (max-width: 900px) {
+          .singlePostContainer {
+                    padding: 60px 8%;
+          }
+
+          .fullPostImg {
+                    height: 320px;
+          }
+
+          .fullPostTitle {
+                    font-size: 34px;
+          }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+          .singlePostContainer {
+                    padding: 40px 6%;
+          }
+
+          .fullPostImg {
+                    height: 220px;
+                    border-radius: 16px;
+          }
+
+          .fullPostTitle {
+                    font-size: 26px;
+                    margin: 15px 0;
+          }
+
+          .fullPostContent {
+                    font-size: 16px;
+                    text-align: left;
+          }
+
+          .backBtn {
+                    margin-bottom: 25px;
+          }
+}

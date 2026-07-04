@@ -164,3 +164,48 @@
 /* ------------- */
 /* SinglePost.module.css */
 
+/* Planşet */
+@media (max-width: 900px) {
+          .blogContainer {
+                    padding: 50px 6%;
+          }
+
+          .postsGrid {
+                    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                    gap: 25px;
+          }
+
+          .adminFormContainer {
+                    padding: 25px;
+          }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+          .blogContainer {
+                    padding: 35px 5%;
+          }
+
+          .postsGrid {
+                    grid-template-columns: 1fr;
+                    gap: 20px;
+          }
+
+          .postCard {
+                    padding: 18px;
+          }
+
+          .postCard img {
+                    height: 200px;
+          }
+
+          .searchInput {
+                    padding: 12px 20px;
+                    font-size: 14px;
+          }
+
+          .publishBtn {
+                    width: 100%;
+                    text-align: center;
+          }
+}

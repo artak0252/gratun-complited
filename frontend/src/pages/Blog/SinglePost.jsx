@@ -55,6 +55,7 @@ const SinglePost = () => {
             <article className={styles.fullPost}>
                 <div className={styles.fullPostHeader}>
                     <img
+                        className={styles.fullPostImg}
                         src={post.image.startsWith('http') ? post.image : `https://ik.imagekit.io/hmtd5pr9d/${post.image}`}
                         alt={post.title}
                         onError={(e) => {

@@ -73,43 +73,21 @@
           /* Այստեղ կարող ես գրել ցանկացած ոճ, որը կազդի միայն այս կոմպոնենտի վրա */
 }
 
-/* CategoryFilter.module.css */
-.categoryFilterContainer {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 15px;
-          padding: 10px;
-}
+/* Mobile - ֆիլտրերի կենտրոնացում և չափերի կրճատում */
+@media (max-width: 480px) {
+          .categoryFilterContainer {
+                    margin: 20px auto;
+                    gap: 10px;
+                    padding: 10px;
+          }
 
-.categoryItem {
-          display: flex;
-          flex-direction: column;
-}
+          .categoryBtn {
+                    padding: 8px 16px;
+                    font-size: 14px;
+          }
 
-.categoryBtn {
-          padding: 8px 16px;
-          border-radius: 20px;
-          border: 1px solid #ccc;
-          cursor: pointer;
-          background: #fff;
-}
-
-.activeCategoryBtn {
-          background-color: #007bff !important;
-          color: white !important;
-          border-color: #007bff !important;
-}
-
-.subCategoryGroup {
-          display: flex;
-          gap: 5px;
-          margin-top: 5px;
-}
-
-.subCategoryBtn {
-          padding: 4px 10px;
-          font-size: 0.8rem;
-          border-radius: 15px;
-          border: 1px solid #ddd;
-          background: #f9f9f9;
+          .subCategoryBtn {
+                    padding: 4px 10px;
+                    font-size: 11px;
+          }
 }
