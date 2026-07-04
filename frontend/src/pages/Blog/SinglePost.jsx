@@ -3,14 +3,12 @@ import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import styles from './SinglePost.module.css';
 
-// Սահմանում ենք սկզբնական վիճակը
 const initialState = {
     post: null,
     loading: true,
     error: null
 };
 
-// Ռեդյուսեր ֆունկցիան
 const postReducer = (state, action) => {
     switch (action.type) {
         case 'FETCH_START':
@@ -29,7 +27,6 @@ const SinglePost = () => {
     const [state, dispatch] = useReducer(postReducer, initialState);
     const { post, loading, error } = state;
 
-    // Օգտագործում ենք հարաբերական հասցե՝ առանց բեքենդի դոմենի
     const API_URL = '/api';
 
     useEffect(() => {
@@ -53,15 +50,16 @@ const SinglePost = () => {
             <Link to="/blog" className={styles.backBtn}>← Հետ դեպի օրագիր</Link>
 
             <article className={styles.fullPost}>
-                <div className={styles.fullPostHeader}>
-                    <img
-                        className={styles.fullPostImg}
-                        src={post.image.startsWith('http') ? post.image : `https://ik.imagekit.io/hmtd5pr9d/${post.image}`}
-                        alt={post.title}
-                        onError={(e) => {
-                            e.target.src = "https://via.placeholder.com/150"; // Այլընտրանքային նկար, եթե հղումը սխալ է
-                        }}
-                    />
+                <img
+                    className={styles.fullPostImg}
+                    src={post.image.startsWith('http') ? post.image : `https://ik.imagekit.io/hmtd5pr9d/${post.image}`}
+                    alt={post.title}
+                    onError={(e) => {
+                        e.target.src = "https://via.placeholder.com/150";
+                    }}
+                />
+
+                <div className={styles.fullPostBody}>
                     <div className={styles.fullPostMeta}>
                         <span className={styles.postCategory}>{post.category}</span>
                         <span className={styles.postDate}>
@@ -69,10 +67,10 @@ const SinglePost = () => {
                         </span>
                     </div>
                     <h1 className={styles.fullPostTitle}>{post.title}</h1>
-                </div>
 
-                <div className={styles.fullPostContent}>
-                    <p style={{ whiteSpace: 'pre-wrap' }}>{post.content}</p>
+                    <div className={styles.fullPostContent}>
+                        <p style={{ whiteSpace: 'pre-wrap' }}>{post.content}</p>
+                    </div>
                 </div>
             </article>
         </div>

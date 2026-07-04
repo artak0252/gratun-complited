@@ -1,6 +1,5 @@
 .singlePostContainer {
-          padding: 80px 20%;
-          /* Շատ ավելի նեղ՝ ընթերցանության համար հարմար */
+          padding: 70px 8%;
           background: #ffffff;
           min-height: 100vh;
 }
@@ -11,61 +10,97 @@
           color: #8e44ad;
           text-decoration: none;
           font-weight: 600;
+          font-family: 'Noto Sans Armenian', 'Poppins', sans-serif;
 }
 
-.fullPostHeader {
-          text-align: center;
-          margin-bottom: 50px;
+.fullPost {
+          display: flex;
+          flex-direction: row;
+          align-items: flex-start;
+          gap: 60px;
+          max-width: 1200px;
+          margin: 0 auto;
 }
 
 .fullPostImg {
-          width: 100%;
-          height: 450px;
+          width: 400px;
+          height: 520px;
+          flex-shrink: 0;
           object-fit: cover;
           border-radius: 24px;
-          margin-bottom: 30px;
+          position: sticky;
+          top: 100px;
 }
 
-.fullPostTitle {
-          font-family: 'Playfair Display', serif;
-          font-size: 48px;
-          color: #1a1a1a;
-          margin: 20px 0;
+.fullPostBody {
+          flex: 1;
+          min-width: 0;
 }
 
 .fullPostMeta {
           color: #888;
-          font-size: 14px;
+          font-size: 13px;
           text-transform: uppercase;
           letter-spacing: 1px;
+          font-family: 'Noto Sans Armenian', 'Poppins', sans-serif;
+          display: flex;
+          gap: 15px;
+}
+
+.fullPostTitle {
+          font-family: 'Noto Serif Armenian', 'Playfair Display', serif;
+          font-size: 42px;
+          font-weight: 600;
+          color: #1a1a1a;
+          margin: 15px 0 30px 0;
+          line-height: 1.25;
 }
 
 .fullPostContent {
-          font-size: 18px;
-          line-height: 1.8;
+          font-family: 'Noto Sans Armenian', 'Poppins', sans-serif;
+          font-size: 17px;
+          line-height: 1.9;
           color: #333;
-          text-align: justify;
+          text-align: left;
 }
 
 /* Planşet */
 @media (max-width: 900px) {
           .singlePostContainer {
-                    padding: 60px 8%;
+                    padding: 50px 6%;
+          }
+
+          .fullPost {
+                    gap: 35px;
           }
 
           .fullPostImg {
-                    height: 320px;
+                    width: 280px;
+                    height: 400px;
+                    position: static;
           }
 
           .fullPostTitle {
-                    font-size: 34px;
+                    font-size: 32px;
           }
 }
 
-/* Mobile */
+/* Mobile - նկարը վերևում, նյութը՝ ներքևում */
+@media (max-width: 700px) {
+          .fullPost {
+                    flex-direction: column;
+          }
+
+          .fullPostImg {
+                    width: 100%;
+                    height: 260px;
+                    position: static;
+          }
+}
+
 @media (max-width: 480px) {
           .singlePostContainer {
-                    padding: 40px 6%;
+                    padding: 35px 5%;
           }
 
           .fullPostImg {
@@ -75,12 +110,11 @@
 
           .fullPostTitle {
                     font-size: 26px;
-                    margin: 15px 0;
+                    margin: 12px 0 20px 0;
           }
 
           .fullPostContent {
                     font-size: 16px;
-                    text-align: left;
           }
 
           .backBtn {
