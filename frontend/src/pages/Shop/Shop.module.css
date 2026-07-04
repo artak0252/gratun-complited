@@ -105,9 +105,15 @@
 .bookCard img {
    width: 100%;
    height: 350px;
-   object-fit: cover;
+   object-fit: contain;
+   /* cover-ի փոխարեն */
+   background-color: #f1f5f9;
+   /* միասնական մոխրագույն ֆոն */
    border-radius: 16px;
    margin-bottom: 20px;
+   padding: 12px;
+   /* նուրբ բացատ նկարի շուրջ */
+   box-sizing: border-box;
 }
 
 .bookCard h3 {
