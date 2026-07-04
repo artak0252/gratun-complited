@@ -39,6 +39,11 @@ const RecommendedBooks = () => {
                                         <div className={styles.sectionHeader}>
                                                   <h2 className={styles.sectionTitle}>Առաջարկվող գրքեր</h2>
                                                   <p className={styles.sectionSubtitle}>Մեր վերջին ավելացրած գրքերը</p>
+                                                  <p className={styles.sectionDescription}>
+                                                            Ուշադիր ընտրված վերնագրեր՝ դասական և ժամանակակից հեղինակներից,
+                                                            որոնք արժանի են Ձեր գրադարակի տեղ ունենալ։ Նոր գրքեր ավելացվում են
+                                                            պարբերաբար, այցելեք հաճախ։
+                                                  </p>
                                         </div>
 
                                         <div className={styles.booksRow}>

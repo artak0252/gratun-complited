@@ -18,7 +18,7 @@
 
    width: 100%;
    background-color: var(--color-bg);
-   padding: 56px 40px;
+   padding: 36px 40px;
    box-sizing: border-box;
    border-bottom: 5px solid white;
 }
@@ -40,10 +40,10 @@
 
 .sectionTitle {
    font-family: Georgia, 'Times New Roman', serif;
-   font-size: 50px;
+   font-size: 38px;
    font-weight: 700;
    color: var(--color-accent);
-   margin: 0 0 16px 0;
+   margin: 0 0 14px 0;
    line-height: 1.2;
    text-shadow: 0 3px 8px rgba(107, 50, 69, 0.18);
 }
@@ -52,11 +52,18 @@
    font-size: 19px;
    color: var(--color-text);
    opacity: 0.8;
-   margin: 0;
+   margin: 0 0 16px 0;
    line-height: 1.5;
    text-shadow: 0 1px 3px rgba(58, 50, 44, 0.1);
 }
 
+.sectionDescription {
+   font-size: 15px;
+   color: var(--color-text);
+   opacity: 0.75;
+   line-height: 1.6;
+   margin: 0;
+}
 .booksRow {
    flex: 0 0 auto;
    display: grid;
@@ -87,7 +94,7 @@
 
 .imageWrapper {
    width: 100%;
-   aspect-ratio: 2 / 3;
+   aspect-ratio: 3 / 4;
    overflow: hidden;
    border-radius: 8px;
    margin-bottom: 12px;
