@@ -30,23 +30,25 @@
 
 .postsGrid {
           display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-          gap: 40px;
+          grid-template-columns: 1fr;
+          gap: 30px;
 }
 
 .postCard {
           background: white;
-          padding: 25px;
+          padding: 20px;
           border-radius: 24px;
           border: 1px solid #f5f5f5;
           transition: 0.4s;
           position: relative;
           display: flex;
-          flex-direction: column;
+          flex-direction: row;
+          align-items: stretch;
+          gap: 30px;
 }
 
 .postCard:hover {
-          transform: translateY(-10px);
+          transform: translateY(-6px);
           box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
 }
 
@@ -57,7 +59,6 @@
           border-radius: 12px;
           font-size: 16px;
           resize: none;
-          /* Սա է հենց արգելում շարժել */
           height: 120px;
           font-family: inherit;
 }
@@ -73,7 +74,6 @@
           cursor: pointer;
           transition: all 0.3s ease;
           width: fit-content;
-          /* Կոճակը կլինի ոչ թե լայն, այլ իր տեքստի չափով */
           margin-top: 10px;
 }
 
@@ -105,12 +105,19 @@
           box-shadow: 0 0 0 3px rgba(142, 68, 173, 0.1);
 }
 
-.postCard img {
-          width: 100%;
-          height: 250px;
+.postImg {
+          width: 260px;
+          height: 220px;
+          flex-shrink: 0;
           object-fit: cover;
           border-radius: 16px;
-          margin-bottom: 20px;
+}
+
+.postContent {
+          display: flex;
+          flex-direction: column;
+          flex: 1;
+          padding: 6px 0;
 }
 
 .deletePostBtn {
@@ -124,8 +131,12 @@
 }
 
 .postCard h2 {
-          font-family: 'Playfair Display', serif;
-          margin-bottom: 10px;
+          font-family: 'Noto Serif Armenian', 'Playfair Display', serif;
+          font-size: 24px;
+          font-weight: 600;
+          color: #1a1a1a;
+          margin: 0 0 12px 0;
+          line-height: 1.3;
 }
 
 /* Թաքցնում ենք բուն տգեղ input-ը */
@@ -153,16 +164,23 @@
           background: #fdf5ff;
 }
 
+.postCard p {
+          font-family: 'Noto Sans Armenian', 'Poppins', sans-serif;
+          font-size: 15px;
+          line-height: 1.7;
+          color: #6b7280;
+          margin: 0 0 15px 0;
+          flex: 1;
+}
+
 .postCard a {
+          font-family: 'Noto Sans Armenian', 'Poppins', sans-serif;
           color: #8e44ad;
           font-weight: 600;
           text-decoration: none;
           margin-top: auto;
-          padding-top: 15px;
+          padding-top: 0;
 }
-
-/* ------------- */
-/* SinglePost.module.css */
 
 /* Planşet */
 @media (max-width: 900px) {
@@ -171,8 +189,12 @@
           }
 
           .postsGrid {
-                    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
                     gap: 25px;
+          }
+
+          .postImg {
+                    width: 200px;
+                    height: 180px;
           }
 
           .adminFormContainer {
@@ -187,15 +209,16 @@
           }
 
           .postsGrid {
-                    grid-template-columns: 1fr;
                     gap: 20px;
           }
 
           .postCard {
+                    flex-direction: column;
                     padding: 18px;
           }
 
-          .postCard img {
+          .postImg {
+                    width: 100%;
                     height: 200px;
           }
 
