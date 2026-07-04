@@ -1,5 +1,3 @@
-
-
 import express from 'express';
 import multer from 'multer';
 import ImageKit from 'imagekit';
@@ -8,7 +6,6 @@ import { adminOnly } from '../middleware/adminMiddleware.js';
 
 const router = express.Router();
 
-
 const imagekit = new ImageKit({
     publicKey: process.env.IMAGEKIT_PUBLIC_KEY || "fallback_key",
     privateKey: process.env.IMAGEKIT_PRIVATE_KEY || "fallback_key",
@@ -16,7 +13,20 @@ const imagekit = new ImageKit({
 });
 
 // Multer (memoryStorage-ը կարևոր է, որպեսզի ֆայլը չպահվի սերվերի վրա)
-const upload = multer({ storage: multer.memoryStorage() });
+// Սահմանափակում ենք միայն նկարներով և առավելագույնը 5ՄԲ, որպեսզի admin token-ի leak-ի դեպքում էլ
+// չկարողանան վնասակար կամ չափազանց մեծ ֆայլեր վերբեռնել
+const upload = multer({
+    storage: multer.memoryStorage(),
+    limits: { fileSize: 5 * 1024 * 1024 }, // 5ՄԲ
+    fileFilter: (req, file, cb) => {
+        const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+        if (allowedTypes.includes(file.mimetype)) {
+            cb(null, true);
+        } else {
+            cb(new Error('Թույլատրվում են միայն նկարներ (jpg, png, webp, gif)'));
+        }
+    }
+});
 
 // 1. GET: Ստանալ բոլոր գրքերը
 router.get('/', async (req, res) => {
@@ -29,7 +39,14 @@ router.get('/', async (req, res) => {
 });
 
 // 2. POST: Ավելացնել նոր գիրք
-router.post('/', adminOnly, upload.single('image'), async (req, res) => {
+router.post('/', adminOnly, (req, res, next) => {
+    upload.single('image')(req, res, (err) => {
+        if (err) {
+            return res.status(400).json({ message: err.message || 'Ֆայլի վերբեռնման սխալ' });
+        }
+        next();
+    });
+}, async (req, res) => {
     try {
         const { title, author, price } = req.body;
         if (!title || !author || !price || !req.file) {
