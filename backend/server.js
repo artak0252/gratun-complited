@@ -1,4 +1,3 @@
-
 import 'dotenv/config';
 import dotenv from 'dotenv';
 import express from 'express';
@@ -14,6 +13,7 @@ import bookRoutes from './routes/bookRoutes.js';
 import postRoutes from './routes/postRoutes.js';
 import { adminOnly } from './middleware/adminMiddleware.js';
 import rateLimit from 'express-rate-limit';
+import helmet from 'helmet';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -26,6 +26,14 @@ app.use(cors({
     origin: ["https://gratun.am", "https://gratun-frontend.onrender.com"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true
+}));
+
+// Անվտանգության HTTP header-ներ (helmet)
+// crossOriginResourcePolicy-ը դնում ենք 'cross-origin', որպեսզի /uploads-ի նկարները
+// արգելափակված չլինեն frontend-ի այլ դոմենից բեռնելիս
+app.use(helmet({
+    crossOriginResourcePolicy: { policy: 'cross-origin' },
+    crossOriginEmbedderPolicy: false,
 }));
 
 app.use(express.json());
