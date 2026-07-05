@@ -1,14 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import axios from 'axios';
+import api from '../../api/axiosInstance';
+import { AuthContext } from '../../context/AuthContext';
 import styles from './Login.module.css';
 
 const Login = () => {
           const [credentials, setCredentials] = useState({ username: '', password: '' });
           const navigate = useNavigate();
-
-          // Օգտագործում ենք հարաբերական հասցե՝ /api/login
-          const API_URL = '/api';
+          const { refreshAuth } = useContext(AuthContext);
 
           const handleChange = (e) => {
                     const { name, value } = e.target;
@@ -18,9 +17,10 @@ const Login = () => {
           const handleLogin = async (e) => {
                     e.preventDefault();
                     try {
-                              // Հարաբերական հասցե
-                              const res = await axios.post(`${API_URL}/login`, credentials);
-                              localStorage.setItem('token', res.data.token);
+                              // Token-ն այլևս response body-ում չի գալիս. սերվերն ինքն է դնում
+                              // httpOnly cookie (withCredentials: true axiosInstance-ում)։
+                              await api.post('/login', credentials);
+                              await refreshAuth(); // թարմացնում ենք role-ը (admin/author) app-ի context-ում
                               alert('Մուտքը հաջողված է');
                               navigate('/blog');
                     } catch (err) {
