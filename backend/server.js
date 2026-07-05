@@ -9,6 +9,7 @@ import jwt from 'jsonwebtoken';
 import nodemailer from 'nodemailer';
 import bcrypt from 'bcrypt';
 import User from './models/User.js';
+import Book from './models/Book.js';
 import bookRoutes from './routes/bookRoutes.js';
 import postRoutes from './routes/postRoutes.js';
 import { adminOnly } from './middleware/adminMiddleware.js';
@@ -126,19 +127,63 @@ app.post('/api/register', authLimiter, async (req, res) => {
 app.use('/api/books', bookRoutes);
 app.use('/api/posts', postRoutes);
 
-app.post('/api/orders', async (req, res) => {
+// Պաշտպանություն spam/flood պատվերներից.
+// 15 րոպեում առավելագույնը 5 պատվեր մեկ IP-ից
+const orderLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 րոպե
+    max: 5,
+    message: { message: 'Չափազանց շատ պատվերներ են ուղարկվել։ Խնդրում ենք փորձել 15 րոպե անց։' },
+    standardHeaders: true,
+    legacyHeaders: false,
+});
+
+app.post('/api/orders', orderLimiter, async (req, res) => {
     try {
-        const { name, phone, address, cartItems, total } = req.body;
-        const orderDetails = cartItems.map(item => `- ${item.title} | ${item.quantity} հատ | ${item.price} ֏`).join('\n');
+        const { name, phone, address, cartItems } = req.body;
+
+        // Հիմնական validation. name/phone/address պարտադիր են, cartItems պիտի լինի ոչ դատարկ array
+        if (!name || !phone || !address) {
+            return res.status(400).json({ message: 'Լրացրու բոլոր դաշտերը' });
+        }
+        if (!Array.isArray(cartItems) || cartItems.length === 0) {
+            return res.status(400).json({ message: 'Զամբյուղը դատարկ է' });
+        }
+
+        // ԿԱՐԵՎՈՐ. գները երբեք չենք վերցնում client-ից, միշտ նոր ենք հանում DB-ից,
+        // որպեսզի ոչ ոք չկարողանա գները փոխել DevTools/ուղիղ API կանչով
+        const bookIds = cartItems.map(item => item._id);
+        const booksFromDb = await Book.find({ _id: { $in: bookIds } });
+
+        let total = 0;
+        const orderDetailsLines = [];
+
+        for (const item of cartItems) {
+            const dbBook = booksFromDb.find(b => b._id.toString() === item._id);
+            if (!dbBook) {
+                return res.status(400).json({ message: `Գիրքը (${item.title || item._id}) այլևս գոյություն չունի` });
+            }
+
+            const quantity = Number(item.quantity);
+            if (!Number.isInteger(quantity) || quantity <= 0 || quantity > 100) {
+                return res.status(400).json({ message: `Անվավեր քանակ գրքի համար՝ ${dbBook.title}` });
+            }
+
+            const lineTotal = dbBook.price * quantity;
+            total += lineTotal;
+            orderDetailsLines.push(`- ${dbBook.title} | ${quantity} հատ | ${dbBook.price} ֏ | ընդհանուր՝ ${lineTotal} ֏`);
+        }
+
+        const orderDetails = orderDetailsLines.join('\n');
         const mailOptions = {
             from: "safaryanartak81@gmail.com",
             to: "safaryanartak81@gmail.com",
             subject: "Նոր պատվեր!",
-            text: `Հաճախորդ՝ ${name}\nՀեռախոս՝ ${phone}\nՀասցե՝ ${address}\nԸնդհանուր՝ ${total} ֏\n\nՊատվերներ՝\n${orderDetails}`
+            text: `Հաճախորդ՝ ${name}\nՀեռախոս՝ ${phone}\nՀասցե՝ ${address}\nԸնդհանուր (հաշվարկված սերվերի կողմից)՝ ${total} ֏\n\nՊատվերներ՝\n${orderDetails}`
         };
-        transporter.sendMail(mailOptions);
-        res.status(200).json({ message: 'Պատվերն ընդունված է!' });
+        await transporter.sendMail(mailOptions);
+        res.status(200).json({ message: 'Պատվերն ընդունված է!', total });
     } catch (error) {
+        console.error('Պատվերի սխալ:', error.message);
         res.status(500).json({ message: "Սխալ պատվերի ժամանակ" });
     }
 });
