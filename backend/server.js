@@ -8,11 +8,13 @@ import { fileURLToPath } from 'url';
 import jwt from 'jsonwebtoken';
 import nodemailer from 'nodemailer';
 import bcrypt from 'bcrypt';
+import cookieParser from 'cookie-parser';
 import User from './models/User.js';
 import Book from './models/Book.js';
 import bookRoutes from './routes/bookRoutes.js';
 import postRoutes from './routes/postRoutes.js';
 import { adminOnly } from './middleware/adminMiddleware.js';
+import { checkAuth } from './middleware/checkAuth.js';
 import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
 
@@ -22,12 +24,42 @@ const __dirname = path.dirname(__filename);
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
+const isProd = process.env.NODE_ENV === 'production';
+
+// Render/Heroku և նման proxy-ների հետևում ենք, սա անհրաժեշտ է, որպեսզի
+// express-rate-limit-ը և secure cookie-ները ճիշտ տեսնեն իրական protocol/IP-ն
+app.set('trust proxy', 1);
 
 app.use(cors({
     origin: ["https://gratun.am", "https://gratun-frontend.onrender.com"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true
 }));
+
+app.use(cookieParser());
+
+// Cookie-ի կարգավորումները մեկ տեղում, որ login/logout-ը չտարբերվեն իրարից
+const COOKIE_NAME = 'token';
+const cookieOptions = {
+    httpOnly: true,          // JS-ը (հետևաբար և XSS-ը) չի կարող կարդալ token-ը
+    secure: isProd,          // production-ում միայն HTTPS-ով ուղարկվի
+    sameSite: isProd ? 'none' : 'lax', // cross-site-ը (gratun.am <-> render backend) պահանջում է 'none'
+    maxAge: 60 * 60 * 1000,  // 1 ժամ, նույնը ինչ JWT-ի expiresIn-ը
+    path: '/',
+};
+
+// Փոքր, բայց կարևոր CSRF պաշտպանություն.
+// Քանի որ cookie-ն այժմ ինքնաշխատ ուղարկվում է browser-ի կողմից,
+// state-փոփոխող (POST/PUT/DELETE) հարցումների համար պահանջում ենք custom header,
+// որը սովորական HTML ֆորմայի submit-ը (հնարավոր CSRF հարձակում) չի կարող դնել,
+// բայց մեր frontend-ի axios instance-ը միշտ դնում է։
+app.use((req, res, next) => {
+    const mutatingMethods = ['POST', 'PUT', 'DELETE', 'PATCH'];
+    if (mutatingMethods.includes(req.method) && req.headers['x-requested-with'] !== 'XMLHttpRequest') {
+        return res.status(403).json({ message: 'Հայցը մերժված է (անվավեր origin)' });
+    }
+    next();
+});
 
 // Անվտանգության HTTP header-ներ (helmet)
 // crossOriginResourcePolicy-ը դնում ենք 'cross-origin', որպեսզի /uploads-ի նկարները
@@ -78,26 +110,44 @@ const authLimiter = rateLimit({
 
 app.post('/api/login', authLimiter, async (req, res) => {
     const { username, password } = req.body;
+    // Երկու դեպքում էլ (username-ը գոյություն չունի, կամ password-ը սխալ է)
+    // վերադարձնում ենք ՆՈՒՅՆ հաղորդագրությունը, որպեսզի ոչ ոք չկարողանա
+    // հասկանալ՝ արդյոք տվյալ username-ը ընդհանրապես գոյություն ունի (user enumeration)
+    const invalidCredsMsg = { message: 'Սխալ օգտանուն կամ գաղտնաբառ' };
     try {
         if (username === process.env.ADMIN_USERNAME && password === process.env.ADMIN_PASSWORD) {
             const token = jwt.sign({ role: 'admin' }, process.env.JWT_SECRET, { expiresIn: '1h' });
-            return res.json({ token, message: 'Մուտքը հաջողված է' });
+            res.cookie(COOKIE_NAME, token, cookieOptions);
+            return res.json({ role: 'admin', message: 'Մուտքը հաջողված է' });
         }
         const user = await User.findOne({ username });
-        if (!user) return res.status(401).json({ message: 'Սխալ մուտքանուն' });
+        if (!user) return res.status(401).json(invalidCredsMsg);
 
         const isMatch = user.password.startsWith('$2b$')
             ? await bcrypt.compare(password, user.password)
             : (password === user.password);
 
-        if (!isMatch) return res.status(401).json({ message: 'Սխալ գաղտնաբառ' });
+        if (!isMatch) return res.status(401).json(invalidCredsMsg);
 
         // Կարևոր. token-ի role-ը վերցնում ենք user-ի իրական role-ից, ոչ թե hardcoded 'admin'
         const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
-        res.json({ token, message: 'Մուտքը հաջողված է' });
+        res.cookie(COOKIE_NAME, token, cookieOptions);
+        res.json({ role: user.role, message: 'Մուտքը հաջողված է' });
     } catch (error) {
         res.status(500).json({ message: 'Սերվերի սխալ' });
     }
+});
+
+// Frontend-ը սա կանչում է page load-ի ժամանակ, որպեսզի իմանա՝ արդյոք
+// օգտատերը արդեն մուտք գործած է (cookie-ն httpOnly է, JS-ը ուղիղ չի կարող կարդալ)
+app.get('/api/me', checkAuth, (req, res) => {
+    res.json({ role: req.user.role || null });
+});
+
+// Դուրս գալը՝ պարզապես մաքրում ենք cookie-ն
+app.post('/api/logout', (req, res) => {
+    res.clearCookie(COOKIE_NAME, { ...cookieOptions, maxAge: undefined });
+    res.json({ message: 'Դուրս եկաք' });
 });
 
 // Գրանցման route (Register.jsx-ը սպասում է սրան)
