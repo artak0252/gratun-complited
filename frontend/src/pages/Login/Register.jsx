@@ -29,7 +29,7 @@ const Register = () => {
                               <form onSubmit={handleRegister} className={styles.loginForm}>
                                         <input type="text" name="username" placeholder="Օգտանուն" onChange={handleChange} className={styles.loginInput} required />
                                         <input type="email" name="email" placeholder="Էլ. փոստ" onChange={handleChange} className={styles.loginInput} required />
-                                        <input type="password" name="password" placeholder="Գաղտնաբառ" onChange={handleChange} className={styles.loginInput} required />
+                                        <input type="password" name="password" placeholder="Գաղտնաբառ (նվազագույնը 8 նիշ)" onChange={handleChange} className={styles.loginInput} required minLength={8} />
                                         <button type="submit" className={styles.loginButton}>Գրանցվել</button>
                               </form>
                               <div style={{ marginTop: '20px', fontSize: '0.9rem' }}>
