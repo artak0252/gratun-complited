@@ -110,6 +110,14 @@ const authLimiter = rateLimit({
 
 app.post('/api/login', authLimiter, async (req, res) => {
     const { username, password } = req.body;
+
+    // ԿԱՐԵՎՈՐ. username/password-ը պարտադիր պիտի string լինեն, այլապես
+    // Mongo query object ({ "$ne": null } և նման բան) կարող է հասնել findOne-ին
+    // (NoSQL injection ռիսկ)
+    if (typeof username !== 'string' || typeof password !== 'string') {
+        return res.status(400).json({ message: 'Անվավեր տվյալներ' });
+    }
+
     // Երկու դեպքում էլ (username-ը գոյություն չունի, կամ password-ը սխալ է)
     // վերադարձնում ենք ՆՈՒՅՆ հաղորդագրությունը, որպեսզի ոչ ոք չկարողանա
     // հասկանալ՝ արդյոք տվյալ username-ը ընդհանրապես գոյություն ունի (user enumeration)
@@ -123,9 +131,9 @@ app.post('/api/login', authLimiter, async (req, res) => {
         const user = await User.findOne({ username });
         if (!user) return res.status(401).json(invalidCredsMsg);
 
-        const isMatch = user.password.startsWith('$2b$')
-            ? await bcrypt.compare(password, user.password)
-            : (password === user.password);
+        // ԿԱՐԵՎՈՐ. plaintext fallback-ը հեռացված է. բոլոր user-ները պիտի
+        // արդեն bcrypt-ով հեշավորված գաղտնաբառ ունենան (տես migrate-passwords.js)
+        const isMatch = await bcrypt.compare(password, user.password);
 
         if (!isMatch) return res.status(401).json(invalidCredsMsg);
 
@@ -156,6 +164,16 @@ app.post('/api/register', authLimiter, async (req, res) => {
     try {
         if (!username || !email || !password) {
             return res.status(400).json({ message: 'Լրացրու բոլոր դաշտերը' });
+        }
+
+        // ԿԱՐԵՎՈՐ. type ստուգում NoSQL injection-ից պաշտպանվելու համար
+        // (այլապես username/email/password կարող են լինել Mongo query object)
+        if (typeof username !== 'string' || typeof email !== 'string' || typeof password !== 'string') {
+            return res.status(400).json({ message: 'Անվավեր տվյալներ' });
+        }
+
+        if (password.length < 8) {
+            return res.status(400).json({ message: 'Գաղտնաբառը պետք է լինի առնվազն 8 նիշ' });
         }
 
         const existingUser = await User.findOne({ $or: [{ username }, { email }] });

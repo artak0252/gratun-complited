@@ -6,10 +6,12 @@ import { adminOnly } from '../middleware/adminMiddleware.js';
 
 const router = express.Router();
 
+// ԿԱՐԵՎՈՐ. fallback key-եր չկան միտումնավոր. եթե env փոփոխականները
+// բացակայում են, upload-ը պիտի հստակ ձախողվի, ոչ թե լուռ սխալ key-երով աշխատի
 const imagekit = new ImageKit({
-    publicKey: process.env.IMAGEKIT_PUBLIC_KEY || "fallback_key",
-    privateKey: process.env.IMAGEKIT_PRIVATE_KEY || "fallback_key",
-    urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT || "https://ik.imagekit.io/fallback"
+    publicKey: process.env.IMAGEKIT_PUBLIC_KEY,
+    privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
+    urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT
 });
 
 // Multer (memoryStorage-ը կարևոր է, որպեսզի ֆայլը չպահվի սերվերի վրա)
