@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { CartContext } from '../../context/CartContext';
 import toast from 'react-hot-toast';
+import api from '../../api/axiosInstance';
 import styles from './Cart.module.css';
 
 const Cart = () => {
@@ -20,29 +21,22 @@ const Cart = () => {
         setIsSubmitting(true);
 
         try {
-            // Օգտագործում ենք հարաբերական հասցե՝ /api/orders
-            const response = await fetch('/api/orders', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    ...formData,
-                    cartItems,
-                    total: totalPrice
-                }),
+            // Օգտագործում ենք ընդհանուր axios instance-ը (api), որը ավտոմատ
+            // ավելացնում է X-Requested-With header-ը, առանց որի backend-ի
+            // CSRF middleware-ը 403-ով մերժում է հարցումը
+            await api.post('/orders', {
+                ...formData,
+                cartItems,
+                total: totalPrice
             });
 
-            if (response.ok) {
-                toast.success('Պատվերն հաջողությամբ ուղարկվեց!');
-                clearCart();
-                setShowForm(false);
-            } else {
-                toast.error('Ինչ-որ բան սխալ գնաց, փորձեք նորից:');
-            }
+            toast.success('Պատվերն հաջողությամբ ուղարկվեց!');
+            clearCart();
+            setShowForm(false);
         } catch (error) {
-            console.error('Սխալ:', error);
-            toast.error('Սերվերը հասանելի չէ:');
+            console.error('Սխալ:', error?.response?.data || error.message);
+            const serverMsg = error?.response?.data?.message;
+            toast.error(serverMsg || 'Ինչ-որ բան սխալ գնաց, փորձեք նորից:');
         } finally {
             setIsSubmitting(false);
         }
