@@ -79,8 +79,128 @@
    border-color: #8e44ad;
    color: #8e44ad;
 }
+/* Ընտրացանկ ժանրի համար ադմինի ֆորմայում */
+.genreSelect {
+   padding: 12px 20px;
+   border: 1px solid #e2e8f0;
+   border-radius: 12px;
+   flex: 1;
+   min-width: 200px;
+   background: #fff;
+   color: #1a1a1a;
+   cursor: pointer;
+}
+
+/* Խանութի հիմնական layout՝ ժանրերի sidebar + գրքերի ցանց */
+.shopLayout {
+   display: flex;
+   align-items: flex-start;
+   gap: 40px;
+}
+
+/* Ժանրերի կողային վահանակ */
+.genreSidebar {
+   flex: 0 0 220px;
+   position: sticky;
+   top: 100px;
+   background: #ffffff;
+   border-radius: 20px;
+   padding: 25px 20px;
+   border: 1px solid #edf2f7;
+   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+}
+
+.genreSidebarTitle {
+   font-family: 'Playfair Display', serif;
+   font-size: 20px;
+   margin: 0 0 18px 0;
+   color: #1a1a1a;
+}
+
+.genreList {
+   list-style: none;
+   margin: 0;
+   padding: 0;
+   display: flex;
+   flex-direction: column;
+   gap: 6px;
+}
+
+.genreBtn {
+   width: 100%;
+   text-align: left;
+   background: none;
+   border: none;
+   padding: 10px 14px;
+   border-radius: 10px;
+   font-size: 15px;
+   color: #4a5568;
+   cursor: pointer;
+   transition: 0.25s;
+}
+
+.genreBtn:hover {
+   background: #f1f5f9;
+   color: #8e44ad;
+}
+
+.activeGenreBtn {
+   background: #8e44ad;
+   color: #fff !important;
+   font-weight: 600;
+}
+
+.activeGenreBtn:hover {
+   background: #6c3483;
+   color: #fff;
+}
+
+/* Գրքի քարտի վրայի ժանրի պիտակ */
+.genreTag {
+   display: inline-block;
+   align-self: flex-start;
+   font-size: 12px;
+   font-weight: 600;
+   color: #8e44ad;
+   background: #f3e8f8;
+   padding: 4px 10px;
+   border-radius: 20px;
+   margin-bottom: 10px;
+}
+
+.noResults {
+   grid-column: 1 / -1;
+   text-align: center;
+   color: #718096;
+   font-size: 16px;
+   padding: 40px 0;
+}
+
+/* Փոքր էկրանների վրա sidebar-ը դառնում է վերևի հորիզոնական ցանկ */
+@media (max-width: 768px) {
+   .shopLayout {
+      flex-direction: column;
+   }
+
+   .genreSidebar {
+      width: 100%;
+      position: static;
+      flex: none;
+   }
+
+   .genreList {
+      flex-direction: row;
+      flex-wrap: wrap;
+   }
+
+   .genreBtn {
+      width: auto;
+   }
+}
+
 /* Գրքերի ցանց */
 .booksGrid {
+   flex: 1;
    display: grid;
    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
    gap: 40px;
