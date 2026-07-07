@@ -24,7 +24,7 @@
 }
 
 .contentWrapper {
-   max-width: 1100px;
+   max-width: 1300px;
    margin: 0 auto;
    display: flex;
    flex-direction: column;
@@ -67,9 +67,10 @@
 .booksRow {
    flex: 0 0 auto;
    display: grid;
-   grid-template-columns: repeat(3, minmax(0, 200px));
+   grid-template-columns: repeat(5, minmax(0, 200px));
    justify-content: center;
    gap: 18px;
+   width: 100%;
 }
 
 .bookCard {
@@ -169,8 +170,8 @@
    }
 
    .booksRow {
-      grid-template-columns: repeat(3, minmax(0, 170px));
-      gap: 14px;
+      grid-template-columns: repeat(5, minmax(0, 150px));
+      gap: 12px;
    }
 }
 
@@ -180,9 +181,17 @@
    }
 
    .booksRow {
-      grid-template-columns: repeat(auto-fit, minmax(120px, 160px));
+      display: flex;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      justify-content: flex-start;
       gap: 12px;
-      width: 100%;
+      padding-bottom: 8px;
+      -webkit-overflow-scrolling: touch;
+   }
+
+   .bookCard {
+      flex: 0 0 130px;
    }
 }
 
@@ -191,12 +200,8 @@
       padding: 24px 16px;
    }
 
-   .booksRow {
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-   }
-
    .bookCard {
+      flex: 0 0 115px;
       padding: 8px;
    }
 
