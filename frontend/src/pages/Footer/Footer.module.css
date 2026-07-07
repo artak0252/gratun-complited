@@ -53,7 +53,7 @@
 }
 
 .footerSection p {
-          color: rgba(241, 236, 227, 0.8);
+          color: var(--color-cta);
           font-size: 14px;
           line-height: 1.7;
           margin: 0;
@@ -71,7 +71,7 @@
 }
 
 .footerSection a {
-          color: rgba(241, 236, 227, 0.85);
+          color: var(--color-cta);
           text-decoration: none;
           font-size: 14px;
           transition: color 0.2s ease, padding-left 0.2s ease;
