@@ -10,6 +10,7 @@
           justify-content: center;
           gap: 24px;
           font-family: 'Noto Sans Armenian', 'Montserrat', sans-serif;
+          border-bottom: 5px solid white;
 }
 
 .announcementText {
