@@ -1,55 +1,169 @@
+/* ===== Footer.module.css =====
+   Same warm-library palette as Header.module.css / RecommendedBooks.module.css:
+   --color-bg:      #F1ECE3  warm cream
+   --color-text:    #3A322C  dark brown-gray
+   --color-accent:  #6B3245  deep plum/wine (used here as footer background)
+   --color-cta:     #D6A73B  muted gold (headings / hover accents)
+*/
+
 .footer {
-          background: #E0DEDC;
-          color: black;
-          padding: 3rem 1rem 1rem;
-          margin-top: auto;
-          font-family: 'Courier New', Courier, monospace;
+          --color-bg: #F1ECE3;
+          --color-text: #3A322C;
+          --color-accent: #6B3245;
+          --color-cta: #D6A73B;
+
+          background-color: var(--color-accent);
+          color: var(--color-bg);
+          padding: 56px 40px 0;
+          font-family: 'Noto Sans Armenian', 'Montserrat', sans-serif;
+          box-sizing: border-box;
 }
 
 .footerContainer {
-          max-width: 1200px;
+          max-width: 1300px;
           margin: 0 auto;
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-          gap: 2rem;
-          margin-bottom: 2rem;
+          grid-template-columns: 1.4fr 1fr 1fr;
+          gap: 40px;
+          padding-bottom: 40px;
 }
 
 .footerSection h3,
 .footerSection h4 {
-          color: black;
-          margin-bottom: 1rem;
+          font-family: Georgia, 'Times New Roman', serif;
+          color: var(--color-cta);
+          font-size: 20px;
+          font-weight: 700;
+          margin: 0 0 18px 0;
+          position: relative;
+          padding-bottom: 10px;
+}
+
+.footerSection h3::after,
+.footerSection h4::after {
+          content: '';
+          position: absolute;
+          left: 0;
+          bottom: 0;
+          width: 34px;
+          height: 3px;
+          border-radius: 2px;
+          background-color: var(--color-cta);
+          opacity: 0.7;
+}
+
+.footerSection p {
+          color: rgba(241, 236, 227, 0.8);
+          font-size: 14px;
+          line-height: 1.7;
+          margin: 0;
+          max-width: 320px;
 }
 
 .footerSection ul {
           list-style: none;
           padding: 0;
+          margin: 0;
 }
 
 .footerSection ul li {
-          margin-bottom: 0.5rem;
+          margin-bottom: 10px;
 }
 
 .footerSection a {
-          color: black;
+          color: rgba(241, 236, 227, 0.85);
           text-decoration: none;
-          transition: color 0.3s;
+          font-size: 14px;
+          transition: color 0.2s ease, padding-left 0.2s ease;
 }
 
 .footerSection a:hover {
-          color: #fab1a0;
+          color: var(--color-cta);
+          padding-left: 4px;
 }
 
 .socialLinks {
           display: flex;
-          gap: 1rem;
-          font-size: 1.5rem;
+          gap: 12px;
+}
+
+.socialLinks a {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          background-color: rgba(241, 236, 227, 0.1);
+          color: var(--color-bg);
+          font-size: 18px;
+          transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.socialLinks a:hover {
+          background-color: var(--color-cta);
+          color: var(--color-accent);
+          transform: translateY(-3px);
 }
 
 .footerBottom {
           text-align: center;
-          border-top: 1px solid #636e72;
-          padding-top: 1rem;
-          font-size: 0.9rem;
-          color: #636e72;
+          border-top: 1px solid rgba(241, 236, 227, 0.15);
+          padding: 18px 0;
+          font-size: 13px;
+          color: rgba(241, 236, 227, 0.6);
+}
+
+.footerBottom p {
+          margin: 0;
+}
+
+/* =========================================================
+   RESPONSIVE BREAKPOINTS
+   ========================================================= */
+
+@media (max-width: 900px) {
+          .footer {
+                    padding: 48px 24px 0;
+          }
+
+          .footerContainer {
+                    grid-template-columns: 1fr 1fr;
+                    gap: 32px;
+          }
+
+          .footerSection:first-child {
+                    grid-column: 1 / -1;
+          }
+
+          .footerSection p {
+                    max-width: none;
+          }
+}
+
+@media (max-width: 560px) {
+          .footer {
+                    padding: 40px 20px 0;
+          }
+
+          .footerContainer {
+                    grid-template-columns: 1fr;
+                    gap: 28px;
+                    text-align: center;
+          }
+
+          .footerSection h3::after,
+          .footerSection h4::after {
+                    left: 50%;
+                    transform: translateX(-50%);
+          }
+
+          .footerSection p {
+                    max-width: none;
+                    margin: 0 auto;
+          }
+
+          .socialLinks {
+                    justify-content: center;
+          }
 }
