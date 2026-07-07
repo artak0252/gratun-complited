@@ -6,7 +6,7 @@
 :global(.swiper),
 :global(.swiper-wrapper),
 :global(.swiper-slide) {
-          background-color: #e0e0db;
+          background-color: #E4E8F0;
 }
 
 .heroContainer {
@@ -18,7 +18,7 @@
           margin: 0 auto;
           min-height: 80vh;
           gap: 30px;
-          background: #e0e0db;
+          background: #E4E8F0;
           border-bottom: 5px solid white;
           line-height: 2;
           width: 100%;
