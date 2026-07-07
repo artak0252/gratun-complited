@@ -15,6 +15,7 @@ import Register from './pages/Login/Register'; // Ավելացված Register է
 
 // Կոմպոնենտներ
 import Header from './pages/Header/Header';
+import AnnouncementBar from './pages/AnnouncementBar/AnnouncementBar';
 import Footer from './pages/Footer/Footer';
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
     <Router>
       <Toaster />
       <Header />
+      <AnnouncementBar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/blog" element={<Blog />} />
