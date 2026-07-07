@@ -12,7 +12,7 @@
           --color-accent: #6B3245;
           --color-cta: #D6A73B;
 
-          background-color: var(--color-accent);
+          background-color: var(--color-bg);
           color: var(--color-bg);
           padding: 56px 40px 0;
           font-family: 'Noto Sans Armenian', 'Montserrat', sans-serif;
