@@ -1,6 +1,6 @@
 import React, { useReducer, useEffect, useContext } from 'react';
-import axios from 'axios';
-import { jwtDecode } from 'jwt-decode';
+import api from '../../api/axiosInstance';
+import { AuthContext } from '../../context/AuthContext.jsx';
 import { CartContext } from '../../context/CartContext';
 import toast from 'react-hot-toast';
 import styles from './Shop.module.css';
@@ -27,23 +27,7 @@ function shopReducer(state, action) {
 const Shop = () => {
     const [state, dispatch] = useReducer(shopReducer, initialState);
     const { addToCart } = useContext(CartContext);
-
-
-
-    // 1. Սա մաքուր isAdmin ֆունկցիան է
-    const isAdmin = () => {
-        const token = localStorage.getItem('token');
-        if (!token) return false;
-        try {
-            const decoded = jwtDecode(token);
-            // Համոզվիր, որ տոկենի մեջ կա role: 'admin'
-            return decoded.role === 'admin';
-        } catch (e) {
-            return false;
-        }
-    };
-
-   
+    const { isAdmin } = useContext(AuthContext);
 
     const handleAddToCart = (book) => {
         addToCart(book);
@@ -51,14 +35,13 @@ const Shop = () => {
     };
 
     useEffect(() => {
-        axios.get(`/api/books`)
+        api.get('/books')
             .then(res => dispatch({ type: 'SET_BOOKS', payload: res.data }))
             .catch(err => console.error(err));
     }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const token = localStorage.getItem('token');
         const formData = new FormData();
 
         formData.append('title', state.formData.title);
@@ -67,30 +50,20 @@ const Shop = () => {
         formData.append('image', state.formData.image);
 
         try {
-            const res = await axios.post(`/api/books`, formData, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                    // !!! ՀԵՌԱՑՐՈՒ 'Content-Type': 'multipart/form-data'-ը, 
-                    // axios-ը ինքն է այն ճիշտ դնում, երբ տեսնում է FormData
-                }
-            });
+            const res = await api.post('/books', formData);
             dispatch({ type: 'ADD_BOOK', payload: res.data });
             dispatch({ type: 'RESET_FORM' });
             toast.success('Գիրքը հաջողությամբ ավելացվեց');
         } catch (error) {
             console.error("FULL ERROR RESPONSE:", error.response?.data);
-            // Ավելացրու ավելի մանրամասն տեքստ
             toast.error(error.response?.data?.message || 'Սխալ գրքի ավելացման ժամանակ');
         }
     };
 
     const handleDelete = async (id) => {
-        const token = localStorage.getItem('token');
         if (window.confirm('Վստա՞հ եք, որ ցանկանում եք ջնջել այս գիրքը։')) {
             try {
-                await axios.delete(`/api/books/${id}`, {
-                    headers: { 'Authorization': `Bearer ${token}` }
-                });
+                await api.delete(`/books/${id}`);
                 dispatch({ type: 'DELETE_BOOK', payload: id });
                 toast.success('Գիրքը ջնջվեց');
             } catch (error) {
@@ -108,7 +81,7 @@ const Shop = () => {
 
     return (
         <div className={styles.shopContainer}>
-            {isAdmin() && (
+            {isAdmin && (
                 <div className={styles.adminFormContainer}>
                     <h3>Ավելացնել Նոր Գիրք</h3>
                     <form onSubmit={handleSubmit}>
@@ -129,15 +102,15 @@ const Shop = () => {
             <div className={styles.booksGrid}>
                 {filteredBooks.map(book => (
                     <div key={book._id} className={styles.bookCard}>
-                        {isAdmin() && (
+                        {isAdmin && (
                             <button className={styles.deleteBtn} onClick={() => handleDelete(book._id)}>🗑️</button>
                         )}
-                    
+
                         <img
                             src={book.image.startsWith('http') ? book.image : `https://ik.imagekit.io/hmtd5pr9d/${book.image}`}
                             alt={book.title}
                             onError={(e) => {
-                                e.target.style.display = 'none'; // Եթե նկարը չկա, պարզապես թաքցրու այն
+                                e.target.style.display = 'none';
                             }}
                         />
                         <h3>{book.title}</h3>

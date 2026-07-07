@@ -1,9 +1,8 @@
-
-import React, { useReducer, useEffect, useState } from 'react';
+import React, { useReducer, useEffect, useState, useContext } from 'react';
 import { blogCategories } from './constants';
-import axios from 'axios';
+import api from '../../api/axiosInstance';
 import { Link } from 'react-router-dom';
-import { jwtDecode } from 'jwt-decode';
+import { AuthContext } from '../../context/AuthContext.jsx';
 import styles from './Blog.module.css';
 import CategoryFilter from './CategoryFilter';
 import adminStyles from './AdminFilter.module.css';
@@ -33,22 +32,12 @@ const Blog = () => {
     const [state, dispatch] = useReducer(blogReducer, initialState);
     const [isFormVisible, setIsFormVisible] = useState(false);
     const { posts, loading, formData, searchTerm, selectedCategory } = state;
-
-    // Օգտագործում ենք հարաբերական հասցե՝ առանց բեքենդի դոմենի, որպեսզի CORS չլինի
-    const API_URL = '/api';
-
-    const isAdmin = () => {
-        const token = localStorage.getItem('token');
-        if (!token) return false;
-        try {
-            return jwtDecode(token).role === 'admin';
-        } catch { return false; }
-    };
+    const { isAdmin } = useContext(AuthContext);
 
     useEffect(() => {
         const fetchPosts = async () => {
             try {
-                const res = await axios.get(`${API_URL}/posts`);
+                const res = await api.get('/posts');
                 dispatch({ type: 'FETCH_SUCCESS', payload: res.data });
             } catch (err) { dispatch({ type: 'SET_LOADING', payload: false }); }
         };
@@ -57,11 +46,8 @@ const Blog = () => {
 
     const handleDelete = async (id) => {
         if (!window.confirm('Ջնջե՞լ այս հոդվածը:')) return;
-        const token = localStorage.getItem('token');
         try {
-            await axios.delete(`${API_URL}/posts/${id}`, {
-                headers: { 'Authorization': `Bearer ${token}` }
-            });
+            await api.delete(`/posts/${id}`);
             dispatch({ type: 'DELETE_POST', payload: id });
             alert('Հոդվածը ջնջվեց');
         } catch (err) { alert('Մուտքը մերժված է'); }
@@ -69,17 +55,11 @@ const Blog = () => {
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
-        const token = localStorage.getItem('token');
         const data = new FormData();
         Object.keys(formData).forEach(key => data.append(key, formData[key]));
 
         try {
-            const res = await axios.post(`${API_URL}/posts`, data, {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'multipart/form-data'
-                }
-            });
+            const res = await api.post('/posts', data);
             dispatch({ type: 'ADD_POST', payload: res.data });
             setIsFormVisible(false);
             alert('Հոդվածը հաջողությամբ ավելացվեց!');
@@ -99,7 +79,7 @@ const Blog = () => {
 
     return (
         <div className={styles.blogContainer}>
-            {isAdmin() && (
+            {isAdmin && (
                 <div className={styles.adminSection}>
                     <button className={styles.publishBtn} style={{ marginBottom: '20px' }} onClick={() => setIsFormVisible(!isFormVisible)}>
                         {isFormVisible ? 'Փակել ֆորման' : '+ Նոր հոդված ավելացնել'}
@@ -133,7 +113,7 @@ const Blog = () => {
             <div className={styles.postsGrid}>
                 {filteredPosts.map(post => (
                     <article key={post._id} className={styles.postCard}>
-                        {isAdmin() && (
+                        {isAdmin && (
                             <button className={styles.deletePostBtn} onClick={() => handleDelete(post._id)}>🗑️</button>
                         )}
                         <img
@@ -141,7 +121,7 @@ const Blog = () => {
                             src={post.image.startsWith('http') ? post.image : `https://ik.imagekit.io/hmtd5pr9d/${post.image}`}
                             alt={post.title}
                             onError={(e) => {
-                                e.target.src = "https://via.placeholder.com/150"; // Այլընտրանքային նկար, եթե հղումը սխալ է
+                                e.target.src = "https://via.placeholder.com/150";
                             }}
                         />
                         <div className={styles.postContent}>
