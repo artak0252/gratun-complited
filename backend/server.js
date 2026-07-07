@@ -11,6 +11,7 @@ import bcrypt from 'bcrypt';
 import cookieParser from 'cookie-parser';
 import User from './models/User.js';
 import Book from './models/Book.js';
+import Order from './models/Order.js';
 import bookRoutes from './routes/bookRoutes.js';
 import postRoutes from './routes/postRoutes.js';
 import { adminOnly } from './middleware/adminMiddleware.js';
@@ -123,10 +124,16 @@ app.post('/api/login', authLimiter, async (req, res) => {
     // հասկանալ՝ արդյոք տվյալ username-ը ընդհանրապես գոյություն ունի (user enumeration)
     const invalidCredsMsg = { message: 'Սխալ օգտանուն կամ գաղտնաբառ' };
     try {
-        if (username === process.env.ADMIN_USERNAME && password === process.env.ADMIN_PASSWORD) {
-            const token = jwt.sign({ role: 'admin' }, process.env.JWT_SECRET, { expiresIn: '1h' });
-            res.cookie(COOKIE_NAME, token, cookieOptions);
-            return res.json({ role: 'admin', message: 'Մուտքը հաջողված է' });
+        // ԿԱՐԵՎՈՐ. admin username-ը plain է (գաղտնիք չէ), բայց password-ը
+        // այժմ պահվում է որպես bcrypt hash (ADMIN_PASSWORD_HASH), ոչ թե plaintext
+        if (username === process.env.ADMIN_USERNAME) {
+            const isAdminMatch = await bcrypt.compare(password, process.env.ADMIN_PASSWORD_HASH || '');
+            if (isAdminMatch) {
+                const token = jwt.sign({ role: 'admin' }, process.env.JWT_SECRET, { expiresIn: '1h' });
+                res.cookie(COOKIE_NAME, token, cookieOptions);
+                return res.json({ role: 'admin', message: 'Մուտքը հաջողված է' });
+            }
+            return res.status(401).json(invalidCredsMsg);
         }
         const user = await User.findOne({ username });
         if (!user) return res.status(401).json(invalidCredsMsg);
@@ -191,7 +198,6 @@ app.post('/api/register', authLimiter, async (req, res) => {
     }
 });
 
-// Փոխիր այսպես
 app.use('/api/books', bookRoutes);
 app.use('/api/posts', postRoutes);
 
@@ -224,6 +230,7 @@ app.post('/api/orders', orderLimiter, async (req, res) => {
 
         let total = 0;
         const orderDetailsLines = [];
+        const orderItems = [];
 
         for (const item of cartItems) {
             const dbBook = booksFromDb.find(b => b._id.toString() === item._id);
@@ -239,7 +246,23 @@ app.post('/api/orders', orderLimiter, async (req, res) => {
             const lineTotal = dbBook.price * quantity;
             total += lineTotal;
             orderDetailsLines.push(`- ${dbBook.title} | ${quantity} հատ | ${dbBook.price} ֏ | ընդհանուր՝ ${lineTotal} ֏`);
+            orderItems.push({
+                book: dbBook._id,
+                title: dbBook.title,
+                price: dbBook.price,
+                quantity
+            });
         }
+
+        // ԿԱՐԵՎՈՐ. պատվերը նախ պահվում է DB-ում, որպեսզի email-ի ցանկացած խնդիր
+        // (spam folder, SMTP timeout, սխալ credentials) պատվերը չկորցնի
+        const newOrder = await Order.create({
+            name,
+            phone,
+            address,
+            items: orderItems,
+            total
+        });
 
         const orderDetails = orderDetailsLines.join('\n');
         const mailOptions = {
@@ -248,8 +271,17 @@ app.post('/api/orders', orderLimiter, async (req, res) => {
             subject: "Նոր պատվեր!",
             text: `Հաճախորդ՝ ${name}\nՀեռախոս՝ ${phone}\nՀասցե՝ ${address}\nԸնդհանուր (հաշվարկված սերվերի կողմից)՝ ${total} ֏\n\nՊատվերներ՝\n${orderDetails}`
         };
-        await transporter.sendMail(mailOptions);
-        res.status(200).json({ message: 'Պատվերն ընդունված է!', total });
+
+        try {
+            await transporter.sendMail(mailOptions);
+            newOrder.emailSent = true;
+            await newOrder.save();
+        } catch (mailError) {
+            // Email-ը ձախողվեց, բայց պատվերն արդեն DB-ում է՝ ոչինչ չի կորչում
+            console.error('Email ուղարկելու սխալ (պատվերը պահված է DB-ում):', mailError.message);
+        }
+
+        res.status(200).json({ message: 'Պատվերն ընդունված է!', total, orderId: newOrder._id });
     } catch (error) {
         console.error('Պատվերի սխալ:', error.message);
         res.status(500).json({ message: "Սխալ պատվերի ժամանակ" });

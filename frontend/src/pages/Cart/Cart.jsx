@@ -21,9 +21,6 @@ const Cart = () => {
         setIsSubmitting(true);
 
         try {
-            // Օգտագործում ենք ընդհանուր axios instance-ը (api), որը ավտոմատ
-            // ավելացնում է X-Requested-With header-ը, առանց որի backend-ի
-            // CSRF middleware-ը 403-ով մերժում է հարցումը
             await api.post('/orders', {
                 ...formData,
                 cartItems,
