@@ -50,8 +50,8 @@ router.post('/', adminOnly, (req, res, next) => {
     });
 }, async (req, res) => {
     try {
-        const { title, author, price } = req.body;
-        if (!title || !author || !price || !req.file) {
+        const { title, author, price, genre } = req.body;
+        if (!title || !author || !price || !genre || !req.file) {
             return res.status(400).json({ message: 'Լրացրու բոլոր դաշտերը' });
         }
 
@@ -65,6 +65,7 @@ router.post('/', adminOnly, (req, res, next) => {
             title,
             author,
             price,
+            genre,
             image: uploadResponse.url // Պահում ենք ImageKit-ի ուղիղ հղումը
         });
 
