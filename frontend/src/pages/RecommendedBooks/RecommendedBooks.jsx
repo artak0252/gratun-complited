@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import styles from './RecommendedBooks.module.css';
 
 
-const RECOMMENDED_COUNT = 3;
+const RECOMMENDED_COUNT = 5;
 
 const RecommendedBooks = () => {
           const [books, setBooks] = useState([]);
