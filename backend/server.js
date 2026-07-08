@@ -32,7 +32,7 @@ const isProd = process.env.NODE_ENV === 'production';
 app.set('trust proxy', 1);
 
 app.use(cors({
-    origin: ["https://gratunhab.am", "https://www.gratunhab.am", "https://gratun-frontend.onrender.com"],
+    origin: ["https://gratunhub.am", "https://www.gratunhub.am", "https://gratun-frontend.onrender.com"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true
 }));
