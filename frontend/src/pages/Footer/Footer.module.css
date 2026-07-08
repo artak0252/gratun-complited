@@ -95,7 +95,7 @@
           height: 40px;
           border-radius: 50%;
           background-color: rgba(241, 236, 227, 0.1);
-          color: var(--color-bg);
+          color: var(--color-cta);
           font-size: 18px;
           transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
