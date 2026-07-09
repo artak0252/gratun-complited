@@ -1,11 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Poppins:wght@400;500;600;700&display=swap');
 
 .genreSection {
-          max-width: 1200px;
-          margin: 0 auto;
-          padding: 70px 8% 60px;
-          text-align: center;
+          width: 100%;
           background: #E4E8F0;
+          /* հիմա ողջ լայնությամբ լցվում է cream ֆոնով */
+          padding: 70px 0 60px;
+}
+
+.genreInner {
+          max-width: 1200px;
+          /* բովանդակությունը դեռ կենտրոնացած ու սահմանափակ է */
+          margin: 0 auto;
+          padding: 0 8%;
+          box-sizing: border-box;
+          text-align: center;
 }
 
 .genreSection h2 {
