@@ -46,23 +46,15 @@
 .headerLogo a {
    display: flex;
    align-items: center;
-   gap: 14px;
-   font-family: Georgia, 'Times New Roman', serif;
-   font-size: 26px;
-   font-weight: 700;
-   letter-spacing: 0.5px;
-   color: var(--color-accent);
    text-decoration: none;
    white-space: nowrap;
 }
 
-.headerLogo a::before {
-   content: "";
-   width: 3px;
-   height: 30px;
-   background-color: var(--color-accent);
-   display: inline-block;
-   border-radius: 2px;
+.logoImg {
+   height: 54px;
+   width: auto;
+   display: block;
+   object-fit: contain;
 }
 
 /* ===== Right side wrapper (nav + icons) ===== */
@@ -260,13 +252,8 @@
       padding: 14px 16px;
    }
 
-   .headerLogo a {
-      font-size: 19px;
-      gap: 10px;
-   }
-
-   .headerLogo a::before {
-      height: 22px;
+   .logoImg {
+      height: 40px;
    }
 
    .cartIcon {

@@ -6,6 +6,7 @@ import styles from './Header.module.css';
 import { CiLogout } from "react-icons/ci";
 import { IoIosLogOut } from "react-icons/io";
 import { AuthContext } from '../../context/AuthContext.jsx';
+import logo from '../../assets/my-logo.png';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,7 +22,9 @@ const Header = () => {
     <header className={styles.headerContainer}>
       <div className={styles.headerTop}>
         <div className={styles.headerLogo}>
-          <Link to="/">Գրատուն-Հաբ</Link>
+          <Link to="/">
+            <img src={logo} alt="Գրատուն" className={styles.logoImg} />
+          </Link>
         </div>
 
         <div className={styles.headerRight}>
