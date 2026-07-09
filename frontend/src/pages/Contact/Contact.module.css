@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Poppins:wght@400;500;600;700&display=swap');
+
 .contactContainer {
           max-width: 700px;
           margin: 80px auto;
@@ -6,9 +8,11 @@
           border-radius: 24px;
           box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
           text-align: center;
+          font-family: 'Noto Sans Armenian', 'Poppins', sans-serif;
 }
 
 .contactContainer h1 {
+          font-family: 'Playfair Display', 'Noto Sans Armenian', Georgia, serif;
           font-size: 2.8rem;
           color: #1a1a1a;
           margin-bottom: 20px;
@@ -16,6 +20,7 @@
 }
 
 .contactContainer>p {
+          font-family: 'Noto Sans Armenian', 'Poppins', sans-serif;
           font-size: 1.1rem;
           color: #666;
           line-height: 1.6;
@@ -31,17 +36,27 @@
           padding: 40px;
           border-radius: 20px;
           display: inline-block;
-          /* Տուփը փոքրացրինք, որ կենտրոնում լինի */
           text-align: left;
 }
 
- h3 {
+.contactInfo h2 {
+          font-family: 'Playfair Display', 'Noto Sans Armenian', Georgia, serif;
+          color: #6B3245;
+          font-size: 1.6rem;
+          font-weight: 700;
+          margin-bottom: 25px;
+}
+
+.contactInfo h3 {
+          font-family: 'Noto Sans Armenian', 'Poppins', sans-serif;
           color: #5f4f4f;
           margin-bottom: 25px;
-          font-size: 1.4rem;
+          font-size: 1.15rem;
+          font-weight: 600;
 }
 
 .contactInfo p {
+          font-family: 'Noto Sans Armenian', 'Poppins', sans-serif;
           font-size: 1.05rem;
           color: #444;
           margin: 15px 0;
@@ -60,6 +75,7 @@
 }
 
 .socialLinks a {
+          font-family: 'Noto Sans Armenian', 'Poppins', sans-serif;
           text-decoration: none;
           color: #007bff;
           font-weight: 600;
