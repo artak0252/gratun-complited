@@ -10,7 +10,7 @@
           --color-bg: #E4E8F0;
           --color-text: #3A322C;
           --color-accent: #6B3245;
-          --color-cta: #D6A73B;
+          --color-cta: #3A322C;
 
           background-color: var(--color-bg);
           color: var(--color-cta);
