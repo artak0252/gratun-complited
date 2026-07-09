@@ -25,7 +25,7 @@
    width: 100%;
    background-color: var(--color-bg);
    border-bottom: 5px solid var(--color-border);
-   padding: 18px 40px;
+   padding: 10px 40px;
    box-sizing: border-box;
 }
 
@@ -38,10 +38,7 @@
    margin: 0 auto;
 }
 
-/* ===== Logo =====
-   Vertical accent bar + serif wordmark, no boxed border
-   (a full rectangle around the logo read as an unfinished
-   placeholder in the screenshots, so it's dropped here). */
+/* ===== Logo ===== */
 
 .headerLogo a {
    display: flex;
@@ -51,15 +48,13 @@
 }
 
 .logoImg {
-   height: 54px;
+   height: 76px;
    width: auto;
    display: block;
    object-fit: contain;
 }
 
 /* ===== Right side wrapper (nav + icons) ===== */
-/* Fills the remaining space after the logo, so the nav (flex:1 below)
-   ends up visually centered in the header */
 
 .headerRight {
    display: flex;
@@ -253,7 +248,7 @@
    }
 
    .logoImg {
-      height: 40px;
+      height: 52px;
    }
 
    .cartIcon {
