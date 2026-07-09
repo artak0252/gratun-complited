@@ -3,8 +3,9 @@
 .genreSection {
           width: 100%;
           background: #F1ECE3;
-          padding: 70px 0 60px;
+          padding: 45px 0 40px;
           box-sizing: border-box;
+          border-bottom: 5px solid white;
 }
 
 .genreInner {
@@ -17,16 +18,17 @@
 
 .genreInner h2 {
           font-family: 'Playfair Display', 'Noto Sans Armenian', Georgia, serif;
-          font-size: 2rem;
+          font-size: 1.7rem;
           color: #6B3245;
-          margin-bottom: 40px;
+          margin: 0 0 22px;
           font-weight: 700;
+          text-align: center;
 }
 
 .genreGrid {
           display: grid;
           grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-          gap: 22px;
+          gap: 16px;
 }
 
 .genreCard {
@@ -34,12 +36,12 @@
           flex-direction: column;
           align-items: center;
           justify-content: center;
-          gap: 14px;
-          padding: 30px 15px;
-          min-height: 140px;
+          gap: 10px;
+          padding: 20px 12px;
+          min-height: 110px;
           background: #ffffff;
           border: 1px solid #DCD5C8;
-          border-radius: 16px;
+          border-radius: 14px;
           text-decoration: none;
           color: #3A322C;
           transition: all 0.25s ease;
@@ -53,27 +55,29 @@
 }
 
 .genreIcon {
-          font-size: 1.7rem;
+          font-size: 1.5rem;
           color: #D6A73B;
 }
 
 .genreCard span {
           font-family: 'Noto Sans Armenian', 'Poppins', sans-serif;
-          font-size: 0.95rem;
+          font-size: 0.9rem;
           font-weight: 600;
 }
 
 .viewAllLink {
-          display: inline-block;
-          margin-top: 40px;
+          display: block;
+          width: fit-content;
+          margin: 24px auto 0;
           font-family: 'Noto Sans Armenian', 'Poppins', sans-serif;
           font-weight: 600;
-          font-size: 1.05rem;
+          font-size: 1rem;
           color: #6B3245;
           text-decoration: none;
           border-bottom: 2px solid #D6A73B;
           padding-bottom: 3px;
           transition: color 0.2s ease;
+          text-align: center;
 }
 
 .viewAllLink:hover {
@@ -82,7 +86,7 @@
 
 @media (max-width: 500px) {
           .genreSection {
-                    padding: 50px 0 40px;
+                    padding: 35px 0 30px;
           }
 
           .genreInner {
