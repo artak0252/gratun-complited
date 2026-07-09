@@ -16,15 +16,16 @@
           text-align: center;
 }
 
-.genreInner h2 {
+.genreSection h2 {
+          text-align: center;
           display: block;
           width: 100%;
-                    font-family: 'Noto Sans Armenian', 'Poppins', sans-serif;
+          font-family: 'Noto Sans Armenian', 'Poppins', sans-serif;
           font-size: 1.7rem;
           color: #6B3245;
           margin: 0 0 22px;
           font-weight: 700;
-          text-align: center;
+          
 }
 
 .genreGrid {
@@ -40,7 +41,7 @@
           align-items: center;
           justify-content: center;
           gap: 10px;
-          padding: 20px 10px;
+          padding: 25px 15px;
           min-height: 100px;
           flex: 0 1 130px;
           background: #ffffff;
