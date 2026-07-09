@@ -48,7 +48,7 @@
 }
 
 .logoImg {
-   height: 76px;
+   height: 60px;
    width: auto;
    display: block;
    object-fit: contain;
@@ -248,7 +248,7 @@
    }
 
    .logoImg {
-      height: 52px;
+      height: 42px;
    }
 
    .cartIcon {

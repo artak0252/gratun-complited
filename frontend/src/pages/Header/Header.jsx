@@ -6,7 +6,7 @@ import styles from './Header.module.css';
 import { CiLogout } from "react-icons/ci";
 import { IoIosLogOut } from "react-icons/io";
 import { AuthContext } from '../../context/AuthContext.jsx';
-import logo from '../../assets/my-logo.png';
+import logo from '../../assets/gratun-logo.png';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
