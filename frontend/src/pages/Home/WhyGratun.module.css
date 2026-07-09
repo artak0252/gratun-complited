@@ -1,91 +1,77 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Poppins:wght@400;500;600;700&display=swap');
 
-.genreSection {
-          width: 100%;
-          background: #F1ECE3;
-          padding: 70px 0 60px;
-          box-sizing: border-box;
+.whyContainer {
+          background: #E4E8F0;
+          padding: 70px 8%;
+          border-bottom: 5px solid white;
+
 }
 
-.genreInner {
-          max-width: 1200px;
+.whyGrid {
+          max-width: 1100px;
           margin: 0 auto;
-          padding: 0 8%;
-          box-sizing: border-box;
-          text-align: center;
+          display: flex;
+          justify-content: center;
+          flex-wrap: wrap;
+          gap: 35px;
 }
 
-.genreInner h2 {
+.whyCard {
+          background: #ffffff;
+          border-radius: 18px;
+          padding: 40px 30px;
+          text-align: center;
+          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
+          transition: transform 0.25s ease, box-shadow 0.25s ease;
+          flex: 1 1 280px;
+          max-width: 320px;
+}
+
+.whyCard:hover {
+          transform: translateY(-6px);
+          box-shadow: 0 16px 32px rgba(107, 50, 69, 0.12);
+}
+
+.iconWrap {
+          width: 64px;
+          height: 64px;
+          margin: 0 auto 20px;
+          border-radius: 50%;
+          background: #D6A73B;
+          color: #ffffff;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1.8rem;
+}
+
+.whyCard h3 {
           font-family: 'Playfair Display', 'Noto Sans Armenian', Georgia, serif;
-          font-size: 2rem;
+          font-size: 1.2rem;
           color: #6B3245;
-          margin-bottom: 40px;
+          margin-bottom: 12px;
           font-weight: 700;
 }
 
-.genreGrid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-          gap: 22px;
-}
-
-.genreCard {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          gap: 14px;
-          padding: 30px 15px;
-          min-height: 140px;
-          background: #ffffff;
-          border: 1px solid #DCD5C8;
-          border-radius: 16px;
-          text-decoration: none;
-          color: #3A322C;
-          transition: all 0.25s ease;
-}
-
-.genreCard:hover {
-          background: #6B3245;
-          border-color: #6B3245;
-          color: #ffffff;
-          transform: translateY(-4px);
-}
-
-.genreIcon {
-          font-size: 1.7rem;
-          color: #D6A73B;
-}
-
-.genreCard span {
+.whyCard p {
           font-family: 'Noto Sans Armenian', 'Poppins', sans-serif;
           font-size: 0.95rem;
-          font-weight: 600;
+          color: #5f5750;
+          line-height: 1.5;
+          margin: 0;
 }
 
-.viewAllLink {
-          display: inline-block;
-          margin-top: 40px;
-          font-family: 'Noto Sans Armenian', 'Poppins', sans-serif;
-          font-weight: 600;
-          font-size: 1.05rem;
-          color: #6B3245;
-          text-decoration: none;
-          border-bottom: 2px solid #D6A73B;
-          padding-bottom: 3px;
-          transition: color 0.2s ease;
-}
-
-.viewAllLink:hover {
-          color: #D6A73B;
+@media (max-width: 900px) {
+          .whyGrid {
+                    grid-template-columns: repeat(2, 1fr);
+          }
 }
 
 @media (max-width: 500px) {
-          .genreSection {
-                    padding: 50px 0 40px;
+          .whyGrid {
+                    grid-template-columns: 1fr;
           }
-
-          .genreInner {
-                    padding: 0 6%;
+          .whyContainer {
+                    padding: 50px 6%;
           }
 }

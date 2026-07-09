@@ -2,21 +2,20 @@
 
 .genreSection {
           width: 100%;
-          background: #E4E8F0;
+          background: #F1ECE3;
           padding: 70px 0 60px;
-          border-bottom: 5px solid white;
+          box-sizing: border-box;
 }
 
 .genreInner {
           max-width: 1200px;
-         
           margin: 0 auto;
           padding: 0 8%;
           box-sizing: border-box;
           text-align: center;
 }
 
-.genreSection h2 {
+.genreInner h2 {
           font-family: 'Playfair Display', 'Noto Sans Armenian', Georgia, serif;
           font-size: 2rem;
           color: #6B3245;
@@ -26,7 +25,7 @@
 
 .genreGrid {
           display: grid;
-          grid-template-columns: repeat(6, 1fr);
+          grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
           gap: 22px;
 }
 
@@ -34,8 +33,10 @@
           display: flex;
           flex-direction: column;
           align-items: center;
+          justify-content: center;
           gap: 14px;
           padding: 30px 15px;
+          min-height: 140px;
           background: #ffffff;
           border: 1px solid #DCD5C8;
           border-radius: 16px;
@@ -79,17 +80,12 @@
           color: #D6A73B;
 }
 
-@media (max-width: 900px) {
-          .genreGrid {
-                    grid-template-columns: repeat(3, 1fr);
-          }
-}
-
 @media (max-width: 500px) {
-          .genreGrid {
-                    grid-template-columns: repeat(2, 1fr);
-          }
           .genreSection {
-                    padding: 50px 6% 40px;
+                    padding: 50px 0 40px;
+          }
+
+          .genreInner {
+                    padding: 0 6%;
           }
 }
