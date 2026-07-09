@@ -1,327 +1,131 @@
-/* ============================================================
-   HERO SLIDER — Gratun
-   Warm "library" palette: parchment background, walnut text,
-   antique-gold accents. Swiper's own classes are global, so we
-   theme them here too (nav arrows, pagination dots, background).
-   ============================================================ */
-
+/* Swiper's own classes (.swiper, .swiper-wrapper, .swiper-slide) are global,
+   not part of this CSS module — they have no background by default, so on
+   wide screens the dark body background (#3e3c39, set in index.css) shows
+   through around the centered 1400px-wide .heroContainer. Matching their
+   background to the hero's own background fixes that. */
 :global(.swiper),
 :global(.swiper-wrapper),
 :global(.swiper-slide) {
-          background: linear-gradient(160deg, #f4efe4 0%, #eae2cf 55%, #e3dcc4 100%);
+   background-color: #E4E8F0;
 }
-
-/* ---------- custom pagination dots ---------- */
-:global(.swiper-pagination) {
-          bottom: 20px !important;
-}
-
-:global(.swiper-pagination-bullet) {
-          width: 9px;
-          height: 9px;
-          background: #b8ac86;
-          opacity: 0.6;
-          transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-:global(.swiper-pagination-bullet-active) {
-          width: 28px;
-          border-radius: 6px;
-          opacity: 1;
-          background: linear-gradient(90deg, #d6bc42, #b8892e);
-}
-
-/* ---------- custom nav arrows ---------- */
-:global(.swiper-button-prev),
-:global(.swiper-button-next) {
-          width: 48px;
-          height: 48px;
-          margin-top: -24px;
-          background: rgba(255, 255, 255, 0.75);
-          border: 1px solid rgba(214, 188, 66, 0.4);
-          border-radius: 50%;
-          box-shadow: 0 6px 18px rgba(60, 45, 10, 0.12);
-          backdrop-filter: blur(4px);
-          transition: all 0.3s ease;
-}
-
-:global(.swiper-button-prev)::after,
-:global(.swiper-button-next)::after {
-          font-size: 16px;
-          font-weight: 900;
-          color: #8e6f1f;
-          transition: color 0.3s ease;
-}
-
-:global(.swiper-button-prev:hover),
-:global(.swiper-button-next:hover) {
-          background: linear-gradient(135deg, #d6bc42, #b8892e);
-          border-color: transparent;
-          box-shadow: 0 8px 22px rgba(182, 137, 39, 0.35);
-          transform: scale(1.06);
-}
-
-:global(.swiper-button-prev:hover)::after,
-:global(.swiper-button-next:hover)::after {
-          color: #fff;
-}
-
-@media (max-width: 768px) {
-          :global(.swiper-button-prev),
-          :global(.swiper-button-next) {
-                    display: none;
-          }
-}
-
-/* ============================================================
-   LAYOUT
-   ============================================================ */
 
 .heroContainer {
-          position: relative;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          padding: 70px 10%;
-          max-width: 1400px;
-          margin: 0 auto;
-          min-height: 80vh;
-          gap: 40px;
-          background: transparent;
-          line-height: 2;
-          width: 100%;
-          height: auto;
-          overflow: hidden;
-          box-sizing: border-box;
-}
-
-/* soft decorative glow anchoring the illustration */
-.heroContainer::before {
-          content: "";
-          position: absolute;
-          top: 50%;
-          right: 8%;
-          width: 480px;
-          height: 480px;
-          background: radial-gradient(circle, rgba(214, 188, 66, 0.22) 0%, rgba(214, 188, 66, 0) 70%);
-          transform: translateY(-50%);
-          pointer-events: none;
-          z-index: 0;
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   padding: 60px 10%;
+   max-width: 1400px;
+   margin: 0 auto;
+   min-height: 80vh;
+   gap: 30px;
+   background: #E4E8F0;
+   border-bottom: 5px solid white;
+   line-height: 2;
+   width: 100%;
+   height: auto;
+   overflow-x: hidden;
+   box-sizing: border-box;
 }
 
 .heroContent {
-          position: relative;
-          z-index: 1;
-          flex: 1.5;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
+   flex: 1.5;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
 }
 
-/* ---------- badge ---------- */
 .badge {
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-          width: fit-content;
-          color: #a9721c;
-          background: rgba(214, 188, 66, 0.14);
-          border: 1px solid rgba(214, 188, 66, 0.5);
-          font-family: "Playwrite AU VIC Guides", "Noto Sans Armenian", cursive, sans-serif;
-          font-weight: 700;
-          font-style: normal;
-          font-size: 12px;
-          text-transform: uppercase;
-          letter-spacing: 2px;
-          padding: 8px 18px;
-          border-radius: 999px;
-          margin-bottom: 26px;
+   display: inline-block;
+   color: #d35400;
+   font-family: "Playwrite AU VIC Guides", "Noto Sans Armenian", cursive, sans-serif;
+   font-weight: 700;
+   font-style: normal;
+   font-size: 13px;
+   text-transform: uppercase;
+   letter-spacing: 2px;
+   margin-bottom: 20px;
 }
 
-.badge::before {
-          content: "✦";
-          font-size: 12px;
-          color: #d6bc42;
-}
-
-/* ---------- title ---------- */
 .heroTitle {
-          font-family: "Playwrite AU VIC Guides", "Noto Sans Armenian", cursive, sans-serif;
-          font-weight: 400;
-          font-style: normal;
-          font-size: 50px;
-          color: #453f34;
-          margin-bottom: 22px;
-          letter-spacing: -1px;
-          line-height: 1.4;
+   font-family: "Playwrite AU VIC Guides", "Noto Sans Armenian", cursive, sans-serif;
+   font-weight: 400;
+   font-style: normal;
+   font-size: 50px;
+   color: #525252;
+   margin-bottom: 20px;
+   letter-spacing: -1px;
+   line-height: 1.4;
 }
 
 .highlight {
-          position: relative;
-          display: inline-block;
-          margin-top: 6px;
-          background: linear-gradient(90deg, #b8892e, #d6bc42 55%, #a9721c);
-          -webkit-background-clip: text;
-          background-clip: text;
-          color: transparent;
-          font-style: italic;
-          font-weight: 400;
-}
-
-.highlight::after {
-          content: "";
-          position: absolute;
-          left: 1px;
-          bottom: -6px;
-          width: 64px;
-          height: 3px;
-          border-radius: 3px;
-          background: linear-gradient(90deg, #d6bc42, transparent);
+   color: #D6BC42;
+   font-style: italic;
+   font-weight: 400;
+   display: block;
 }
 
 .heroDesc {
-          font-family: "Playwrite AU VIC Guides", "Noto Sans Armenian", cursive, sans-serif;
-          font-weight: 400;
-          font-style: normal;
-          font-size: 18px;
-          color: #6b6353;
-          line-height: 1.6;
-          margin-bottom: 34px;
-          max-width: 500px;
+   font-family: "Playwrite AU VIC Guides", "Noto Sans Armenian", cursive, sans-serif;
+   font-weight: 400;
+   font-style: normal;
+   font-size: 18px;
+   color: #4a4a4a;
+   line-height: 1.6;
+   margin-bottom: 30px;
+   max-width: 500px;
 }
 
-/* ---------- CTA button ---------- */
 .ctaButton {
-          position: relative;
-          overflow: hidden;
-          background: linear-gradient(135deg, #d6bc42, #b8892e);
-          color: #fff;
-          padding: 16px 36px;
-          border: none;
-          border-radius: 8px;
-          font-family: "Noto Sans Armenian", sans-serif;
-          font-size: 16px;
-          font-weight: 600;
-          cursor: pointer;
-          transition: transform 0.3s ease, box-shadow 0.3s ease;
-          display: flex;
-          align-items: center;
-          gap: 12px;
-          width: fit-content;
-          box-shadow: 0 10px 24px rgba(182, 137, 39, 0.3);
-}
-
-.ctaButton::before {
-          content: "";
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(135deg, #8e44ad, #a855c9);
-          opacity: 0;
-          transition: opacity 0.35s ease;
+   background: #D6BC42;
+   color: #fff;
+   padding: 15px 35px;
+   border: none;
+   font-size: 16px;
+   font-weight: 600;
+   cursor: pointer;
+   transition: 0.3s;
+   display: flex;
+   align-items: center;
+   gap: 10px;
+   width: fit-content;
 }
 
 .ctaButton:hover {
-          transform: translateY(-3px);
-          box-shadow: 0 14px 30px rgba(142, 68, 173, 0.32);
+   background: #8e44ad;
 }
 
-.ctaButton:hover::before {
-          opacity: 1;
-}
-
-.ctaButton > * {
-          position: relative;
-          z-index: 1;
-}
-
-.arrow {
-          display: inline-block;
-          transition: transform 0.3s ease;
-}
-
-.ctaButton:hover .arrow {
-          transform: translateX(6px);
-}
-
-/* ---------- illustration ---------- */
 .heroImageStack {
-          position: relative;
-          z-index: 1;
-          flex: 1;
-          display: flex;
-          justify-content: center;
+   flex: 1;
+   display: flex;
+   justify-content: center;
 }
 
 .mainBookImg {
-          width: 500px;
-          height: auto;
-          mix-blend-mode: multiply;
-          pointer-events: none;
-          filter: drop-shadow(0 25px 30px rgba(90, 65, 20, 0.18));
-          animation: floatTree 6s ease-in-out infinite;
-}
-
-@keyframes floatTree {
-          0%, 100% {
-                    transform: translateY(0);
-          }
-          50% {
-                    transform: translateY(-14px);
-          }
-}
-
-/* ============================================================
-   RESPONSIVE
-   ============================================================ */
-
-@media (max-width: 992px) {
-          .heroContainer::before {
-                    width: 340px;
-                    height: 340px;
-          }
-
-          .heroTitle {
-                    font-size: 40px;
-          }
+   width: 500px;
+   height: auto;
+   mix-blend-mode: multiply;
+   pointer-events: none;
 }
 
 @media (max-width: 768px) {
-          .heroContainer {
-                    flex-direction: column;
-                    text-align: center;
-                    padding: 40px 24px;
-                    overflow: hidden;
-                    min-height: auto;
-          }
+   .heroContainer {
+      flex-direction: column;
+      text-align: center;
+      padding: 20px;
+      overflow: hidden;
+      min-height: auto;
+   }
 
-          .heroContainer::before {
-                    right: 50%;
-                    transform: translate(50%, -50%);
-          }
+   .heroTitle {
+      font-size: 29px;
+   }
 
-          .heroContent {
-                    align-items: center;
-          }
+   .ctaButton {
+      margin: 0 auto;
+   }
 
-          .badge {
-                    margin-left: auto;
-                    margin-right: auto;
-          }
-
-          .heroTitle {
-                    font-size: 29px;
-          }
-
-          .heroDesc {
-                    max-width: 100%;
-          }
-
-          .ctaButton {
-                    margin: 0 auto;
-          }
-
-          .mainBookImg {
-                    max-width: 300px;
-                    width: 100%;
-          }
+   .mainBookImg {
+      max-width: 300px;
+      width: 100%;
+   }
 }
