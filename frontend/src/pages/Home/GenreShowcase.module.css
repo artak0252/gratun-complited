@@ -2,7 +2,7 @@
 
 .genreSection {
           width: 100%;
-          background: #F1ECE3;
+          background: #E4E8F0;
           padding: 45px 0 40px;
           box-sizing: border-box;
           border-bottom: 5px solid white;
@@ -17,7 +17,9 @@
 }
 
 .genreInner h2 {
-          font-family: 'Playfair Display', 'Noto Sans Armenian', Georgia, serif;
+          display: block;
+          width: 100%;
+                    font-family: 'Noto Sans Armenian', 'Poppins', sans-serif;
           font-size: 1.7rem;
           color: #6B3245;
           margin: 0 0 22px;
@@ -26,9 +28,10 @@
 }
 
 .genreGrid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-          gap: 16px;
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 14px;
 }
 
 .genreCard {
@@ -37,8 +40,9 @@
           align-items: center;
           justify-content: center;
           gap: 10px;
-          padding: 20px 12px;
-          min-height: 110px;
+          padding: 20px 10px;
+          min-height: 100px;
+          flex: 0 1 130px;
           background: #ffffff;
           border: 1px solid #DCD5C8;
           border-radius: 14px;
@@ -55,13 +59,13 @@
 }
 
 .genreIcon {
-          font-size: 1.5rem;
+          font-size: 1.4rem;
           color: #D6A73B;
 }
 
 .genreCard span {
           font-family: 'Noto Sans Armenian', 'Poppins', sans-serif;
-          font-size: 0.9rem;
+          font-size: 0.85rem;
           font-weight: 600;
 }
 
@@ -91,5 +95,9 @@
 
           .genreInner {
                     padding: 0 6%;
+          }
+
+          .genreCard {
+                    flex: 0 1 100px;
           }
 }

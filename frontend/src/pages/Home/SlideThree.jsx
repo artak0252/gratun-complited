@@ -9,8 +9,8 @@ const SlideThree = () => (
                     <div className={styles.heroContent}>
                               <span className={styles.badge}>Գիրքը քո մտքի լավագույն ընկերն է</span>
                               <h1 className={styles.heroTitle}>
-                                        Այս կայքէջը կօգնի քեզ ոչ միայն գտնել Քեզ անհրաժեշտ գրքերը, <br />
-                                        <span className={styles.highlight}>նաև վաճառել քո գրքերը</span>
+                                        Այս կայքէջը կօգնի ոչ միայն գտնել Քեզ անհրաժեշտ գրքերը, <br />
+                                        <span className={styles.highlight}>նաև վաճառել այլ գրքեր</span>
                               </h1>
                               <button className={styles.ctaButton} onClick={() => window.location.href = '/shop'}>
                                         Ցանկին ծանոթացիր այստեղ →
