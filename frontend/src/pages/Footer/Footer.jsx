@@ -8,7 +8,7 @@ const Footer = () => {
     <footer className={styles.footer}>
       <div className={styles.footerContainer}>
         <div className={styles.footerSection}>
-          <h3>Գրատուն</h3>
+          <h3>Գրատուն - Հաբ</h3>
           <p>Բացահայտիր գրքերի կախարդական աշխարհը մեզ հետ:</p>
         </div>
 
