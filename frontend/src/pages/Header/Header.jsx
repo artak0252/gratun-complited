@@ -21,7 +21,7 @@ const Header = () => {
     <header className={styles.headerContainer}>
       <div className={styles.headerTop}>
         <div className={styles.headerLogo}>
-          <Link to="/">ԳրատունՀաբ</Link>
+          <Link to="/">Գրատուն-Հաբ</Link>
         </div>
 
         <div className={styles.headerRight}>
