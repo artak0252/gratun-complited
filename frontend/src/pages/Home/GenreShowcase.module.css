@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Poppins:wght@400;500;600;700&display=swap');
+
+.genreSection {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 70px 8% 60px;
+          text-align: center;
+}
+
+.genreSection h2 {
+          font-family: 'Playfair Display', 'Noto Sans Armenian', Georgia, serif;
+          font-size: 2rem;
+          color: #6B3245;
+          margin-bottom: 40px;
+          font-weight: 700;
+}
+
+.genreGrid {
+          display: grid;
+          grid-template-columns: repeat(6, 1fr);
+          gap: 22px;
+}
+
+.genreCard {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 14px;
+          padding: 30px 15px;
+          background: #ffffff;
+          border: 1px solid #DCD5C8;
+          border-radius: 16px;
+          text-decoration: none;
+          color: #3A322C;
+          transition: all 0.25s ease;
+}
+
+.genreCard:hover {
+          background: #6B3245;
+          border-color: #6B3245;
+          color: #ffffff;
+          transform: translateY(-4px);
+}
+
+.genreIcon {
+          font-size: 1.7rem;
+          color: #D6A73B;
+}
+
+.genreCard span {
+          font-family: 'Noto Sans Armenian', 'Poppins', sans-serif;
+          font-size: 0.95rem;
+          font-weight: 600;
+}
+
+.viewAllLink {
+          display: inline-block;
+          margin-top: 40px;
+          font-family: 'Noto Sans Armenian', 'Poppins', sans-serif;
+          font-weight: 600;
+          font-size: 1.05rem;
+          color: #6B3245;
+          text-decoration: none;
+          border-bottom: 2px solid #D6A73B;
+          padding-bottom: 3px;
+          transition: color 0.2s ease;
+}
+
+.viewAllLink:hover {
+          color: #D6A73B;
+}
+
+@media (max-width: 900px) {
+          .genreGrid {
+                    grid-template-columns: repeat(3, 1fr);
+          }
+}
+
+@media (max-width: 500px) {
+          .genreGrid {
+                    grid-template-columns: repeat(2, 1fr);
+          }
+          .genreSection {
+                    padding: 50px 6% 40px;
+          }
+}

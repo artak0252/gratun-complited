@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Poppins:wght@400;500;600;700&display=swap');
+
+.whyContainer {
+          background: #F1ECE3;
+          padding: 70px 8%;
+}
+
+.whyGrid {
+          max-width: 1200px;
+          margin: 0 auto;
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 30px;
+}
+
+.whyCard {
+          background: #ffffff;
+          border-radius: 18px;
+          padding: 35px 25px;
+          text-align: center;
+          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
+          transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.whyCard:hover {
+          transform: translateY(-6px);
+          box-shadow: 0 16px 32px rgba(107, 50, 69, 0.12);
+}
+
+.iconWrap {
+          width: 64px;
+          height: 64px;
+          margin: 0 auto 20px;
+          border-radius: 50%;
+          background: #D6A73B;
+          color: #ffffff;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1.8rem;
+}
+
+.whyCard h3 {
+          font-family: 'Playfair Display', 'Noto Sans Armenian', Georgia, serif;
+          font-size: 1.2rem;
+          color: #6B3245;
+          margin-bottom: 12px;
+          font-weight: 700;
+}
+
+.whyCard p {
+          font-family: 'Noto Sans Armenian', 'Poppins', sans-serif;
+          font-size: 0.95rem;
+          color: #5f5750;
+          line-height: 1.5;
+          margin: 0;
+}
+
+@media (max-width: 900px) {
+          .whyGrid {
+                    grid-template-columns: repeat(2, 1fr);
+          }
+}
+
+@media (max-width: 500px) {
+          .whyGrid {
+                    grid-template-columns: 1fr;
+          }
+          .whyContainer {
+                    padding: 50px 6%;
+          }
+}

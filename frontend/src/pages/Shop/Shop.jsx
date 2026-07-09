@@ -1,4 +1,5 @@
 import React, { useReducer, useEffect, useContext } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import api from '../../api/axiosInstance';
 import { AuthContext } from '../../context/AuthContext.jsx';
 import { CartContext } from '../../context/CartContext';
@@ -32,6 +33,16 @@ const Shop = () => {
     const [state, dispatch] = useReducer(shopReducer, initialState);
     const { addToCart } = useContext(CartContext);
     const { isAdmin } = useContext(AuthContext);
+    const [searchParams] = useSearchParams();
+
+    // Եթե Home-ի GenreShowcase-ից եկել ենք ուղիղ հղումով (/shop?genre=fantasy),
+    // ուրեմն URL-ի genre պարամետրը դառնում է նախնական ընտրված ժանրը
+    useEffect(() => {
+        const genreFromUrl = searchParams.get('genre');
+        if (genreFromUrl) {
+            dispatch({ type: 'SET_GENRE', payload: genreFromUrl });
+        }
+    }, [searchParams]);
 
     const handleAddToCart = (book) => {
         addToCart(book);
