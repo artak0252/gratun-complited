@@ -3,6 +3,8 @@
 .whyContainer {
           background: #F1ECE3;
           padding: 70px 8%;
+          border-bottom: 5px solid white;
+
 }
 
 .whyGrid {
