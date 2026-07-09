@@ -3,6 +3,7 @@ import axios from 'axios';
 import { CartContext } from '../../context/CartContext';
 import toast from 'react-hot-toast';
 import styles from './RecommendedBooks.module.css';
+import { EXCLUDED_FROM_RECOMMENDED } from '../Shop/genreConstants';
 
 
 const RECOMMENDED_COUNT = 5;
@@ -15,7 +16,12 @@ const RecommendedBooks = () => {
           useEffect(() => {
                     axios.get('/api/books')
                               .then(res => {
-                                        const sorted = [...res.data].sort((a, b) => (a._id < b._id ? 1 : -1));
+                                        // Հին հրատարակությունների ժանրի գրքերը երբեք չպետք է
+                                        // հայտնվեն այս բաժնում, նույնիսկ եթե ամենավերջին ավելացվածներից են
+                                        const eligibleBooks = res.data.filter(
+                                                  book => !EXCLUDED_FROM_RECOMMENDED.includes(book.genre)
+                                        );
+                                        const sorted = [...eligibleBooks].sort((a, b) => (a._id < b._id ? 1 : -1));
                                         setBooks(sorted.slice(0, RECOMMENDED_COUNT));
                                         setLoading(false);
                               })
