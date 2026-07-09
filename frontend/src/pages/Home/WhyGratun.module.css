@@ -6,20 +6,23 @@
 }
 
 .whyGrid {
-          max-width: 1200px;
+          max-width: 1100px;
           margin: 0 auto;
-          display: grid;
-          grid-template-columns: repeat(4, 1fr);
-          gap: 30px;
+          display: flex;
+          justify-content: center;
+          flex-wrap: wrap;
+          gap: 35px;
 }
 
 .whyCard {
           background: #ffffff;
           border-radius: 18px;
-          padding: 35px 25px;
+          padding: 40px 30px;
           text-align: center;
           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
           transition: transform 0.25s ease, box-shadow 0.25s ease;
+          flex: 1 1 280px;
+          max-width: 320px;
 }
 
 .whyCard:hover {
