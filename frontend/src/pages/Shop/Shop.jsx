@@ -1,5 +1,5 @@
 import React, { useReducer, useEffect, useContext } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, Link } from 'react-router-dom';
 import api from '../../api/axiosInstance';
 import { AuthContext } from '../../context/AuthContext.jsx';
 import { CartContext } from '../../context/CartContext';
@@ -14,7 +14,7 @@ const initialState = {
     searchTerm: '',
     selectedGenre: 'all',
     editingId: null,
-    formData: { title: '', author: '', price: '', genre: 'fiction', image: null }
+    formData: { title: '', author: '', price: '', genre: 'fiction', description: '', image: null }
 };
 
 function shopReducer(state, action) {
@@ -26,8 +26,8 @@ function shopReducer(state, action) {
         case 'SET_SEARCH': return { ...state, searchTerm: action.payload };
         case 'SET_GENRE': return { ...state, selectedGenre: action.payload };
         case 'SET_FORM': return { ...state, formData: { ...state.formData, ...action.payload } };
-        case 'RESET_FORM': return { ...state, formData: { title: '', author: '', price: '', genre: 'fiction', image: null }, editingId: null };
-        case 'START_EDIT': return { ...state, editingId: action.payload._id, formData: { title: action.payload.title, author: action.payload.author, price: action.payload.price, genre: action.payload.genre, image: null } };
+        case 'RESET_FORM': return { ...state, formData: { title: '', author: '', price: '', genre: 'fiction', description: '', image: null }, editingId: null };
+        case 'START_EDIT': return { ...state, editingId: action.payload._id, formData: { title: action.payload.title, author: action.payload.author, price: action.payload.price, genre: action.payload.genre, description: action.payload.description || '', image: null } };
         default: return state;
     }
 }
@@ -66,6 +66,7 @@ const Shop = () => {
         formData.append('author', state.formData.author);
         formData.append('price', state.formData.price);
         formData.append('genre', state.formData.genre);
+        formData.append('description', state.formData.description || '');
         // Խմբագրելիս, եթե admin-ը նոր նկար չի ընտրել, image դաշտը չենք ուղարկում,
         // որպեսզի backend-ը հին նկարը թողնի անփոփոխ
         if (state.formData.image) formData.append('image', state.formData.image);
@@ -137,6 +138,12 @@ const Shop = () => {
                                 <option key={g.id} value={g.id}>{g.label}</option>
                             ))}
                         </select>
+                        <textarea
+                            className={styles.descriptionInput}
+                            placeholder="Նկարագրություն"
+                            value={state.formData.description}
+                            onChange={e => dispatch({ type: 'SET_FORM', payload: { description: e.target.value } })}
+                        />
                         <label htmlFor="file-upload" className={styles.fileLabel}>
                             {state.formData.image ? state.formData.image.name : (state.editingId ? "Փոխել նկարը (ընտրովի)" : "Ընտրել նկարը")}
                         </label>
@@ -180,7 +187,10 @@ const Shop = () => {
                             <p>{book.author}</p>
                             <span className={styles.genreTag}>{bookGenres.find(g => g.id === book.genre)?.label || book.genre}</span>
                             <span>{book.price} ֏</span>
-                            <button className={styles.buyBtn} onClick={() => handleAddToCart(book)}>Ավելացնել զամբյուղ</button>
+                            <div className={styles.bookCardActions}>
+                                <Link to={`/shop/${book._id}`} className={styles.viewBtn}>Դիտել</Link>
+                                <button className={styles.buyBtn} onClick={() => handleAddToCart(book)}>Ավելացնել զամբյուղ</button>
+                            </div>
                         </div>
                     ))}
                 </div>

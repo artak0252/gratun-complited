@@ -93,6 +93,18 @@
    cursor: pointer;
 }
 
+/* Նկարագրության textarea admin ֆորմայում */
+.descriptionInput {
+   padding: 12px 20px;
+   border: 1px solid #e2e8f0;
+   border-radius: 12px;
+   flex: 1 1 100%;
+   min-width: 200px;
+   min-height: 90px;
+   font-family: inherit;
+   resize: vertical;
+}
+
 /* Խանութի հիմնական layout՝ ժանրերի sidebar + գրքերի ցանց */
 .shopLayout {
    display: flex;
@@ -266,10 +278,39 @@
    font-weight: 600;
    cursor: pointer;
    transition: 0.3s;
+   flex: 1;
 }
 
 .buyBtn:hover {
    background: #8e44ad;
+}
+
+/* Քարտի ներքևի կոճակների տողը՝ Դիտել + Ավելացնել զամբյուղ */
+.bookCardActions {
+   display: flex;
+   gap: 10px;
+   margin-top: auto;
+}
+
+/* «Դիտել» կոճակ, տանում է դեպի մանրամասն էջ */
+.viewBtn {
+   flex: 0 0 auto;
+   background: #fff;
+   color: #1a1a1a;
+   border: 1px solid #1a1a1a;
+   padding: 14px 18px;
+   border-radius: 12px;
+   font-weight: 600;
+   cursor: pointer;
+   transition: 0.3s;
+   text-decoration: none;
+   text-align: center;
+   white-space: nowrap;
+}
+
+.viewBtn:hover {
+   background: #1a1a1a;
+   color: #fff;
 }
 
 /* ... նախորդ սթայլերը թողնում ենք ... */

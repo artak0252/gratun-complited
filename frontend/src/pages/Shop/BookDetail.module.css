@@ -1,0 +1,183 @@
+.detailContainer {
+          padding: 70px 8%;
+          background: #f8fafc;
+          min-height: 100vh;
+}
+
+.backBtn {
+          display: inline-block;
+          margin-bottom: 40px;
+          color: #8e44ad;
+          text-decoration: none;
+          font-weight: 600;
+          font-family: 'Noto Sans Armenian', 'Poppins', sans-serif;
+}
+
+.bookDetailCard {
+          display: flex;
+          flex-direction: row;
+          align-items: flex-start;
+          gap: 60px;
+          max-width: 1200px;
+          margin: 0 auto;
+          background: #ffffff;
+          border-radius: 24px;
+          padding: 50px;
+          border: 1px solid #edf2f7;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+}
+
+.bookDetailImg {
+          width: 360px;
+          height: 500px;
+          flex-shrink: 0;
+          object-fit: contain;
+          background-color: #f1f5f9;
+          border-radius: 16px;
+          padding: 20px;
+          box-sizing: border-box;
+          position: sticky;
+          top: 100px;
+}
+
+.bookDetailBody {
+          flex: 1;
+          min-width: 0;
+}
+
+.genreTag {
+          display: inline-block;
+          font-size: 12px;
+          font-weight: 600;
+          color: #8e44ad;
+          background: #f3e8f8;
+          padding: 4px 10px;
+          border-radius: 20px;
+          margin-bottom: 15px;
+}
+
+.bookDetailTitle {
+          font-family: 'Playfair Display', serif;
+          font-size: 40px;
+          font-weight: 600;
+          color: #1a1a1a;
+          margin: 0 0 10px 0;
+          line-height: 1.25;
+}
+
+.bookDetailAuthor {
+          font-family: 'Noto Sans Armenian', 'Poppins', sans-serif;
+          font-size: 18px;
+          color: #718096;
+          margin: 0 0 30px 0;
+}
+
+.bookDetailDescription {
+          font-family: 'Noto Sans Armenian', 'Poppins', sans-serif;
+          font-size: 16px;
+          line-height: 1.8;
+          color: #333;
+          text-align: left;
+          margin-bottom: 40px;
+}
+
+.bookDetailFooter {
+          display: flex;
+          align-items: center;
+          gap: 25px;
+          flex-wrap: wrap;
+}
+
+.bookDetailPrice {
+          font-weight: 700;
+          font-size: 24px;
+          color: #8e44ad;
+}
+
+.buyBtn {
+          background: #1a1a1a;
+          color: white;
+          border: none;
+          padding: 16px 30px;
+          border-radius: 12px;
+          font-weight: 600;
+          font-size: 15px;
+          cursor: pointer;
+          transition: 0.3s;
+}
+
+.buyBtn:hover {
+          background: #8e44ad;
+}
+
+.loading {
+          text-align: center;
+          padding: 100px;
+          font-family: 'Playfair Display', serif;
+          font-size: 24px;
+}
+
+/* Planşet */
+@media (max-width: 900px) {
+          .detailContainer {
+                    padding: 50px 6%;
+          }
+
+          .bookDetailCard {
+                    gap: 35px;
+                    padding: 35px;
+          }
+
+          .bookDetailImg {
+                    width: 260px;
+                    height: 380px;
+                    position: static;
+          }
+
+          .bookDetailTitle {
+                    font-size: 30px;
+          }
+}
+
+/* Mobile - նկարը վերևում, նյութը՝ ներքևում */
+@media (max-width: 700px) {
+          .bookDetailCard {
+                    flex-direction: column;
+                    align-items: center;
+          }
+
+          .bookDetailImg {
+                    width: 100%;
+                    max-width: 280px;
+                    height: 340px;
+                    position: static;
+          }
+
+          .bookDetailBody {
+                    width: 100%;
+          }
+}
+
+@media (max-width: 480px) {
+          .detailContainer {
+                    padding: 35px 5%;
+          }
+
+          .bookDetailCard {
+                    padding: 20px;
+                    border-radius: 16px;
+          }
+
+          .bookDetailTitle {
+                    font-size: 24px;
+                    margin: 12px 0 8px 0;
+          }
+
+          .bookDetailDescription {
+                    font-size: 15px;
+          }
+
+          .backBtn {
+                    margin-bottom: 25px;
+          }
+}

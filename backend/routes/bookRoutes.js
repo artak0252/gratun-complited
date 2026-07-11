@@ -40,7 +40,18 @@ router.get('/', async (req, res) => {
     }
 });
 
-// 2. POST: Ավելացնել նոր գիրք
+// 2. GET: Ստանալ մեկ գիրք ըստ ID-ի (դիտման էջի համար)
+router.get('/:id', async (req, res) => {
+    try {
+        const book = await Book.findById(req.params.id);
+        if (!book) return res.status(404).json({ message: 'Գիրքը չգտնվեց' });
+        res.status(200).json(book);
+    } catch (error) {
+        res.status(500).json({ message: 'Սերվերի սխալ', error: error.message });
+    }
+});
+
+// 3. POST: Ավելացնել նոր գիրք
 router.post('/', adminOnly, (req, res, next) => {
     upload.single('image')(req, res, (err) => {
         if (err) {
@@ -50,7 +61,7 @@ router.post('/', adminOnly, (req, res, next) => {
     });
 }, async (req, res) => {
     try {
-        const { title, author, price, genre } = req.body;
+        const { title, author, price, genre, description } = req.body;
         if (!title || !author || !price || !genre || !req.file) {
             return res.status(400).json({ message: 'Լրացրու բոլոր դաշտերը' });
         }
@@ -66,6 +77,7 @@ router.post('/', adminOnly, (req, res, next) => {
             author,
             price,
             genre,
+            description: description || '',
             image: uploadResponse.url // Պահում ենք ImageKit-ի ուղիղ հղումը
         });
 
@@ -76,7 +88,7 @@ router.post('/', adminOnly, (req, res, next) => {
     }
 });
 
-// 3. PUT: Խմբագրել առկա գիրքը (նկարը փոխելը ընտրովի է)
+// 4. PUT: Խմբագրել առկա գիրքը (նկարը փոխելը ընտրովի է)
 router.put('/:id', adminOnly, (req, res, next) => {
     upload.single('image')(req, res, (err) => {
         if (err) {
@@ -86,12 +98,12 @@ router.put('/:id', adminOnly, (req, res, next) => {
     });
 }, async (req, res) => {
     try {
-        const { title, author, price, genre } = req.body;
+        const { title, author, price, genre, description } = req.body;
         if (!title || !author || !price || !genre) {
             return res.status(400).json({ message: 'Լրացրու բոլոր դաշտերը' });
         }
 
-        const updateData = { title, author, price, genre };
+        const updateData = { title, author, price, genre, description: description || '' };
 
         // Եթե admin-ը վերբեռնել է նոր նկար, փոխարինում ենք հինը, հակառակ դեպքում թողնում ենք ինչպես կար
         if (req.file) {
@@ -111,7 +123,7 @@ router.put('/:id', adminOnly, (req, res, next) => {
     }
 });
 
-// 4. DELETE: Ջնջել գիրքը
+// 5. DELETE: Ջնջել գիրքը
 router.delete('/:id', adminOnly, async (req, res) => {
     try {
         const book = await Book.findByIdAndDelete(req.params.id);
