@@ -1,3 +1,127 @@
+/* Blog.module.css */
+.blogContainer {
+          padding: 60px 10%;
+          background: #fdfdfd;
+          min-height: 100vh;
+}
+
+.adminFormContainer {
+          background: #ffffff;
+          padding: 40px;
+          border-radius: 24px;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+          margin-bottom: 60px;
+          border: 1px solid #f0f0f0;
+}
+
+.adminFormContainer form {
+          display: flex;
+          flex-direction: column;
+          gap: 15px;
+}
+
+.adminFormContainer input,
+.adminFormContainer textarea {
+          padding: 15px;
+          border: 1px solid #eee;
+          border-radius: 12px;
+          font-size: 16px;
+}
+
+.postsGrid {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 30px;
+}
+
+.postCard {
+          background: white;
+          padding: 20px;
+          border-radius: 24px;
+          border: 1px solid #f5f5f5;
+          transition: 0.4s;
+          position: relative;
+          display: flex;
+          flex-direction: row;
+          align-items: flex-start;
+          gap: 30px;
+}
+
+.postCard:hover {
+          transform: translateY(-6px);
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+}
+
+/* Ֆիքսում ենք textarea-ն */
+.adminFormContainer textarea {
+          padding: 15px;
+          border: 1px solid #eee;
+          border-radius: 12px;
+          font-size: 16px;
+          resize: none;
+          height: 120px;
+          font-family: inherit;
+}
+
+/* Կոճակի գեղեցիկ ոճավորում */
+.publishBtn {
+          background: #1a1a1a;
+          color: #ffffff;
+          border: none;
+          padding: 15px 30px;
+          border-radius: 12px;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          width: fit-content;
+          margin-top: 10px;
+}
+
+.publishBtn:hover {
+          background: #8e44ad;
+          transform: scale(1.02);
+}
+
+.searchContainer {
+          margin: 0 auto 40px;
+          max-width: 600px;
+          display: flex;
+          justify-content: center;
+}
+
+.searchInput {
+          width: 100%;
+          padding: 15px 25px;
+          border-radius: 30px;
+          border: 1px solid #e2e8f0;
+          font-size: 16px;
+          outline: none;
+          transition: 0.3s;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.searchInput:focus {
+          border-color: #8e44ad;
+          box-shadow: 0 0 0 3px rgba(142, 68, 173, 0.1);
+}
+
+.postImg {
+          width: 260px;
+          height: 220px;
+          flex-shrink: 0;
+          object-fit: cover;
+          border-radius: 16px;
+}
+
+.postContent {
+          display: flex;
+          flex-direction: column;
+          flex: 1;
+          min-height: 220px;
+          justify-content: center;
+          padding: 6px 0;
+}
+
 .adminPostActions {
           position: absolute;
           top: 20px;
@@ -21,4 +145,104 @@
 .deletePostBtn:hover,
 .editPostBtn:hover {
           transform: scale(1.1);
+}
+
+.postCard h2 {
+          font-family: 'Noto Serif Armenian', 'Playfair Display', serif;
+          font-size: 24px;
+          font-weight: 600;
+          color: #1a1a1a;
+          margin: 0 0 12px 0;
+          line-height: 1.3;
+}
+
+/* Թաքցնում ենք բուն տգեղ input-ը */
+.fileInput {
+          display: none;
+}
+
+/* Label-ը դարձնում ենք գեղեցիկ ինտերակտիվ դաշտ */
+.fileLabel {
+          padding: 15px;
+          background: #f8f9fa;
+          border: 1px dashed #d1d5db;
+          border-radius: 12px;
+          cursor: pointer;
+          text-align: center;
+          color: #6b7280;
+          font-size: 14px;
+          transition: all 0.3s ease;
+          display: block;
+}
+
+.fileLabel:hover {
+          border-color: #8e44ad;
+          color: #8e44ad;
+          background: #fdf5ff;
+}
+
+.postCard p {
+          font-family: 'Noto Sans Armenian', 'Poppins', sans-serif;
+          font-size: 15px;
+          line-height: 1.7;
+          color: #6b7280;
+          margin: 0 0 15px 0;
+}
+
+.postCard a {
+          font-family: 'Noto Sans Armenian', 'Poppins', sans-serif;
+          color: #8e44ad;
+          font-weight: 600;
+          text-decoration: none;
+}
+
+/* Planşet */
+@media (max-width: 900px) {
+          .blogContainer {
+                    padding: 50px 6%;
+          }
+
+          .postsGrid {
+                    gap: 25px;
+          }
+
+          .postImg {
+                    width: 200px;
+                    height: 180px;
+          }
+
+          .adminFormContainer {
+                    padding: 25px;
+          }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+          .blogContainer {
+                    padding: 35px 5%;
+          }
+
+          .postsGrid {
+                    gap: 20px;
+          }
+
+          .postCard {
+                    flex-direction: column;
+                    padding: 18px;
+          }
+
+          .postImg {
+                    width: 100%;
+                    height: 200px;
+          }
+
+          .searchInput {
+                    padding: 12px 20px;
+                    font-size: 14px;
+          }
+
+          .publishBtn {
+                    width: 100%;
+                    text-align: center;
+          }
 }
