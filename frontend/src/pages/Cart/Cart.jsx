@@ -86,7 +86,7 @@ const Cart = () => {
                     <form onSubmit={submitOrder}>
                         <input name="name" placeholder="Անուն, Ազգանուն" required onChange={handleInputChange} />
                         <input name="phone" placeholder="Հեռախոսահամար" required onChange={handleInputChange} />
-                        <input name="address" placeholder="Հասցե" required onChange={handleInputChange} />
+                        <input name="address" placeholder="Էլ․ հասցե" required onChange={handleInputChange} />
                         <button type="submit" className={styles.checkoutBtn} disabled={isSubmitting}>
                             {isSubmitting ? 'Ուղարկվում է...' : 'Հաստատել Պատվերը'}
                         </button>
