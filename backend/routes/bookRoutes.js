@@ -76,7 +76,42 @@ router.post('/', adminOnly, (req, res, next) => {
     }
 });
 
-// 3. DELETE: Ջնջել գիրքը
+// 3. PUT: Խմբագրել առկա գիրքը (նկարը փոխելը ընտրովի է)
+router.put('/:id', adminOnly, (req, res, next) => {
+    upload.single('image')(req, res, (err) => {
+        if (err) {
+            return res.status(400).json({ message: err.message || 'Ֆայլի վերբեռնման սխալ' });
+        }
+        next();
+    });
+}, async (req, res) => {
+    try {
+        const { title, author, price, genre } = req.body;
+        if (!title || !author || !price || !genre) {
+            return res.status(400).json({ message: 'Լրացրու բոլոր դաշտերը' });
+        }
+
+        const updateData = { title, author, price, genre };
+
+        // Եթե admin-ը վերբեռնել է նոր նկար, փոխարինում ենք հինը, հակառակ դեպքում թողնում ենք ինչպես կար
+        if (req.file) {
+            const uploadResponse = await imagekit.upload({
+                file: req.file.buffer,
+                fileName: `${Date.now()}_${req.file.originalname}`
+            });
+            updateData.image = uploadResponse.url;
+        }
+
+        const updatedBook = await Book.findByIdAndUpdate(req.params.id, updateData, { new: true, runValidators: true });
+        if (!updatedBook) return res.status(404).json({ message: 'Գիրքը չգտնվեց' });
+
+        res.status(200).json(updatedBook);
+    } catch (error) {
+        res.status(400).json({ message: 'Սխալ խմբագրելիս', error: error.message });
+    }
+});
+
+// 4. DELETE: Ջնջել գիրքը
 router.delete('/:id', adminOnly, async (req, res) => {
     try {
         const book = await Book.findByIdAndDelete(req.params.id);

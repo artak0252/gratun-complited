@@ -1,276 +1,9 @@
-/* Shop.module.css */
-
-.shopContainer {
-   padding: 80px 10%;
-   background-color: #f8fafc;
-   min-height: 100vh;
-}
-
-/* Ադմինի ֆորմա - դարձրել ենք ավելի նուրբ */
-.adminFormContainer {
-   background: #ffffff;
-   padding: 40px;
-   border-radius: 24px;
-   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
-   margin-bottom: 60px;
-   border: 1px solid #edf2f7;
-}
-
-.adminFormContainer h3 {
-   font-family: 'Playfair Display', serif;
-   font-size: 28px;
-   margin-bottom: 25px;
-   color: #1a1a1a;
-}
-
-.adminFormContainer form {
+/* Ադմինի կոճակների (խմբագրել/ջնջել) տեղակայումը */
+.adminBookActions {
    display: flex;
-   gap: 15px;
-   flex-wrap: wrap;
-}
-
-.adminFormContainer input {
-   padding: 12px 20px;
-   border: 1px solid #e2e8f0;
-   border-radius: 12px;
-   flex: 1;
-   min-width: 200px;
-}
-
-/* Որոնում */
-.searchInput {
-   width: 100%;
-   max-width: 600px;
-   padding: 18px 30px;
-   margin: 0 auto 50px auto;
-   display: block;
-   border: 2px solid transparent;
-   border-radius: 50px;
-   font-size: 16px;
-   background: #ffffff;
-   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-   outline: none;
-   transition: 0.3s;
-}
-
-.searchInput:focus {
-   border-color: #8e44ad;
-}
-/* Թաքցնում ենք բուն input-ը */
-.fileInput {
-   display: none;
-}
-
-/* Label-ը դարձնում ենք գեղեցիկ կոճակ */
-.fileLabel {
-   padding: 12px 20px;
-   background: #f1f5f9;
-   color: #4a5568;
-   border-radius: 12px;
-   cursor: pointer;
-   text-align: center;
-   font-weight: 500;
-   transition: 0.3s;
-   border: 1px dashed #cbd5e0;
-}
-
-.fileLabel:hover {
-   background: #e2e8f0;
-   border-color: #8e44ad;
-   color: #8e44ad;
-}
-/* Ընտրացանկ ժանրի համար ադմինի ֆորմայում */
-.genreSelect {
-   padding: 12px 20px;
-   border: 1px solid #e2e8f0;
-   border-radius: 12px;
-   flex: 1;
-   min-width: 200px;
-   background: #fff;
-   color: #1a1a1a;
-   cursor: pointer;
-}
-
-/* Խանութի հիմնական layout՝ ժանրերի sidebar + գրքերի ցանց */
-.shopLayout {
-   display: flex;
-   align-items: flex-start;
-   gap: 40px;
-}
-
-/* Ժանրերի կողային վահանակ */
-.genreSidebar {
-   flex: 0 0 220px;
-   position: sticky;
-   top: 100px;
-   background: #ffffff;
-   border-radius: 20px;
-   padding: 25px 20px;
-   border: 1px solid #edf2f7;
-   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
-}
-
-.genreSidebarTitle {
-   font-family: 'Playfair Display', serif;
-   font-size: 20px;
-   margin: 0 0 18px 0;
-   color: #1a1a1a;
-}
-
-.genreList {
-   list-style: none;
-   margin: 0;
-   padding: 0;
-   display: flex;
-   flex-direction: column;
-   gap: 6px;
-}
-
-.genreBtn {
-   width: 100%;
-   text-align: left;
-   background: none;
-   border: none;
-   padding: 10px 14px;
-   border-radius: 10px;
-   font-size: 15px;
-   color: #4a5568;
-   cursor: pointer;
-   transition: 0.25s;
-}
-
-.genreBtn:hover {
-   background: #f1f5f9;
-   color: #8e44ad;
-}
-
-.activeGenreBtn {
-   background: #8e44ad;
-   color: #fff !important;
-   font-weight: 600;
-}
-
-.activeGenreBtn:hover {
-   background: #6c3483;
-   color: #fff;
-}
-
-/* Գրքի քարտի վրայի ժանրի պիտակ */
-.genreTag {
-   display: inline-block;
+   gap: 8px;
    align-self: flex-start;
-   font-size: 12px;
-   font-weight: 600;
-   color: #8e44ad;
-   background: #f3e8f8;
-   padding: 4px 10px;
-   border-radius: 20px;
-   margin-bottom: 10px;
 }
-
-.noResults {
-   grid-column: 1 / -1;
-   text-align: center;
-   color: #718096;
-   font-size: 16px;
-   padding: 40px 0;
-}
-
-/* Փոքր էկրանների վրա sidebar-ը դառնում է վերևի հորիզոնական ցանկ */
-@media (max-width: 768px) {
-   .shopLayout {
-      flex-direction: column;
-   }
-
-   .genreSidebar {
-      width: 100%;
-      position: static;
-      flex: none;
-   }
-
-   .genreList {
-      flex-direction: row;
-      flex-wrap: wrap;
-   }
-
-   .genreBtn {
-      width: auto;
-   }
-}
-
-/* Գրքերի ցանց */
-.booksGrid {
-   flex: 1;
-   display: grid;
-   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-   gap: 40px;
-}
-
-.bookCard {
-   background: #ffffff;
-   padding: 20px;
-   border-radius: 24px;
-   transition: all 0.5s ease;
-   border: 1px solid #f1f5f9;
-   text-align: left;
-   display: flex;
-   flex-direction: column;
-}
-
-.bookCard:hover {
-   transform: translateY(-15px);
-   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
-}
-
-.bookCard img {
-   width: 100%;
-   height: 350px;
-   object-fit: contain;
-   /* cover-ի փոխարեն */
-   background-color: #f1f5f9;
-   /* միասնական մոխրագույն ֆոն */
-   border-radius: 16px;
-   margin-bottom: 20px;
-   padding: 12px;
-   /* նուրբ բացատ նկարի շուրջ */
-   box-sizing: border-box;
-}
-
-.bookCard h3 {
-   font-family: 'Playfair Display', serif;
-   font-size: 22px;
-   margin: 0 0 5px 0;
-}
-
-.bookCard p {
-   color: #718096;
-   margin-bottom: 15px;
-}
-
-.bookCard span {
-   font-weight: 700;
-   font-size: 18px;
-   color: #8e44ad;
-   display: block;
-   margin-bottom: 15px;
-}
-
-.buyBtn {
-   background: #1a1a1a;
-   color: white;
-   border: none;
-   padding: 14px;
-   border-radius: 12px;
-   font-weight: 600;
-   cursor: pointer;
-   transition: 0.3s;
-}
-
-.buyBtn:hover {
-   background: #8e44ad;
-}
-
-/* ... նախորդ սթայլերը թողնում ենք ... */
 
 /* Ջնջելու կոճակի ոճը */
 .deleteBtn {
@@ -291,25 +24,21 @@
    transform: scale(1.05);
 }
 
-/* Ավելացնելու կոճակի (Form Submit) ոճը */
-.adminFormContainer button[type="submit"] {
-   background: #8e44ad;
-   color: white;
-   border: none;
-   padding: 12px 25px;
-   border-radius: 12px;
-   font-weight: 600;
+/* Խմբագրելու կոճակի ոճը */
+.editBtn {
+   background: #fff;
+   color: #8e44ad;
+   border: 1px solid #8e44ad;
+   padding: 10px;
+   border-radius: 10px;
    cursor: pointer;
-   transition: background 0.3s;
+   transition: all 0.3s ease;
+   margin-top: 10px;
+   font-size: 16px;
 }
 
-.adminFormContainer button[type="submit"]:hover {
-   background: #6c3483;
-}
-
-.loading {
-   text-align: center;
-   padding: 100px;
-   font-family: 'Playfair Display', serif;
-   font-size: 24px;
+.editBtn:hover {
+   background: #8e44ad;
+   color: #fff;
+   transform: scale(1.05);
 }
