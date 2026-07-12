@@ -12,11 +12,13 @@ import SlideThree from './SlideThree';
 import RecommendedBooks from '../RecommendedBooks/RecommendedBooks';
 import WhyGratun from './WhyGratun';
 import GenreShowcase from './GenreShowcase';
+import BlogShowcase from '../BlogShowcase/BlogShowcase';
 
 const Home = () => {
   return (
     <>
       <RecommendedBooks />
+      <BlogShowcase />
       <Swiper
         autoplay={{ delay: 5000, disableOnInteraction: false }}
         pagination={{ clickable: true }}
