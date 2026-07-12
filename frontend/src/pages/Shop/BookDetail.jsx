@@ -2,9 +2,11 @@ import React, { useReducer, useEffect, useContext } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import api from '../../api/axiosInstance';
 import { CartContext } from '../../context/CartContext';
+import { FavoritesContext } from '../../context/FavoritesContext';
 import toast from 'react-hot-toast';
 import styles from './BookDetail.module.css';
 import { bookGenres } from './genreConstants';
+import { FiHeart } from 'react-icons/fi';
 
 const initialState = {
           book: null,
@@ -30,6 +32,7 @@ const BookDetail = () => {
           const [state, dispatch] = useReducer(bookReducer, initialState);
           const { book, loading, error } = state;
           const { addToCart } = useContext(CartContext);
+          const { isFavorite, toggleFavorite } = useContext(FavoritesContext);
 
           useEffect(() => {
                     const fetchBook = async () => {
@@ -49,6 +52,15 @@ const BookDetail = () => {
                     toast.success(`${book.title} գիրքը ավելացվեց զամբյուղի մեջ!`, { icon: '🛒', duration: 2000 });
           };
 
+          const handleToggleFavorite = () => {
+                    const wasFavorite = isFavorite(book._id);
+                    toggleFavorite(book);
+                    toast.success(
+                              wasFavorite ? `${book.title} հեռացվեց հավանածներից` : `${book.title} ավելացվեց հավանածների մեջ`,
+                              { icon: '❤️', duration: 2000 }
+                    );
+          };
+
           if (loading) return <div className={styles.loading}>Բեռնվում է...</div>;
           if (error) return <div className={styles.loading}>{error}</div>;
 
@@ -57,14 +69,23 @@ const BookDetail = () => {
                               <Link to="/shop" className={styles.backBtn}>← Հետ դեպի խանութ</Link>
 
                               <div className={styles.bookDetailCard}>
-                                        <img
-                                                  className={styles.bookDetailImg}
-                                                  src={book.image.startsWith('http') ? book.image : `https://ik.imagekit.io/hmtd5pr9d/${book.image}`}
-                                                  alt={book.title}
-                                                  onError={(e) => {
-                                                            e.target.src = "https://via.placeholder.com/150";
-                                                  }}
-                                        />
+                                        <div className={styles.imageWrapper}>
+                                                  <img
+                                                            className={styles.bookDetailImg}
+                                                            src={book.image.startsWith('http') ? book.image : `https://ik.imagekit.io/hmtd5pr9d/${book.image}`}
+                                                            alt={book.title}
+                                                            onError={(e) => {
+                                                                      e.target.src = "https://via.placeholder.com/150";
+                                                            }}
+                                                  />
+                                                  <button
+                                                            className={`${styles.favBtn} ${isFavorite(book._id) ? styles.favBtnActive : ''}`}
+                                                            onClick={handleToggleFavorite}
+                                                            aria-label="Հավանել"
+                                                  >
+                                                            <FiHeart />
+                                                  </button>
+                                        </div>
 
                                         <div className={styles.bookDetailBody}>
                                                   <span className={styles.genreTag}>

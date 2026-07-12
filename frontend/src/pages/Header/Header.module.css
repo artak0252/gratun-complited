@@ -87,6 +87,44 @@
    color: var(--color-accent);
 }
 
+
+/* ===== Heart / Favorites icon ===== */
+
+.heartIcon {
+   position: relative;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   width: 40px;
+   height: 40px;
+   border: 1.5px solid var(--color-accent);
+   border-radius: 8px;
+   color: var(--color-accent);
+   text-decoration: none;
+   font-size: 19px;
+   transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.heartIcon:hover {
+   background-color: var(--color-accent);
+   color: #ffffff;
+}
+
+.heartBadge {
+   position: absolute;
+   top: -8px;
+   right: -8px;
+   background-color: var(--color-cta);
+   color: var(--color-text);
+   font-size: 10px;
+   font-weight: 700;
+   width: 18px;
+   height: 18px;
+   border-radius: 50%;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
 /* ===== Cart icon ===== */
 
 .cartIcon {
@@ -267,4 +305,10 @@
    .headerRight {
       gap: 12px;
    }
+
+      .heartIcon {
+         width: 34px;
+         height: 34px;
+         font-size: 16px;
+      }
 }

@@ -1,0 +1,178 @@
+.favContainer {
+          padding: 80px 10%;
+          background-color: #f8fafc;
+          min-height: 100vh;
+}
+
+.favTitle {
+          font-family: 'Playfair Display', serif;
+          font-size: 32px;
+          color: #1a1a1a;
+          margin-bottom: 40px;
+}
+
+.emptyState {
+          text-align: center;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+}
+
+.emptyState h2 {
+          font-family: 'Playfair Display', serif;
+          color: #1a1a1a;
+          margin-bottom: 10px;
+}
+
+.emptyState p {
+          color: #718096;
+          margin-bottom: 25px;
+}
+
+.shopLinkBtn {
+          background: #1a1a1a;
+          color: white;
+          padding: 14px 28px;
+          border-radius: 12px;
+          font-weight: 600;
+          text-decoration: none;
+          transition: 0.3s;
+}
+
+.shopLinkBtn:hover {
+          background: #8e44ad;
+}
+
+.booksGrid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+          gap: 40px;
+}
+
+.bookCard {
+          background: #ffffff;
+          padding: 20px;
+          border-radius: 24px;
+          transition: all 0.5s ease;
+          border: 1px solid #f1f5f9;
+          text-align: left;
+          display: flex;
+          flex-direction: column;
+}
+
+.bookCard:hover {
+          transform: translateY(-15px);
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+}
+
+.imageWrapper {
+          position: relative;
+}
+
+.imageWrapper img {
+          width: 100%;
+          height: 350px;
+          object-fit: contain;
+          background-color: #f1f5f9;
+          border-radius: 16px;
+          margin-bottom: 20px;
+          padding: 12px;
+          box-sizing: border-box;
+}
+
+.favBtn {
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          width: 38px;
+          height: 38px;
+          border-radius: 50%;
+          border: none;
+          background: rgba(255, 255, 255, 0.9);
+          color: #e74c3c;
+          font-size: 18px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+          transition: 0.2s;
+}
+
+.favBtn:hover {
+          transform: scale(1.1);
+}
+
+.bookCard h3 {
+          font-family: 'Playfair Display', serif;
+          font-size: 22px;
+          margin: 0 0 5px 0;
+}
+
+.bookCard p {
+          color: #718096;
+          margin-bottom: 15px;
+}
+
+.genreTag {
+          display: inline-block;
+          align-self: flex-start;
+          font-size: 12px;
+          font-weight: 600;
+          color: #8e44ad;
+          background: #f3e8f8;
+          padding: 4px 10px;
+          border-radius: 20px;
+          margin-bottom: 10px;
+}
+
+.bookCard span {
+          font-weight: 700;
+          font-size: 18px;
+          color: #8e44ad;
+          display: block;
+          margin-bottom: 15px;
+}
+
+.bookCardActions {
+          display: flex;
+          gap: 10px;
+          margin-top: auto;
+}
+
+.viewBtn {
+          flex: 0 0 auto;
+          background: #fff;
+          color: #1a1a1a;
+          border: 1px solid #1a1a1a;
+          padding: 14px 18px;
+          border-radius: 12px;
+          font-weight: 600;
+          cursor: pointer;
+          transition: 0.3s;
+          text-decoration: none;
+          text-align: center;
+          white-space: nowrap;
+}
+
+.viewBtn:hover {
+          background: #1a1a1a;
+          color: #fff;
+}
+
+.buyBtn {
+          background: #1a1a1a;
+          color: white;
+          border: none;
+          padding: 14px;
+          border-radius: 12px;
+          font-weight: 600;
+          cursor: pointer;
+          transition: 0.3s;
+          flex: 1;
+}
+
+.buyBtn:hover {
+          background: #8e44ad;
+}

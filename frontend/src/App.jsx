@@ -8,6 +8,7 @@ import Blog from './pages/Blog/Blog';
 import Shop from './pages/Shop/Shop';
 import BookDetail from './pages/Shop/BookDetail';
 import Cart from './pages/Cart/Cart';
+import Favorites from './pages/Favorites/Favorites';
 import Contact from './pages/Contact/Contact';
 import About from './pages/About/About';
 import SinglePost from './pages/Blog/SinglePost';
@@ -32,6 +33,7 @@ function App() {
         <Route path="/shop" element={<Shop />} />
         <Route path="/shop/:id" element={<BookDetail />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/favorites" element={<Favorites />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/about" element={<About />} />
         <Route path="/login" element={<Login />} />

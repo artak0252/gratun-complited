@@ -40,6 +40,41 @@
           top: 100px;
 }
 
+/* Նկարի փաթաթան սրտիկի համար */
+.imageWrapper {
+          position: relative;
+          flex-shrink: 0;
+}
+
+/* Սրտիկ կոճակ մանրամասն էջում */
+.favBtn {
+          position: absolute;
+          top: 30px;
+          right: 30px;
+          width: 42px;
+          height: 42px;
+          border-radius: 50%;
+          border: none;
+          background: rgba(255, 255, 255, 0.9);
+          color: #b0b7c3;
+          font-size: 20px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+          transition: 0.2s;
+}
+
+.favBtn:hover {
+          color: #e74c3c;
+          transform: scale(1.1);
+}
+
+.favBtnActive {
+          color: #e74c3c;
+}
+
 .bookDetailBody {
           flex: 1;
           min-width: 0;

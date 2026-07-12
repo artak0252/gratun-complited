@@ -3,10 +3,12 @@ import { useSearchParams, Link } from 'react-router-dom';
 import api from '../../api/axiosInstance';
 import { AuthContext } from '../../context/AuthContext.jsx';
 import { CartContext } from '../../context/CartContext';
+import { FavoritesContext } from '../../context/FavoritesContext';
 import toast from 'react-hot-toast';
 import styles from './Shop.module.css';
 import { bookGenres } from './genreConstants';
 import GenreFilter from './GenreFilter';
+import { FiHeart } from 'react-icons/fi';
 
 const initialState = {
     books: [],
@@ -36,6 +38,7 @@ const Shop = () => {
     const [state, dispatch] = useReducer(shopReducer, initialState);
     const { addToCart } = useContext(CartContext);
     const { isAdmin } = useContext(AuthContext);
+    const { isFavorite, toggleFavorite } = useContext(FavoritesContext);
     const [searchParams] = useSearchParams();
 
     // Եթե Home-ի GenreShowcase-ից եկել ենք ուղիղ հղումով (/shop?genre=fantasy),
@@ -50,6 +53,15 @@ const Shop = () => {
     const handleAddToCart = (book) => {
         addToCart(book);
         toast.success(`${book.title} գիրքը ավելացվեց զամբյուղի մեջ!`, { icon: '🛒', duration: 2000 });
+    };
+
+    const handleToggleFavorite = (book) => {
+        const wasFavorite = isFavorite(book._id);
+        toggleFavorite(book);
+        toast.success(
+            wasFavorite ? `${book.title} հեռացվեց հավանածներից` : `${book.title} ավելացվեց հավանածների մեջ`,
+            { icon: '❤️', duration: 2000 }
+        );
     };
 
     useEffect(() => {
@@ -176,13 +188,22 @@ const Shop = () => {
                                 </div>
                             )}
 
-                            <img
-                                src={book.image.startsWith('http') ? book.image : `https://ik.imagekit.io/hmtd5pr9d/${book.image}`}
-                                alt={book.title}
-                                onError={(e) => {
-                                    e.target.style.display = 'none';
-                                }}
-                            />
+                            <div className={styles.imageWrapper}>
+                                <img
+                                    src={book.image.startsWith('http') ? book.image : `https://ik.imagekit.io/hmtd5pr9d/${book.image}`}
+                                    alt={book.title}
+                                    onError={(e) => {
+                                        e.target.style.display = 'none';
+                                    }}
+                                />
+                                <button
+                                    className={`${styles.favBtn} ${isFavorite(book._id) ? styles.favBtnActive : ''}`}
+                                    onClick={() => handleToggleFavorite(book)}
+                                    aria-label="Հավանել"
+                                >
+                                    <FiHeart />
+                                </button>
+                            </div>
                             <h3>{book.title}</h3>
                             <p>{book.author}</p>
                             <span className={styles.genreTag}>{bookGenres.find(g => g.id === book.genre)?.label || book.genre}</span>

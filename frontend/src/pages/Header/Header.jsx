@@ -1,17 +1,20 @@
 import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FiShoppingBag, FiMenu, FiX } from "react-icons/fi";
+import { FiHeart } from "react-icons/fi";
 import { VscAccount } from "react-icons/vsc";
 import styles from './Header.module.css';
 import { CiLogout } from "react-icons/ci";
 import { IoIosLogOut } from "react-icons/io";
 import { AuthContext } from '../../context/AuthContext.jsx';
+import { FavoritesContext } from '../../context/FavoritesContext.jsx';
 import logo from '../../assets/gratun-logo.png';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const { isLoggedIn, logout } = useContext(AuthContext);
+  const { favorites } = useContext(FavoritesContext);
 
   const handleLogout = async () => {
     await logout();
@@ -39,6 +42,11 @@ const Header = () => {
           <button className={styles.menuToggle} onClick={() => setIsOpen(!isOpen)}>
             {isOpen ? <FiX /> : <FiMenu />}
           </button>
+
+          <Link to="/favorites" aria-label="Հավանածներ" className={styles.heartIcon}>
+            <FiHeart />
+            {favorites.length > 0 && <span className={styles.heartBadge}>{favorites.length}</span>}
+          </Link>
 
           <Link to="/cart" aria-label="Զամբյուղ" className={styles.cartIcon}>
             <FiShoppingBag />
