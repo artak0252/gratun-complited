@@ -21,17 +21,17 @@
 
 .emptyState h2 {
           font-family: 'Playfair Display', serif;
-          color: #1a1a1a;
+          color: white;
           margin-bottom: 10px;
 }
 
 .emptyState p {
-          color: #718096;
+          color: white;
           margin-bottom: 25px;
 }
 
 .shopLinkBtn {
-          background: #1a1a1a;
+          background: #14315C;
           color: white;
           padding: 14px 28px;
           border-radius: 12px;
@@ -41,7 +41,7 @@
 }
 
 .shopLinkBtn:hover {
-          background: #8e44ad;
+          background: #14315C;
 }
 
 .booksGrid {
