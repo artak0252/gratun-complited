@@ -141,7 +141,7 @@
 .buyBtn {
    width: 100%;
    background-color: var(--color-cta);
-   color: var(--color-text);
+   color: white;
    border: none;
    border-radius: 6px;
    padding: 7px 10px;
