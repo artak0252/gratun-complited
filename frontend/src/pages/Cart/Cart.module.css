@@ -1,14 +1,15 @@
 .cartContainer {
+          background: #f8fafc !important; 
           max-width: 1200px;
           margin: 40px auto;
           padding: 20px;
-          color: #e0e0e0;
+          color: #14315C;
           min-height: 70vh;
 }
 
 .cartPageTitle {
           font-size: 2rem;
-          color: #fff;
+          color: #14315C;
           margin-bottom: 30px;
           border-left: 3px solid #d4af37;
           padding-left: 15px;
@@ -24,7 +25,7 @@
 }
 
 .emptyCart h2 {
-          color: #888;
+          color: #14315C;
           margin-bottom: 10px;
 }
 
@@ -45,8 +46,8 @@
 .cartItemCard {
           display: flex;
           align-items: center;
-          background: #4a7791;
-          border: 1px solid #222;
+          background: #14315C;
+          border: 1px solid #14315C;
           padding: 15px;
           border-radius: 4px;
           gap: 20px;
@@ -69,7 +70,7 @@
 }
 
 .cartItemDetails h3 {
-          color: #fff;
+          color: white;
           margin: 0 0 5px 0;
           font-size: 1.1rem;
 }
