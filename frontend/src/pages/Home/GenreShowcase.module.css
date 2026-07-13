@@ -61,7 +61,7 @@
 
 .genreIcon {
           font-size: 1.4rem;
-          color: #D6A73B;
+          color: #14315C;
 }
 
 .genreCard span {
@@ -79,14 +79,14 @@
           font-size: 1rem;
           color: #6B3245;
           text-decoration: none;
-          border-bottom: 2px solid #D6A73B;
+          border-bottom: 2px solid #14315C;
           padding-bottom: 3px;
           transition: color 0.2s ease;
           text-align: center;
 }
 
 .viewAllLink:hover {
-          color: #D6A73B;
+          color: #14315C;
 }
 
 @media (max-width: 500px) {
