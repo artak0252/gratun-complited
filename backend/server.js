@@ -14,6 +14,7 @@ import Book from './models/Book.js';
 import Order from './models/Order.js';
 import bookRoutes from './routes/bookRoutes.js';
 import postRoutes from './routes/postRoutes.js';
+import sitemapRouter from './routes/sitemap.js';
 import { adminOnly } from './middleware/adminMiddleware.js';
 import { checkAuth } from './middleware/checkAuth.js';
 import rateLimit from 'express-rate-limit';
@@ -112,20 +113,12 @@ const authLimiter = rateLimit({
 app.post('/api/login', authLimiter, async (req, res) => {
     const { username, password } = req.body;
 
-    // ԿԱՐԵՎՈՐ. username/password-ը պարտադիր պիտի string լինեն, այլապես
-    // Mongo query object ({ "$ne": null } և նման բան) կարող է հասնել findOne-ին
-    // (NoSQL injection ռիսկ)
     if (typeof username !== 'string' || typeof password !== 'string') {
         return res.status(400).json({ message: 'Անվավեր տվյալներ' });
     }
 
-    // Երկու դեպքում էլ (username-ը գոյություն չունի, կամ password-ը սխալ է)
-    // վերադարձնում ենք ՆՈՒՅՆ հաղորդագրությունը, որպեսզի ոչ ոք չկարողանա
-    // հասկանալ՝ արդյոք տվյալ username-ը ընդհանրապես գոյություն ունի (user enumeration)
     const invalidCredsMsg = { message: 'Սխալ օգտանուն կամ գաղտնաբառ' };
     try {
-        // ԿԱՐԵՎՈՐ. admin username-ը plain է (գաղտնիք չէ), բայց password-ը
-        // այժմ պահվում է որպես bcrypt hash (ADMIN_PASSWORD_HASH), ոչ թե plaintext
         if (username === process.env.ADMIN_USERNAME) {
             const isAdminMatch = await bcrypt.compare(password, process.env.ADMIN_PASSWORD_HASH || '');
             if (isAdminMatch) {
@@ -138,13 +131,10 @@ app.post('/api/login', authLimiter, async (req, res) => {
         const user = await User.findOne({ username });
         if (!user) return res.status(401).json(invalidCredsMsg);
 
-        // ԿԱՐԵՎՈՐ. plaintext fallback-ը հեռացված է. բոլոր user-ները պիտի
-        // արդեն bcrypt-ով հեշավորված գաղտնաբառ ունենան (տես migrate-passwords.js)
         const isMatch = await bcrypt.compare(password, user.password);
 
         if (!isMatch) return res.status(401).json(invalidCredsMsg);
 
-        // Կարևոր. token-ի role-ը վերցնում ենք user-ի իրական role-ից, ոչ թե hardcoded 'admin'
         const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
         res.cookie(COOKIE_NAME, token, cookieOptions);
         res.json({ role: user.role, message: 'Մուտքը հաջողված է' });
@@ -153,19 +143,15 @@ app.post('/api/login', authLimiter, async (req, res) => {
     }
 });
 
-// Frontend-ը սա կանչում է page load-ի ժամանակ, որպեսզի իմանա՝ արդյոք
-// օգտատերը արդեն մուտք գործած է (cookie-ն httpOnly է, JS-ը ուղիղ չի կարող կարդալ)
 app.get('/api/me', checkAuth, (req, res) => {
     res.json({ role: req.user.role || null });
 });
 
-// Դուրս գալը՝ պարզապես մաքրում ենք cookie-ն
 app.post('/api/logout', (req, res) => {
     res.clearCookie(COOKIE_NAME, { ...cookieOptions, maxAge: undefined });
     res.json({ message: 'Դուրս եկաք' });
 });
 
-// Գրանցման route (Register.jsx-ը սպասում է սրան)
 app.post('/api/register', authLimiter, async (req, res) => {
     const { username, email, password } = req.body;
     try {
@@ -173,8 +159,6 @@ app.post('/api/register', authLimiter, async (req, res) => {
             return res.status(400).json({ message: 'Լրացրու բոլոր դաշտերը' });
         }
 
-        // ԿԱՐԵՎՈՐ. type ստուգում NoSQL injection-ից պաշտպանվելու համար
-        // (այլապես username/email/password կարող են լինել Mongo query object)
         if (typeof username !== 'string' || typeof email !== 'string' || typeof password !== 'string') {
             return res.status(400).json({ message: 'Անվավեր տվյալներ' });
         }
@@ -200,9 +184,8 @@ app.post('/api/register', authLimiter, async (req, res) => {
 
 app.use('/api/books', bookRoutes);
 app.use('/api/posts', postRoutes);
+app.use('/', sitemapRouter);
 
-// Պաշտպանություն spam/flood պատվերներից.
-// 15 րոպեում առավելագույնը 5 պատվեր մեկ IP-ից
 const orderLimiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 րոպե
     max: 5,
@@ -215,7 +198,6 @@ app.post('/api/orders', orderLimiter, async (req, res) => {
     try {
         const { name, phone, address, cartItems } = req.body;
 
-        // Հիմնական validation. name/phone/address պարտադիր են, cartItems պիտի լինի ոչ դատարկ array
         if (!name || !phone || !address) {
             return res.status(400).json({ message: 'Լրացրու բոլոր դաշտերը' });
         }
@@ -223,8 +205,6 @@ app.post('/api/orders', orderLimiter, async (req, res) => {
             return res.status(400).json({ message: 'Զամբյուղը դատարկ է' });
         }
 
-        // ԿԱՐԵՎՈՐ. գները երբեք չենք վերցնում client-ից, միշտ նոր ենք հանում DB-ից,
-        // որպեսզի ոչ ոք չկարողանա գները փոխել DevTools/ուղիղ API կանչով
         const bookIds = cartItems.map(item => item._id);
         const booksFromDb = await Book.find({ _id: { $in: bookIds } });
 
@@ -254,8 +234,6 @@ app.post('/api/orders', orderLimiter, async (req, res) => {
             });
         }
 
-        // ԿԱՐԵՎՈՐ. պատվերը նախ պահվում է DB-ում, որպեսզի email-ի ցանկացած խնդիր
-        // (spam folder, SMTP timeout, սխալ credentials) պատվերը չկորցնի
         const newOrder = await Order.create({
             name,
             phone,
@@ -277,7 +255,6 @@ app.post('/api/orders', orderLimiter, async (req, res) => {
             newOrder.emailSent = true;
             await newOrder.save();
         } catch (mailError) {
-            // Email-ը ձախողվեց, բայց պատվերն արդեն DB-ում է՝ ոչինչ չի կորչում
             console.error('Email ուղարկելու սխալ (պատվերը պահված է DB-ում):', mailError.message);
         }
 
