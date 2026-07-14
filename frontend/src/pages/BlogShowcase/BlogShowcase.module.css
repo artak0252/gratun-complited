@@ -1,143 +1,143 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Poppins:wght@400;500;600;700&display=swap');
 
 .blogSection {
-          --color-bg: #E4E8F0;
-          --color-text: white;
-          --color-accent: #6B3245;
-          --color-accent-light: #8A4E63;
-          --color-cta: #14315C;
-          --color-border: #DCD5C8;
+   --color-bg: #E4E8F0;
+   --color-text: white;
+   --color-accent: #6B3245;
+   --color-accent-light: #8A4E63;
+   --color-cta: #14315C;
+   --color-border: #DCD5C8;
 
-          width: 100%;
-          background-color: var(--color-bg);
-          padding: 45px 8% 50px;
-          box-sizing: border-box;
-          border-bottom: 5px solid white;
+   width: 100%;
+   background-color: var(--color-bg);
+   padding: 45px 8% 50px;
+   box-sizing: border-box;
+   border-bottom: 5px solid white;
 }
 
 .contentWrapper {
-          max-width: 1200px;
-          margin: 0 auto;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 30px;
+   max-width: 1200px;
+   margin: 0 auto;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   gap: 30px;
 }
 
 .sectionHeader {
-          text-align: center;
-          max-width: 620px;
+   text-align: center;
+   max-width: 620px;
 }
 
 .sectionTitle {
-          font-family: 'Playfair Display', Georgia, serif;
-          font-size: 30px;
-          font-weight: 700;
-          color: var(--color-text);
-          margin: 0 0 8px 0;
-          line-height: 1.2;
+   font-family: 'Playfair Display', Georgia, serif;
+   font-size: 30px;
+   font-weight: 700;
+   color: var(--color-text);
+   margin: 0 0 8px 0;
+   line-height: 1.2;
 }
 
 .sectionSubtitle {
-          font-family: 'Poppins', sans-serif;
-          font-size: 15px;
-          color: var(--color-text);
-          opacity: 0.8;
-          margin: 0;
+   font-family: 'Poppins', sans-serif;
+   font-size: 15px;
+   color: var(--color-text);
+   opacity: 0.8;
+   margin: 0;
 }
 
 .postsRow {
-          display: grid;
-          grid-template-columns: repeat(3, minmax(0, 340px));
-          justify-content: center;
-          gap: 26px;
-          width: 100%;
+   display: grid;
+   grid-template-columns: repeat(3, minmax(0, 340px));
+   justify-content: center;
+   gap: 26px;
+   width: 100%;
 }
 
 .postCard {
-          background-color: #ffffff;
-          border: 1px solid rgba(220, 213, 200, 0.5);
-          border-radius: 16px;
-          padding: 16px;
-          display: flex;
-          flex-direction: column;
-          text-align: left;
-          text-decoration: none;
-          box-shadow: 0 6px 14px rgba(58, 50, 44, 0.08);
-          transition: transform 0.25s ease, box-shadow 0.25s ease;
+   background-color: #ffffff;
+   border: 1px solid rgba(220, 213, 200, 0.5);
+   border-radius: 16px;
+   padding: 16px;
+   display: flex;
+   flex-direction: column;
+   text-align: left;
+   text-decoration: none;
+   box-shadow: 0 6px 14px rgba(58, 50, 44, 0.08);
+   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .postCard:hover {
-          transform: translateY(-6px);
-          box-shadow: 0 14px 26px rgba(58, 50, 44, 0.15);
+   transform: translateY(-6px);
+   box-shadow: 0 14px 26px rgba(58, 50, 44, 0.15);
 }
 
 .imageWrapper {
-          width: 100%;
-          aspect-ratio: 16 / 10;
-          overflow: hidden;
-          border-radius: 10px;
-          margin-bottom: 14px;
-          background-color: var(--color-bg);
+   width: 100%;
+   aspect-ratio: 16 / 10;
+   overflow: hidden;
+   border-radius: 10px;
+   margin-bottom: 14px;
+   background-color: var(--color-bg);
 }
 
 .imageWrapper img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          display: block;
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
+   display: block;
 }
 
 .postTitle {
-          font-family: 'Playfair Display', Georgia, serif;
-          font-size: 18px;
-          font-weight: 700;
-          color: var(--color-text);
-          margin: 0 0 8px 0;
-          line-height: 1.35;
+   font-family: 'Playfair Display', Georgia, serif;
+   font-size: 18px;
+   font-weight: 700;
+   color: #2A2A2A;
+   margin: 0 0 8px 0;
+   line-height: 1.35;
 }
 
 .postExcerpt {
-          font-family: 'Poppins', sans-serif;
-          font-size: 13px;
-          color: var(--color-text);
-          opacity: 0.75;
-          line-height: 1.5;
-          margin: 0 0 12px 0;
-          display: -webkit-box;
-          -webkit-line-clamp: 3;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
+   font-family: 'Poppins', sans-serif;
+   font-size: 13px;
+   color: #4A4A4A;
+   opacity: 0.9;
+   line-height: 1.5;
+   margin: 0 0 12px 0;
+   display: -webkit-box;
+   -webkit-line-clamp: 3;
+   -webkit-box-orient: vertical;
+   overflow: hidden;
 }
 
 .readMore {
-          font-family: 'Poppins', sans-serif;
-          font-size: 13px;
-          font-weight: 600;
-          color: var(--color-accent);
-          margin-top: auto;
+   font-family: 'Poppins', sans-serif;
+   font-size: 13px;
+   font-weight: 600;
+   color: var(--color-accent);
+   margin-top: auto;
 }
 
 .postCard:hover .readMore {
-          color: var(--color-accent-light);
+   color: var(--color-accent-light);
 }
 
 .allPostsBtn {
-          display: inline-block;
-          background-color: var(--color-cta);
-          color: var(--color-text);
-          font-family: 'Poppins', sans-serif;
-          font-weight: 600;
-          font-size: 15px;
-          padding: 12px 30px;
-          border-radius: 8px;
-          text-decoration: none;
-          transition: background-color 0.2s ease, color 0.2s ease;
+   display: inline-block;
+   background-color: var(--color-cta);
+   color: var(--color-text);
+   font-family: 'Poppins', sans-serif;
+   font-weight: 600;
+   font-size: 15px;
+   padding: 12px 30px;
+   border-radius: 8px;
+   text-decoration: none;
+   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .allPostsBtn:hover {
-          background-color: var(--color-accent);
-          color: #ffffff;
+   background-color: var(--color-accent);
+   color: #ffffff;
 }
 
 /* =========================================================
@@ -145,47 +145,47 @@
    ========================================================= */
 
 @media (max-width: 1024px) {
-          .postsRow {
-                    grid-template-columns: repeat(3, minmax(0, 220px));
-                    gap: 16px;
-          }
+   .postsRow {
+      grid-template-columns: repeat(3, minmax(0, 220px));
+      gap: 16px;
+   }
 }
 
 @media (max-width: 768px) {
-          .sectionTitle {
-                    font-size: 24px;
-          }
+   .sectionTitle {
+      font-size: 24px;
+   }
 
-          .postsRow {
-                    display: flex;
-                    flex-wrap: nowrap;
-                    overflow-x: auto;
-                    justify-content: flex-start;
-                    gap: 14px;
-                    padding-bottom: 8px;
-                    -webkit-overflow-scrolling: touch;
-          }
+   .postsRow {
+      display: flex;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      justify-content: flex-start;
+      gap: 14px;
+      padding-bottom: 8px;
+      -webkit-overflow-scrolling: touch;
+   }
 
-          .postCard {
-                    flex: 0 0 240px;
-          }
+   .postCard {
+      flex: 0 0 240px;
+   }
 }
 
 @media (max-width: 480px) {
-          .blogSection {
-                    padding: 30px 5% 35px;
-          }
+   .blogSection {
+      padding: 30px 5% 35px;
+   }
 
-          .postCard {
-                    flex: 0 0 200px;
-                    padding: 12px;
-          }
+   .postCard {
+      flex: 0 0 200px;
+      padding: 12px;
+   }
 
-          .postTitle {
-                    font-size: 16px;
-          }
+   .postTitle {
+      font-size: 16px;
+   }
 
-          .sectionTitle {
-                    font-size: 20px;
-          }
+   .sectionTitle {
+      font-size: 20px;
+   }
 }
