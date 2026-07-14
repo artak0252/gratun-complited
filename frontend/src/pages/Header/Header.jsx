@@ -8,6 +8,7 @@ import { CiLogout } from "react-icons/ci";
 import { IoIosLogOut } from "react-icons/io";
 import { AuthContext } from '../../context/AuthContext.jsx';
 import { FavoritesContext } from '../../context/FavoritesContext.jsx';
+import { CartContext } from '../../context/CartContext.jsx';
 import logo from '../../assets/gratun-logo.png';
 
 const Header = () => {
@@ -15,6 +16,8 @@ const Header = () => {
   const navigate = useNavigate();
   const { isLoggedIn, logout } = useContext(AuthContext);
   const { favorites } = useContext(FavoritesContext);
+  const { cartItems } = useContext(CartContext);
+  const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
   const handleLogout = async () => {
     await logout();
@@ -50,6 +53,7 @@ const Header = () => {
 
           <Link to="/cart" aria-label="Զամբյուղ" className={styles.cartIcon}>
             <FiShoppingBag />
+            {cartCount > 0 && <span className={styles.cartBadge}>{cartCount}</span>}
           </Link>
 
           {isLoggedIn ? (

@@ -163,6 +163,38 @@
    justify-content: center;
 }
 
+.heartBadge {
+   position: absolute;
+   top: -8px;
+   right: -8px;
+   background-color: var(--color-cta);
+   color: white;
+   font-size: 10px;
+   font-weight: 700;
+   width: 18px;
+   height: 18px;
+   border-radius: 50%;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+
+.cartBadge {
+   position: absolute;
+   top: -8px;
+   right: -8px;
+   background-color: var(--color-cta);
+   color: white;
+   font-size: 10px;
+   font-weight: 700;
+   width: 18px;
+   height: 18px;
+   border-radius: 50%;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+
 /* ===== Account / login-logout icon group ===== */
 
 .accountAction {
