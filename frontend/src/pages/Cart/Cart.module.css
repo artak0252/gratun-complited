@@ -25,7 +25,7 @@
 }
 
 .emptyCart h2 {
-          color: #14315C;
+          color: white;
           margin-bottom: 10px;
 }
 
@@ -90,7 +90,7 @@
           display: flex;
           align-items: center;
           gap: 12px;
-          background: #4a8a91;
+          background: #14315C;
           padding: 5px 10px;
           border-radius: 4px;
           border: 1px solid #333;
