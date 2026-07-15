@@ -60,12 +60,12 @@ const Cart = () => {
                                     <img src={item.image} alt={item.title} className={styles.cartItemImage} />
                                     <div className={styles.cartItemDetails}>
                                         <h3>{item.title}</h3>
-                                        <p>{item.author}</p>
-                                        <p>{item.price} ֏</p>
+                                        <p className={styles.cartItemAuthor}>{item.author}</p>
+                                        <p className={styles.cartItemPrice}>{item.price} ֏</p>
                                     </div>
                                     <div className={styles.cartItemQuantity}>
                                         <button onClick={() => updateQuantity(item._id, -1)} className={styles.qtyBtn}>-</button>
-                                        <span>{item.quantity}</span>
+                                        <span className={styles.qtyNumber}>{item.quantity}</span>
                                         <button onClick={() => updateQuantity(item._id, 1)} className={styles.qtyBtn}>+</button>
                                     </div>
                                     <button onClick={() => removeFromCart(item._id)} className={styles.cartItemDeleteBtn}>🗑️</button>
@@ -74,7 +74,15 @@ const Cart = () => {
                         </div>
                         <div className={styles.cartSummaryPanel}>
                             <h3>Պատվերի Ամփոփում</h3>
-                            <p>Ընդհանուր գումար՝ <strong>{totalPrice} ֏</strong></p>
+                            <hr className={styles.summaryDivider} />
+                            <div className={styles.summaryRow}>
+                                <span>Ապրանքներ</span>
+                                <span>{cartItems.reduce((count, item) => count + item.quantity, 0)}</span>
+                            </div>
+                            <div className={`${styles.summaryRow} ${styles.totalPriceRow}`}>
+                                <span>Ընդհանուր գումար</span>
+                                <span className={styles.goldText}>{totalPrice} ֏</span>
+                            </div>
                             <button onClick={() => setShowForm(true)} className={styles.checkoutBtn}>Ձևակերպել Պատվեր</button>
                             <button onClick={clearCart} className={styles.clearCartBtn}>Դատարկել</button>
                         </div>
