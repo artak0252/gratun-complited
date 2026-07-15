@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, useCallback } from 'react';
+import React, { createContext, useState, useEffect, useCallback, useMemo } from 'react';
 import api from '../api/axiosInstance';
 
 export const AuthContext = createContext();
@@ -26,23 +26,28 @@ export const AuthProvider = ({ children }) => {
                     refreshAuth();
           }, [refreshAuth]);
 
-          const logout = async () => {
+          const logout = useCallback(async () => {
                     try {
                               await api.post('/logout');
                     } catch {
                               // անգամ եթե logout հարցումը ձախողվի, տեղում role-ը մաքրում ենք
                     }
                     setRole(null);
-          };
+          }, []);
 
-          const value = {
-                    role,
-                    isAdmin: role === 'admin',
-                    isLoggedIn: !!role,
-                    checked,
-                    refreshAuth,
-                    logout,
-          };
+          // Value-ն memoize ենք անում, որպեսզի role/checked-ը չփոխվելու դեպքում
+          // Context-ից կախված բոլոր component-ները ավելորդ re-render չկրեն
+          const value = useMemo(
+                    () => ({
+                              role,
+                              isAdmin: role === 'admin',
+                              isLoggedIn: !!role,
+                              checked,
+                              refreshAuth,
+                              logout,
+                    }),
+                    [role, checked, refreshAuth, logout]
+          );
 
           return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

@@ -1,32 +1,10 @@
 import express from 'express';
-import multer from 'multer';
-import ImageKit from 'imagekit';
 import Post from '../models/Post.js';
 import { adminOnly } from '../middleware/adminMiddleware.js';
+import imagekit from '../utils/imagekit.js';
+import upload from '../utils/upload.js';
 
 const router = express.Router();
-
-// ImageKit-ի ինիցիալիզացիա
-const imagekit = new ImageKit({
-    publicKey: process.env.IMAGEKIT_PUBLIC_KEY,
-    privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
-    urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT
-});
-
-// Multer memoryStorage-ով (ֆայլերը չեն պահվում սերվերի վրա)
-// Սահմանափակում ենք միայն նկարներով և առավելագույնը 5ՄԲ
-const upload = multer({
-    storage: multer.memoryStorage(),
-    limits: { fileSize: 5 * 1024 * 1024 }, // 5ՄԲ
-    fileFilter: (req, file, cb) => {
-        const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
-        if (allowedTypes.includes(file.mimetype)) {
-            cb(null, true);
-        } else {
-            cb(new Error('Թույլատրվում են միայն նկարներ (jpg, png, webp, gif)'));
-        }
-    }
-});
 
 // 1. GET: Ստանալ բոլոր հոդվածները
 router.get('/', async (req, res) => {

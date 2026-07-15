@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useMemo, useCallback } from 'react';
 
 // Ստեղծում ենք Context-ը
 export const CartContext = createContext();
@@ -16,7 +16,7 @@ export const CartProvider = ({ children }) => {
     }, [cartItems]);
 
     // 1. Ավելացնել զամբյուղում
-    const addToCart = (book) => {
+    const addToCart = useCallback((book) => {
         setCartItems((prevItems) => {
             // Ստուգում ենք՝ արդյոք գիրքն արդեն կա զամբյուղում
             const isBookInCart = prevItems.find((item) => item._id === book._id);
@@ -30,15 +30,15 @@ export const CartProvider = ({ children }) => {
             // Եթե չկա, ավելացնում ենք նոր գիրք՝ quantity: 1-ով
             return [...prevItems, { ...book, quantity: 1 }];
         });
-    };
+    }, []);
 
     // 2. Հեռացնել զամբյուղից
-    const removeFromCart = (bookId) => {
+    const removeFromCart = useCallback((bookId) => {
         setCartItems((prevItems) => prevItems.filter((item) => item._id !== bookId));
-    };
+    }, []);
 
     // 3. Փոխել քանակը (+1 կամ -1)
-    const updateQuantity = (bookId, amount) => {
+    const updateQuantity = useCallback((bookId, amount) => {
         setCartItems((prevItems) =>
             prevItems.map((item) => {
                 if (item._id === bookId) {
@@ -49,15 +49,22 @@ export const CartProvider = ({ children }) => {
                 return item;
             }).filter((item) => item.quantity > 0) // Ապահովության համար
         );
-    };
+    }, []);
 
     // 4. Մաքրել զամբյուղը
-    const clearCart = () => {
+    const clearCart = useCallback(() => {
         setCartItems([]);
-    };
+    }, []);
+
+    // Value-ն memoize ենք անում, որպեսզի cartItems-ը չփոխվելու դեպքում
+    // Context-ից կախված բոլոր component-ները ավելորդ re-render չկրեն
+    const value = useMemo(
+        () => ({ cartItems, addToCart, removeFromCart, updateQuantity, clearCart }),
+        [cartItems, addToCart, removeFromCart, updateQuantity, clearCart]
+    );
 
     return (
-        <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, updateQuantity, clearCart }}>
+        <CartContext.Provider value={value}>
             {children}
         </CartContext.Provider>
     );

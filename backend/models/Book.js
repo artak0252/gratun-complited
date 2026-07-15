@@ -7,6 +7,6 @@ const bookSchema = new mongoose.Schema({
   genre: { type: String, required: true, default: "other" },
   image: { type: String, default: "https://via.placeholder.com/150" },
   description: { type: String, default: "" }
-});
+}, { timestamps: true });
 
 export default mongoose.model('Book', bookSchema);

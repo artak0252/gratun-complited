@@ -13,6 +13,6 @@ const postSchema = new mongoose.Schema({
     },
     image: { type: String, required: true },
     date: { type: String, default: () => new Date().toISOString().split('T')[0] }
-});
+}, { timestamps: true });
 
 export default mongoose.model('Post', postSchema);

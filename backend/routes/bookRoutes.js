@@ -1,34 +1,10 @@
 import express from 'express';
-import multer from 'multer';
-import ImageKit from 'imagekit';
 import Book from '../models/Book.js';
 import { adminOnly } from '../middleware/adminMiddleware.js';
+import imagekit from '../utils/imagekit.js';
+import upload from '../utils/upload.js';
 
 const router = express.Router();
-
-// ԿԱՐԵՎՈՐ. fallback key-եր չկան միտումնավոր. եթե env փոփոխականները
-// բացակայում են, upload-ը պիտի հստակ ձախողվի, ոչ թե լուռ սխալ key-երով աշխատի
-const imagekit = new ImageKit({
-    publicKey: process.env.IMAGEKIT_PUBLIC_KEY,
-    privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
-    urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT
-});
-
-// Multer (memoryStorage-ը կարևոր է, որպեսզի ֆայլը չպահվի սերվերի վրա)
-// Սահմանափակում ենք միայն նկարներով և առավելագույնը 5ՄԲ, որպեսզի admin token-ի leak-ի դեպքում էլ
-// չկարողանան վնասակար կամ չափազանց մեծ ֆայլեր վերբեռնել
-const upload = multer({
-    storage: multer.memoryStorage(),
-    limits: { fileSize: 5 * 1024 * 1024 }, // 5ՄԲ
-    fileFilter: (req, file, cb) => {
-        const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
-        if (allowedTypes.includes(file.mimetype)) {
-            cb(null, true);
-        } else {
-            cb(new Error('Թույլատրվում են միայն նկարներ (jpg, png, webp, gif)'));
-        }
-    }
-});
 
 // 1. GET: Ստանալ բոլոր գրքերը
 router.get('/', async (req, res) => {

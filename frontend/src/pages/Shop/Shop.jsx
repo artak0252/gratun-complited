@@ -192,6 +192,7 @@ const Shop = () => {
                                 <img
                                     src={book.image.startsWith('http') ? book.image : `https://ik.imagekit.io/hmtd5pr9d/${book.image}`}
                                     alt={book.title}
+                                    loading="lazy"
                                     onError={(e) => {
                                         e.target.style.display = 'none';
                                     }}

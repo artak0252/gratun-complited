@@ -152,6 +152,7 @@ const Blog = () => {
                             className={styles.postImg}
                             src={post.image.startsWith('http') ? post.image : `https://ik.imagekit.io/hmtd5pr9d/${post.image}`}
                             alt={post.title}
+                            loading="lazy"
                             onError={(e) => {
                                 e.target.src = "https://via.placeholder.com/150";
                             }}
