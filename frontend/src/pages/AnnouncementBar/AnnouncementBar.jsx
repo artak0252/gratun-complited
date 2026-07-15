@@ -10,7 +10,7 @@ const AnnouncementBar = () => {
           return (
                     <div className={styles.announcementBar}>
                               <p className={styles.announcementText}>
-                                        Պատվիրի՛ր գրքեր, ստացի՛ր արագ առաքում: 041736074
+                                        Պատվիրի՛ր գրքեր, ստացի՛ր արագ առաքում: +37441736074
                                         <a href="tel:041736074" className={styles.callLink}>
                                                   Պատվիրի՛ր զանգ հիմա <FiPhoneCall />
                                         </a>
