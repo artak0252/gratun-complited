@@ -15,6 +15,8 @@ import Order from './models/Order.js';
 import bookRoutes from './routes/bookRoutes.js';
 import postRoutes from './routes/postRoutes.js';
 import sitemapRouter from './routes/sitemap.js';
+import Post from './models/Post.js';
+import { isSocialCrawler, renderSocialHtml, SITE_URL } from './utils/socialMeta.js';
 import { adminOnly } from './middleware/adminMiddleware.js';
 import { checkAuth } from './middleware/checkAuth.js';
 import rateLimit from 'express-rate-limit';
@@ -265,10 +267,55 @@ app.post('/api/orders', orderLimiter, async (req, res) => {
     }
 });
 
+const FRONTEND_BUILD_DIR = path.join(__dirname, '../frontend/build');
+
+// Այս 2 route-երը միայն social-media crawler-ների համար են (Facebook, WhatsApp,
+// Twitter/X, Telegram, LinkedIn և այլն), որոնք JavaScript չեն կատարում, ուստի
+// React-ի client-side meta tags-ը (react-helmet-async) նրանց համար անտեսանելի են։
+// Իրական users-ի (և Google-ի, որը JS-ը render է անում) համար next()-ով
+// անցնում ենք սովորական static+SPA serving-ին ներքևում։
+app.get('/shop/:id', async (req, res, next) => {
+    if (!isSocialCrawler(req.headers['user-agent'])) return next();
+    try {
+        const book = await Book.findById(req.params.id);
+        if (!book) return next();
+        const image = book.image.startsWith('http') ? book.image : `https://ik.imagekit.io/hmtd5pr9d/${book.image}`;
+        const html = renderSocialHtml(FRONTEND_BUILD_DIR, {
+            title: `${book.title} — ${book.author}`,
+            description: book.description || `${book.title}, հեղինակ՝ ${book.author}։ Պատվիրեք հիմա Գրատուն առցանց գրախանութից։`,
+            image,
+            url: `${SITE_URL}/shop/${book._id}`,
+            type: 'product',
+        });
+        res.send(html);
+    } catch (error) {
+        next();
+    }
+});
+
+app.get('/blog/:id', async (req, res, next) => {
+    if (!isSocialCrawler(req.headers['user-agent'])) return next();
+    try {
+        const post = await Post.findById(req.params.id);
+        if (!post) return next();
+        const image = post.image.startsWith('http') ? post.image : `https://ik.imagekit.io/hmtd5pr9d/${post.image}`;
+        const html = renderSocialHtml(FRONTEND_BUILD_DIR, {
+            title: post.title,
+            description: post.excerpt || post.content?.slice(0, 160),
+            image,
+            url: `${SITE_URL}/blog/${post._id}`,
+            type: 'article',
+        });
+        res.send(html);
+    } catch (error) {
+        next();
+    }
+});
+
 if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, '../frontend/build')));
+    app.use(express.static(FRONTEND_BUILD_DIR));
     app.get('*', (req, res) => {
-        res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
+        res.sendFile(path.join(FRONTEND_BUILD_DIR, 'index.html'));
     });
 }
 
