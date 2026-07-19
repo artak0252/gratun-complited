@@ -1,11 +1,17 @@
 import React, { useState } from 'react';
 import styles from './Contact.module.css'; // Փոխված իմպորտը
+import Seo from '../Seo/Seo';
 
 const Contact = () => {
   
 
   return (
     <div className={styles.contactContainer}>
+      <Seo
+        title="Կապվեք մեզ հետ"
+        description="Ունե՞ք հարցեր կամ առաջարկներ Գրատուն առցանց գրախանութի վերաբերյալ։ Կապվեք մեզ հետ։"
+        url="https://www.gratunhub.am/contact"
+      />
       <h1>Կապվեք մեզ հետ</h1>
       <p>Ունե՞ք հարցեր կամ առաջարկներ։ Գրեք մեզ, և մենք կպատասխանենք հնարավորինս շուտ։</p>
 

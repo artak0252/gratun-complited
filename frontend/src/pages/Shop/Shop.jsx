@@ -9,6 +9,7 @@ import styles from './Shop.module.css';
 import { bookGenres } from './genreConstants';
 import GenreFilter from './GenreFilter';
 import { FiHeart } from 'react-icons/fi';
+import Seo from '../Seo/Seo';
 
 const initialState = {
     books: [],
@@ -133,6 +134,11 @@ const Shop = () => {
 
     return (
         <div className={styles.shopContainer}>
+            <Seo
+                title="Խանութ"
+                description="Դիտեք և պատվիրեք գրքեր տարբեր ժանրերով Գրատուն առցանց գրախանութից։"
+                url="https://www.gratunhub.am/shop"
+            />
             {isAdmin && (
                 <div className={styles.adminFormContainer}>
                     <h3>{state.editingId ? 'Խմբագրել Գիրքը' : 'Ավելացնել Նոր Գիրք'}</h3>

@@ -11,6 +11,7 @@ import { FavoritesContext } from '../../context/FavoritesContext.jsx';
 import { CartContext } from '../../context/CartContext.jsx';
 import logo from '../../assets/gratun-logo.png';
 
+
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();

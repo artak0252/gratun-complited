@@ -1,9 +1,15 @@
 import React from 'react';
 import styles from './About.module.css';
+import Seo from '../Seo/Seo';
 
 const About = () => {
   return (
     <div className={styles.aboutContainer}>
+      <Seo
+        title="Մեր մասին"
+        description="Իմացեք Գրատուն առցանց գրախանութի պատմության և առաքելության մասին։"
+        url="https://www.gratunhub.am/about"
+      />
       <header className={styles.aboutHeader}>
         <h1>Մեր պատմությունը</h1>
         <p>Մենք սիրահարված ենք գրքերին և գաղափարներին</p>

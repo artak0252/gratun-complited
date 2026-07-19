@@ -7,6 +7,9 @@ import toast from 'react-hot-toast';
 import styles from './BookDetail.module.css';
 import { bookGenres } from './genreConstants';
 import { FiHeart } from 'react-icons/fi';
+import Seo from '../Seo/Seo';
+
+const SITE_URL = 'https://www.gratunhub.am';
 
 const initialState = {
           book: null,
@@ -64,8 +67,34 @@ const BookDetail = () => {
           if (loading) return <div className={styles.loading}>Բեռնվում է...</div>;
           if (error) return <div className={styles.loading}>{error}</div>;
 
+          const bookImage = book.image.startsWith('http')
+                    ? book.image
+                    : `https://ik.imagekit.io/hmtd5pr9d/${book.image}`;
+
           return (
                     <div className={styles.detailContainer}>
+                              <Seo
+                                        title={`${book.title} — ${book.author}`}
+                                        description={book.description || `${book.title}, հեղինակ՝ ${book.author}։ Պատվիրեք հիմա Գրատուն առցանց գրախանութից։`}
+                                        image={bookImage}
+                                        url={`${SITE_URL}/shop/${book._id}`}
+                                        type="product"
+                                        jsonLd={{
+                                                  '@context': 'https://schema.org',
+                                                  '@type': 'Book',
+                                                  name: book.title,
+                                                  author: { '@type': 'Person', name: book.author },
+                                                  image: bookImage,
+                                                  description: book.description || undefined,
+                                                  offers: {
+                                                            '@type': 'Offer',
+                                                            price: book.price,
+                                                            priceCurrency: 'AMD',
+                                                            availability: 'https://schema.org/InStock',
+                                                            url: `${SITE_URL}/shop/${book._id}`,
+                                                  },
+                                        }}
+                              />
                               <Link to="/shop" className={styles.backBtn}>← Հետ դեպի խանութ</Link>
 
                               <div className={styles.bookDetailCard}>

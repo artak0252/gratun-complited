@@ -6,6 +6,7 @@ import { AuthContext } from '../../context/AuthContext.jsx';
 import styles from './Blog.module.css';
 import CategoryFilter from './CategoryFilter';
 import adminStyles from './AdminFilter.module.css';
+import Seo from '../Seo/Seo';
 
 const initialState = {
     posts: [],
@@ -106,6 +107,11 @@ const Blog = () => {
 
     return (
         <div className={styles.blogContainer}>
+            <Seo
+                title="Օրագիր"
+                description="Կարդացեք հոդվածներ գրականության, փիլիսոփայության և հոգևոր թեմաներով Գրատուն օրագրում։"
+                url="https://www.gratunhub.am/blog"
+            />
             {isAdmin && (
                 <div className={styles.adminSection}>
                     <button className={styles.publishBtn} style={{ marginBottom: '20px' }} onClick={() => isFormVisible ? handleCancelEdit() : setIsFormVisible(true)}>
