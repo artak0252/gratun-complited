@@ -87,6 +87,22 @@
    color: var(--color-accent);
 }
 
+/* Երկտող navLink (օր.՝ «Մեջբերումներ / գրքերից»). նույն navLink-ի վրա
+   դնում ենք column ուղղություն ու մի փոքր փոքրացնում ենք տառաչափը,
+   որպեսզի երկու տողն էլ տեղավորվեն առանց մենյուի բարձրությունը մեծացնելու */
+.navLinkStacked {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   line-height: 1.2;
+   font-size: 14px;
+   text-align: center;
+}
+
+.navLinkStacked span {
+   display: block;
+}
+
 
 /* ===== Heart / Favorites icon ===== */
 

@@ -14,6 +14,7 @@ import Book from './models/Book.js';
 import Order from './models/Order.js';
 import bookRoutes from './routes/bookRoutes.js';
 import postRoutes from './routes/postRoutes.js';
+import quoteRoutes from './routes/quoteRoutes.js';
 import sitemapRouter from './routes/sitemap.js';
 import Post from './models/Post.js';
 import { isSocialCrawler, renderSocialHtml, SITE_URL } from './utils/socialMeta.js';
@@ -186,6 +187,7 @@ app.post('/api/register', authLimiter, async (req, res) => {
 
 app.use('/api/books', bookRoutes);
 app.use('/api/posts', postRoutes);
+app.use('/api/quotes', quoteRoutes);
 app.use('/', sitemapRouter);
 
 const orderLimiter = rateLimit({

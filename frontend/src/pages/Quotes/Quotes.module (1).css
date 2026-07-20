@@ -1,0 +1,341 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600&display=swap');
+
+.quotesPage {
+          padding: 60px 8%;
+          background: #fdfdfd;
+          min-height: 100vh;
+          box-sizing: border-box;
+}
+
+.loading {
+          padding: 100px 0;
+          text-align: center;
+          font-size: 18px;
+          color: #6b7280;
+}
+
+/* ===== Page header ===== */
+
+.pageHeader {
+          text-align: center;
+          max-width: 700px;
+          margin: 0 auto 40px;
+}
+
+.pageHeader h1 {
+          font-family: 'Playfair Display', serif;
+          font-size: 34px;
+          color: #14315C;
+          margin: 0 0 10px;
+}
+
+.pageHeader p {
+          font-family: 'Noto Sans Armenian', 'Poppins', sans-serif;
+          font-size: 15px;
+          color: #6b7280;
+          margin: 0;
+}
+
+/* ===== Admin form (mirrors Blog's admin form) ===== */
+
+.adminSection {
+          max-width: 900px;
+          margin: 0 auto 30px;
+}
+
+.publishBtn {
+          background: #14315C;
+          color: #ffffff;
+          border: none;
+          padding: 15px 30px;
+          border-radius: 12px;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          width: fit-content;
+          margin-bottom: 20px;
+}
+
+.publishBtn:hover {
+          background: #d35400;
+          transform: scale(1.02);
+}
+
+.cancelBtn {
+          background: none;
+          border: 1px solid #e2e8f0;
+          color: #6b7280;
+          padding: 15px 24px;
+          border-radius: 12px;
+          cursor: pointer;
+          margin-left: 10px;
+}
+
+.adminFormContainer {
+          background: #ffffff;
+          padding: 40px;
+          border-radius: 24px;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+          margin-bottom: 40px;
+          border: 1px solid #f0f0f0;
+}
+
+.adminFormContainer h3 {
+          margin-top: 0;
+          font-family: 'Playfair Display', serif;
+          color: #14315C;
+}
+
+.adminFormContainer form {
+          display: flex;
+          flex-direction: column;
+          gap: 15px;
+}
+
+.adminFormContainer input,
+.adminFormContainer textarea {
+          padding: 15px;
+          border: 1px solid #eee;
+          border-radius: 12px;
+          font-size: 16px;
+          font-family: inherit;
+}
+
+.adminFormContainer textarea {
+          resize: none;
+          height: 110px;
+}
+
+.fileInput {
+          display: none;
+}
+
+.fileLabel {
+          padding: 15px;
+          background: #f8f9fa;
+          border: 1px dashed #d1d5db;
+          border-radius: 12px;
+          cursor: pointer;
+          text-align: center;
+          color: #6b7280;
+          font-size: 14px;
+          transition: all 0.3s ease;
+          display: block;
+}
+
+.fileLabel:hover {
+          border-color: #14315C;
+          color: #14315C;
+          background: #f4f7fb;
+}
+
+/* ===== Search (the "powerful" search bar) ===== */
+
+.searchContainer {
+          position: relative;
+          margin: 0 auto 50px;
+          max-width: 600px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+}
+
+.searchIcon {
+          position: absolute;
+          left: 22px;
+          color: #9ca3af;
+          font-size: 18px;
+          pointer-events: none;
+}
+
+.searchInput {
+          width: 100%;
+          padding: 15px 50px;
+          border-radius: 30px;
+          border: 1px solid #e2e8f0;
+          font-size: 16px;
+          outline: none;
+          transition: 0.3s;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+          box-sizing: border-box;
+}
+
+.searchInput:focus {
+          border-color: #14315C;
+          box-shadow: 0 0 0 3px rgba(20, 49, 92, 0.1);
+}
+
+.clearSearchBtn {
+          position: absolute;
+          right: 22px;
+          background: none;
+          border: none;
+          color: #9ca3af;
+          cursor: pointer;
+          font-size: 18px;
+          display: flex;
+}
+
+.clearSearchBtn:hover {
+          color: #d35400;
+}
+
+.resultsCount {
+          position: absolute;
+          bottom: -26px;
+          font-size: 13px;
+          color: #9ca3af;
+}
+
+.highlight {
+          background: #ffe6b3;
+          color: inherit;
+          border-radius: 3px;
+          padding: 0 2px;
+}
+
+.noResults {
+          text-align: center;
+          color: #9ca3af;
+          font-size: 16px;
+          padding: 60px 0;
+}
+
+/* ===== Quotes grid / card (same visual language as Home's ReadingQuote) ===== */
+
+.quotesGrid {
+          display: flex;
+          flex-direction: column;
+          gap: 30px;
+          max-width: 1100px;
+          margin: 0 auto;
+}
+
+.quoteCard {
+          position: relative;
+          background: #E4E8F0;
+          border-radius: 24px;
+          padding: 40px 6%;
+          display: flex;
+          align-items: center;
+          gap: 40px;
+          box-sizing: border-box;
+          transition: 0.3s;
+}
+
+.quoteCard:hover {
+          box-shadow: 0 16px 32px rgba(20, 49, 92, 0.08);
+}
+
+.imageSide {
+          flex: 0 0 auto;
+}
+
+.authorPhoto {
+          width: 120px;
+          height: 120px;
+          border-radius: 50%;
+          object-fit: cover;
+          border: 4px solid #ffffff;
+          box-shadow: 0 0 0 3px #14315C;
+          display: block;
+}
+
+.authorPhotoFallback {
+          width: 120px;
+          height: 120px;
+          border-radius: 50%;
+          background: #ffffff;
+          border: 4px solid #ffffff;
+          box-shadow: 0 0 0 3px #14315C;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 44px;
+          color: #14315C;
+}
+
+.textSide {
+          flex: 1 1 500px;
+          max-width: 780px;
+          position: relative;
+}
+
+.quoteMark {
+          font-family: 'Playfair Display', serif;
+          font-size: 56px;
+          line-height: 0;
+          color: #d35400;
+          display: block;
+          margin-bottom: 6px;
+}
+
+.quoteText {
+          font-family: 'Playfair Display', serif;
+          font-style: italic;
+          font-weight: 600;
+          font-size: 20px;
+          color: #14315C;
+          line-height: 1.55;
+          margin: 0 0 14px;
+}
+
+.author {
+          font-family: 'Poppins', sans-serif;
+          font-size: 15px;
+          font-weight: 600;
+          color: #525252;
+          letter-spacing: 0.5px;
+}
+
+.adminQuoteActions {
+          position: absolute;
+          top: 16px;
+          right: 16px;
+          display: flex;
+          gap: 8px;
+          z-index: 2;
+}
+
+.editQuoteBtn,
+.deleteQuoteBtn {
+          background: rgba(255, 255, 255, 0.9);
+          border: none;
+          border-radius: 8px;
+          cursor: pointer;
+          font-size: 18px;
+          padding: 4px 8px;
+          transition: transform 0.2s ease;
+}
+
+.editQuoteBtn:hover,
+.deleteQuoteBtn:hover {
+          transform: scale(1.1);
+}
+
+/* ===== Responsive ===== */
+
+@media (max-width: 700px) {
+          .quotesPage {
+                    padding: 40px 6%;
+          }
+
+          .quoteCard {
+                    flex-direction: column;
+                    text-align: center;
+                    gap: 20px;
+                    padding: 30px 6%;
+          }
+
+          .quoteText {
+                    font-size: 18px;
+          }
+
+          .pageHeader h1 {
+                    font-size: 26px;
+          }
+
+          .adminFormContainer {
+                    padding: 24px;
+          }
+}
