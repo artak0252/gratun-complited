@@ -13,16 +13,19 @@ import Contact from './pages/Contact/Contact';
 import About from './pages/About/About';
 import SinglePost from './pages/Blog/SinglePost';
 import Login from './pages/Login/Login';
-import Register from './pages/Login/Register'; // Ավելացված Register էջը
-
-// Կոմպոնենտներ
+import Register from './pages/Login/Register'; 
 import Header from './pages/Header/Header';
 import AnnouncementBar from './pages/AnnouncementBar/AnnouncementBar';
 import Footer from './pages/Footer/Footer';
+import Seo from './pages/Seo/Seo';
 
 function App() {
   return (
     <Router>
+      {/* Default/fallback tags — page-specific <Seo> (Shop, BookDetail, Blog...)
+          overrides these. Սա մեկ, միասնական title-managed by Helmet, առանց
+          index.html-ի static tags-ի հետ կրկնապատկվելու։ */}
+      <Seo />
       <Toaster />
       <Header />
       <AnnouncementBar />

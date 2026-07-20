@@ -312,6 +312,15 @@ app.get('/blog/:id', async (req, res, next) => {
     }
 });
 
+// Homepage/listing էջերի (/, /shop, /blog, /about, /contact) համար crawler-ներին
+// ուղարկում ենք default site-wide meta tags-ով HTML (նույն template-ը, առանց
+// կոնկրետ գրքի/հոդվածի տվյալների)
+app.get(['/', '/shop', '/blog', '/about', '/contact'], (req, res, next) => {
+    if (!isSocialCrawler(req.headers['user-agent'])) return next();
+    const html = renderSocialHtml(FRONTEND_BUILD_DIR, { url: `${SITE_URL}${req.path === '/' ? '/' : req.path}` });
+    res.send(html);
+});
+
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static(FRONTEND_BUILD_DIR));
     app.get('*', (req, res) => {
