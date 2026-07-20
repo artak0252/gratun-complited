@@ -12,6 +12,7 @@ import Favorites from './pages/Favorites/Favorites';
 import Contact from './pages/Contact/Contact';
 import About from './pages/About/About';
 import SinglePost from './pages/Blog/SinglePost';
+import Quotes from './pages/Quotes/Quotes';
 import Login from './pages/Login/Login';
 import Register from './pages/Login/Register'; 
 import Header from './pages/Header/Header';
@@ -33,6 +34,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:id" element={<SinglePost />} />
+        <Route path="/quotes" element={<Quotes />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/shop/:id" element={<BookDetail />} />
         <Route path="/cart" element={<Cart />} />
