@@ -40,8 +40,8 @@ const Header = () => {
             <Link to="/shop" className={styles.navLink} onClick={() => setIsOpen(false)}>Գրքեր</Link>
             <Link to="/blog" className={styles.navLink} onClick={() => setIsOpen(false)}>Բլոգ</Link>
             <Link to="/quotes" className={`${styles.navLink} ${styles.navLinkStacked}`} onClick={() => setIsOpen(false)}>
-              <span>Մեջբերումներ</span>
-              <span>գրքերից</span>
+              Մեջբերումներ
+             
             </Link>
             <Link to="/contact" className={styles.navLink} onClick={() => setIsOpen(false)}>Հետադարձ կապ</Link>
             <Link to="/about" className={styles.navLink} onClick={() => setIsOpen(false)}>Մեր մասին</Link>
