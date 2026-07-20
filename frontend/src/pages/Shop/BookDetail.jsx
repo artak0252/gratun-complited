@@ -81,11 +81,12 @@ const BookDetail = () => {
                                         type="product"
                                         jsonLd={{
                                                   '@context': 'https://schema.org',
-                                                  '@type': 'Book',
+                                                  '@type': 'Product',
                                                   name: book.title,
-                                                  author: { '@type': 'Person', name: book.author },
+                                                  brand: { '@type': 'Brand', name: book.author },
                                                   image: bookImage,
                                                   description: book.description || undefined,
+                                                  sku: book._id,
                                                   offers: {
                                                             '@type': 'Offer',
                                                             price: book.price,
