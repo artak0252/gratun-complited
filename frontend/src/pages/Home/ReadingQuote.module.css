@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600&display=swap');
+
+.quoteContainer {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 50px;
+          max-width: 1100px;
+          margin: 0 auto;
+          padding: 50px 8%;
+          background: #E4E8F0;
+          border-bottom: 5px solid white;
+          box-sizing: border-box;
+}
+
+.imageSide {
+          flex: 0 0 auto;
+}
+
+.illustration {
+          width: 140px;
+          height: 140px;
+}
+
+.bgCircle {
+          fill: #ffffff;
+}
+
+.stone {
+          fill: #14315C;
+          opacity: 0.92;
+}
+
+.foldLine {
+          fill: none;
+          stroke: #E4E8F0;
+          stroke-width: 2;
+          stroke-linecap: round;
+}
+
+.laurel path {
+          fill: none;
+          stroke: #d35400;
+          stroke-width: 3;
+          stroke-linecap: round;
+}
+
+.textSide {
+          flex: 1 1 500px;
+          max-width: 600px;
+          position: relative;
+}
+
+.quoteMark {
+          font-family: 'Playfair Display', serif;
+          font-size: 64px;
+          line-height: 0;
+          color: #d35400;
+          display: block;
+          margin-bottom: 6px;
+}
+
+.quoteText {
+          font-family: 'Playfair Display', serif;
+          font-style: italic;
+          font-weight: 600;
+          font-size: 24px;
+          color: #14315C;
+          line-height: 1.5;
+          margin: 0 0 16px;
+}
+
+.author {
+          font-family: 'Poppins', sans-serif;
+          font-size: 15px;
+          font-weight: 600;
+          color: #525252;
+          letter-spacing: 0.5px;
+}
+
+@media (max-width: 700px) {
+          .quoteContainer {
+                    flex-direction: column;
+                    text-align: center;
+                    gap: 24px;
+                    padding: 40px 6%;
+          }
+
+          .quoteText {
+                    font-size: 20px;
+          }
+}
