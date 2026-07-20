@@ -67,7 +67,7 @@
 
 .headerMenu {
    display: flex;
-   align-items: center;
+   align-items: baseline;
    justify-content: center;
    flex: 1;
    gap: 36px;
