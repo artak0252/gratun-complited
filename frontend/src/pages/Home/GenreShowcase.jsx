@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FiBookOpen, FiClock, FiStar, FiSearch, FiSmile, FiFeather } from 'react-icons/fi';
+import { FiBookOpen, FiClock, FiStar, FiSearch, FiSmile, FiFeather, FiHeart } from 'react-icons/fi';
 import styles from './GenreShowcase.module.css';
 
 const genres = [
@@ -10,6 +10,7 @@ const genres = [
   { id: 'detective', label: 'Դետեկտիվ', icon: <FiSearch /> },
   { id: 'children', label: 'Մանկական', icon: <FiSmile /> },
   { id: 'poetry', label: 'Պոեզիա', icon: <FiFeather /> },
+  { id: 'psychology', label: 'Հոգեբանական', icon: <FiHeart /> },
 ];
 
 const GenreShowcase = () => {

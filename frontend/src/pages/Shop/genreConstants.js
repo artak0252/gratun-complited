@@ -10,6 +10,7 @@ export const bookGenres = [
           { id: 'biography', label: 'Կենսագրական' },
           { id: 'science', label: 'Մոտիվացիոն' },
           { id: 'spiritual', label: 'Հոգևոր-կրոնական' },
+          { id: 'psychology', label: 'Հոգեբանական' },
           { id: 'other', label: 'Այլ' },
           { id: 'old-editions', label: 'ՀԻՆ ՀՐԱՏԱՐԱԿՈՒԹՅԱՆ ԳՐՔԵՐ' }
 ];
