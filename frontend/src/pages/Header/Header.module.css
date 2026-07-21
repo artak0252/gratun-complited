@@ -141,6 +141,7 @@
    align-items: center;
    justify-content: center;
 }
+
 /* ===== Cart icon ===== */
 
 .cartIcon {
@@ -322,6 +323,15 @@
       font-size: 16px;
    }
 
+   /* Մոբայլ մենյուում «Մեջբերումներ»-ը պետք է հավասարվի մնացած
+      լինքերի հետ (ձախ եզրով, տողի լայնությամբ), ոչ թե կենտրոնացած
+      սյունակի տեսքով, ինչպես desktop navLinkStacked-ում */
+   .navLinkStacked {
+      flex-direction: row;
+      align-items: flex-start;
+      text-align: left;
+   }
+
    .headerTop {
       flex-wrap: wrap;
    }
@@ -354,9 +364,9 @@
       gap: 12px;
    }
 
-      .heartIcon {
-         width: 34px;
-         height: 34px;
-         font-size: 16px;
-      }
+   .heartIcon {
+      width: 34px;
+      height: 34px;
+      font-size: 16px;
+   }
 }

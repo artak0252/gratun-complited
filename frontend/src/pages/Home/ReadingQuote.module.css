@@ -16,6 +16,7 @@
           /* եղել էր՝ 1100px */
           margin: 0 auto;
 }
+
 .imageSide {
           flex: 0 0 auto;
 }
@@ -28,6 +29,20 @@
           border: 4px solid #ffffff;
           box-shadow: 0 0 0 3px #14315C;
           display: block;
+}
+
+.authorPhotoFallback {
+          width: 140px;
+          height: 140px;
+          border-radius: 50%;
+          border: 4px solid #ffffff;
+          box-shadow: 0 0 0 3px #14315C;
+          background: #14315C;
+          color: #ffffff;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 48px;
 }
 
 .textSide {
