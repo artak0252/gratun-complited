@@ -4,7 +4,6 @@ import api from '../../api/axiosInstance';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext.jsx';
 import styles from './Blog.module.css';
-import CategoryFilter from './CategoryFilter';
 import adminStyles from './AdminFilter.module.css';
 import Seo from '../Seo/Seo';
 
@@ -12,7 +11,6 @@ const initialState = {
     posts: [],
     loading: true,
     searchTerm: '',
-    selectedCategory: 'all',
     editingId: null,
     formData: { title: '', excerpt: '', content: '', category: 'history', image: null }
 };
@@ -28,7 +26,6 @@ const blogReducer = (state, action) => {
         case 'START_EDIT': return { ...state, editingId: action.payload._id, formData: { title: action.payload.title, excerpt: action.payload.excerpt, content: action.payload.content, category: action.payload.category, image: null } };
         case 'CANCEL_EDIT': return { ...state, editingId: null, formData: initialState.formData };
         case 'SET_SEARCH': return { ...state, searchTerm: action.payload };
-        case 'SET_CATEGORY': return { ...state, selectedCategory: action.payload };
         default: return state;
     }
 };
@@ -36,7 +33,7 @@ const blogReducer = (state, action) => {
 const Blog = () => {
     const [state, dispatch] = useReducer(blogReducer, initialState);
     const [isFormVisible, setIsFormVisible] = useState(false);
-    const { posts, loading, formData, searchTerm, selectedCategory, editingId } = state;
+    const { posts, loading, formData, searchTerm, editingId } = state;
     const { isAdmin } = useContext(AuthContext);
 
     useEffect(() => {
@@ -100,9 +97,8 @@ const Blog = () => {
     if (loading) return <div className={styles.loading}>Բեռնվում է...</div>;
 
     const filteredPosts = posts.filter(p => {
-        const matchesCategory = selectedCategory === 'all' || p.category === selectedCategory || (selectedCategory === 'literature' && p.category?.startsWith('literature'));
         const matchesSearch = p.title?.toLowerCase().includes(searchTerm.toLowerCase());
-        return matchesCategory && matchesSearch;
+        return matchesSearch;
     });
 
     return (
@@ -138,8 +134,6 @@ const Blog = () => {
                     )}
                 </div>
             )}
-
-            <CategoryFilter categories={blogCategories} selectedCategory={selectedCategory} onSelectCategory={(id) => dispatch({ type: 'SET_CATEGORY', payload: id })} />
 
             <div className={styles.searchContainer}>
                 <input className={styles.searchInput} type="text" placeholder="Որոնել հոդված..." value={searchTerm} onChange={e => dispatch({ type: 'SET_SEARCH', payload: e.target.value })} />
