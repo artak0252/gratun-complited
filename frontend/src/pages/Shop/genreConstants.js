@@ -4,7 +4,7 @@ export const bookGenres = [
           { id: 'history', label: 'Պատմական' },
           { id: 'philosophy', label: 'Փիլիսոփայական' },
           { id: 'poetry', label: 'Պոեզիա' },
-          { id: 'fantasy', label: 'Ֆանտաստիկ' },
+          { id: 'fantasy', label: 'Ֆանտաստիկա' },
           { id: 'detective', label: 'Դետեկտիվ' },
           { id: 'children', label: 'Մանկական' },
           { id: 'biography', label: 'Կենսագրական' },
