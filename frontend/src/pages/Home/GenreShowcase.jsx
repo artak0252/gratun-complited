@@ -6,7 +6,7 @@ import styles from './GenreShowcase.module.css';
 const genres = [
   { id: 'fiction', label: 'Գեղարվեստական', icon: <FiBookOpen /> },
   { id: 'history', label: 'Պատմական', icon: <FiClock /> },
-  { id: 'fantasy', label: 'Ֆենթեզի', icon: <FiStar /> },
+  { id: 'fantasy', label: 'Ֆանտաստիկ', icon: <FiStar /> },
   { id: 'detective', label: 'Դետեկտիվ', icon: <FiSearch /> },
   { id: 'children', label: 'Մանկական', icon: <FiSmile /> },
   { id: 'poetry', label: 'Պոեզիա', icon: <FiFeather /> },
