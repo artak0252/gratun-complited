@@ -14,6 +14,7 @@ import About from './pages/About/About';
 import SinglePost from './pages/Blog/SinglePost';
 import Quotes from './pages/Quotes/Quotes';
 import ThematicBooks from './pages/ThematicBooks/ThematicBooks';
+import ThematicTeaser from './pages/Home/ThematicTeaser';
 import Login from './pages/Login/Login';
 import Register from './pages/Login/Register'; 
 import Header from './pages/Header/Header';
@@ -31,6 +32,7 @@ function App() {
       <Toaster />
       <Header />
       <AnnouncementBar />
+      <ThematicTeaser />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/blog" element={<Blog />} />
