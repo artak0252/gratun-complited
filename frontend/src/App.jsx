@@ -31,8 +31,9 @@ function App() {
       <Seo />
       <Toaster />
       <Header />
+       <AnnouncementBar />
        <ThematicTeaser />
-      <AnnouncementBar />
+     
      
       <Routes>
         <Route path="/" element={<Home />} />
