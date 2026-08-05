@@ -43,6 +43,7 @@ const Header = () => {
               Մեջբերումներ
              
             </Link>
+            <Link to="/thematic" className={styles.navLink} onClick={() => setIsOpen(false)}>Թեմատիկ</Link>
             <Link to="/contact" className={styles.navLink} onClick={() => setIsOpen(false)}>Հետադարձ կապ</Link>
             <Link to="/about" className={styles.navLink} onClick={() => setIsOpen(false)}>Մեր մասին</Link>
           </nav>

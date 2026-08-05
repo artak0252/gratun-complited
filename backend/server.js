@@ -15,7 +15,9 @@ import Order from './models/Order.js';
 import bookRoutes from './routes/bookRoutes.js';
 import postRoutes from './routes/postRoutes.js';
 import quoteRoutes from './routes/quoteRoutes.js';
+import thematicBookRoutes from './routes/thematicBookRoutes.js';
 import sitemapRouter from './routes/sitemap.js';
+
 import Post from './models/Post.js';
 import { isSocialCrawler, renderSocialHtml, SITE_URL } from './utils/socialMeta.js';
 import { adminOnly } from './middleware/adminMiddleware.js';
@@ -188,6 +190,7 @@ app.post('/api/register', authLimiter, async (req, res) => {
 app.use('/api/books', bookRoutes);
 app.use('/api/posts', postRoutes);
 app.use('/api/quotes', quoteRoutes);
+app.use('/api/thematic-books', thematicBookRoutes);
 app.use('/', sitemapRouter);
 
 const orderLimiter = rateLimit({
