@@ -14,9 +14,8 @@ import About from './pages/About/About';
 import SinglePost from './pages/Blog/SinglePost';
 import Quotes from './pages/Quotes/Quotes';
 import ThematicBooks from './pages/ThematicBooks/ThematicBooks';
-import ThematicTeaser from './pages/Home/ThematicTeaser';
 import Login from './pages/Login/Login';
-import Register from './pages/Login/Register'; 
+import Register from './pages/Login/Register';
 import Header from './pages/Header/Header';
 import AnnouncementBar from './pages/AnnouncementBar/AnnouncementBar';
 import Footer from './pages/Footer/Footer';
@@ -31,10 +30,8 @@ function App() {
       <Seo />
       <Toaster />
       <Header />
-       <AnnouncementBar />
-       <ThematicTeaser />
-     
-     
+      <AnnouncementBar />
+
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/blog" element={<Blog />} />

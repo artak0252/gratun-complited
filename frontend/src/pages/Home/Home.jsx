@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
@@ -15,12 +14,14 @@ import GenreShowcase from './GenreShowcase';
 import BlogShowcase from '../BlogShowcase/BlogShowcase';
 import Seo from '../Seo/Seo';
 import ReadingQuote from './ReadingQuote';
+import ThematicTeaser from './ThematicTeaser';
 
 const Home = () => {
   return (
     <>
       <Seo url="https://www.gratunhub.am/" />
       <ReadingQuote />
+      <ThematicTeaser />
       <RecommendedBooks />
       <BlogShowcase />
       <Swiper
