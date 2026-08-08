@@ -120,6 +120,15 @@
                     gap: 24px;
           }
 
+          /* Նույն խնդիրը, ինչ ReadingQuote-ում. flex-basis: 500px-ը
+             column ուղղության մեջ դառնում է min-height, ոչ թե width,
+             ինչի արդյունքում բլոկը տակից մեծ դատարկ տարածք էր թողնում */
+          .textSide {
+                    flex: 1 1 auto;
+                    width: 100%;
+                    max-width: 100%;
+          }
+
           .teaserContainer {
                     padding: 40px 6%;
           }
