@@ -1,16 +1,16 @@
 .cartContainer {
-          background: #f8fafc;
+          background: var(--color-surface);
           max-width: 1200px;
           margin: 0 auto;
           padding: 70px 8%;
-          color: #1a1a1a;
+          color: var(--color-text);
           min-height: 70vh;
 }
 
 .cartPageTitle {
-          font-family: 'Playfair Display', serif;
+          font-family: var(--font-heading);
           font-size: 32px;
-          color: #1a1a1a;
+          color: var(--color-text);
           margin-bottom: 40px;
 }
 
@@ -23,13 +23,13 @@
 }
 
 .emptyCart h2 {
-          font-family: 'Playfair Display', serif;
-          color: #1a1a1a;
+          font-family: var(--font-heading);
+          color: var(--color-text);
           margin-bottom: 10px;
 }
 
 .emptyCart p {
-          color: #718096;
+          color: var(--color-text-secondary);
 }
 
 .cartContent {
@@ -51,7 +51,7 @@
           display: flex;
           align-items: center;
           background: #ffffff;
-          border: 1px solid #f1f5f9;
+          border: 1px solid var(--color-surface);
           padding: 15px;
           border-radius: 20px;
           gap: 20px;
@@ -68,7 +68,7 @@
           width: 80px;
           height: 110px;
           object-fit: contain;
-          background-color: #f1f5f9;
+          background-color: var(--color-surface);
           border-radius: 12px;
           padding: 6px;
           box-sizing: border-box;
@@ -79,20 +79,20 @@
 }
 
 .cartItemDetails h3 {
-          font-family: 'Playfair Display', serif;
-          color: #1a1a1a;
+          font-family: var(--font-heading);
+          color: var(--color-text);
           margin: 0 0 5px 0;
           font-size: 1.15rem;
 }
 
 .cartItemAuthor {
-          color: #718096;
+          color: var(--color-text-secondary);
           font-size: 0.9rem;
           margin: 0 0 5px 0;
 }
 
 .cartItemPrice {
-          color: #8e44ad;
+          color: var(--color-accent);
           font-weight: 700;
           margin: 0;
 }
@@ -101,7 +101,7 @@
           display: flex;
           align-items: center;
           gap: 12px;
-          background: #f1f5f9;
+          background: var(--color-surface);
           padding: 6px 10px;
           border-radius: 12px;
 }
@@ -109,7 +109,7 @@
 .qtyBtn {
           background: transparent;
           border: none;
-          color: #1a1a1a;
+          color: var(--color-text);
           font-size: 1.2rem;
           cursor: pointer;
           width: 25px;
@@ -118,7 +118,7 @@
 }
 
 .qtyBtn:hover {
-          color: #8e44ad;
+          color: var(--color-accent);
 }
 
 .qtyNumber {
@@ -126,13 +126,13 @@
           font-weight: 600;
           min-width: 20px;
           text-align: center;
-          color: #1a1a1a;
+          color: var(--color-text);
 }
 
 .cartItemDeleteBtn {
           background: transparent;
           border: none;
-          color: #e74c3c;
+          color: var(--color-danger);
           font-size: 1.2rem;
           cursor: pointer;
           padding: 10px;
@@ -146,7 +146,7 @@
 .cartSummaryPanel {
           flex: 1;
           background: #ffffff;
-          border: 1px solid #edf2f7;
+          border: 1px solid var(--color-border);
           padding: 30px 25px;
           border-radius: 20px;
           min-width: 280px;
@@ -155,14 +155,14 @@
 }
 
 .cartSummaryPanel h3 {
-          font-family: 'Playfair Display', serif;
-          color: #1a1a1a;
+          font-family: var(--font-heading);
+          color: var(--color-text);
           margin-top: 0;
 }
 
 .summaryDivider {
           border: 0;
-          border-top: 1px solid #edf2f7;
+          border-top: 1px solid var(--color-border);
           margin: 15px 0;
 }
 
@@ -170,25 +170,25 @@
           display: flex;
           justify-content: space-between;
           margin-bottom: 12px;
-          color: #718096;
+          color: var(--color-text-secondary);
           font-size: 0.95rem;
 }
 
 .totalPriceRow {
           font-size: 1.2rem;
-          color: #1a1a1a;
+          color: var(--color-text);
           font-weight: 700;
           margin-top: 20px;
 }
 
 .goldText {
-          color: #8e44ad;
+          color: var(--color-accent);
 }
 
 .checkoutBtn {
           width: 100%;
           padding: 14px;
-          background: #1a1a1a;
+          background: var(--color-text);
           color: white;
           border: none;
           border-radius: 12px;
@@ -199,15 +199,15 @@
 }
 
 .checkoutBtn:hover {
-          background: #8e44ad;
+          background: var(--color-accent);
 }
 
 .clearCartBtn {
           width: 100%;
           padding: 12px;
           background: #fff;
-          color: #e74c3c;
-          border: 1px solid #e74c3c;
+          color: var(--color-danger);
+          border: 1px solid var(--color-danger);
           border-radius: 12px;
           margin-top: 10px;
           cursor: pointer;
@@ -216,7 +216,7 @@
 }
 
 .clearCartBtn:hover {
-          background: #e74c3c;
+          background: var(--color-danger);
           color: #fff;
 }
 
@@ -225,15 +225,15 @@
           padding: 40px;
           border-radius: 24px;
           box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
-          border: 1px solid #edf2f7;
+          border: 1px solid var(--color-border);
           max-width: 500px;
           margin: 20px auto;
           text-align: center;
 }
 
 .orderFormContainer h3 {
-          font-family: 'Playfair Display', serif;
-          color: #1a1a1a;
+          font-family: var(--font-heading);
+          color: var(--color-text);
 }
 
 .orderFormContainer input {
@@ -241,7 +241,7 @@
           width: 100%;
           padding: 14px 20px;
           margin: 10px 0;
-          border: 1px solid #e2e8f0;
+          border: 1px solid var(--color-border);
           border-radius: 12px;
           font-size: 16px;
           box-sizing: border-box;
@@ -250,12 +250,12 @@
 
 .orderFormContainer input:focus {
           outline: none;
-          border-color: #8e44ad;
+          border-color: var(--color-accent);
 }
 
 .orderFormContainer .checkoutBtn {
           width: 100%;
-          background: #8e44ad;
+          background: var(--color-accent);
           color: white;
           border: none;
           padding: 15px;
@@ -267,14 +267,14 @@
 }
 
 .orderFormContainer .checkoutBtn:hover {
-          background: #6c3483;
+          background: var(--color-accent-dark);
 }
 
 .orderFormContainer .clearCartBtn {
           width: 100%;
           background: #fff;
-          color: #718096;
-          border: 1px solid #e2e8f0;
+          color: var(--color-text-secondary);
+          border: 1px solid var(--color-border);
           padding: 12px;
           margin-top: 10px;
           border-radius: 12px;
@@ -283,8 +283,8 @@
 }
 
 .orderFormContainer .clearCartBtn:hover {
-          background: #f1f5f9;
-          color: #1a1a1a;
+          background: var(--color-surface);
+          color: var(--color-text);
 }
 
 @media (max-width: 768px) {

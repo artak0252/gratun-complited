@@ -1,25 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Noto+Sans+Armenian:wght@400;500;600&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap');
-
 /* ===== Header.module.css =====
    Design tokens (warm library palette) — defined on .headerContainer
    and inherited by all children via CSS custom property cascade.
-   --color-bg:      #F1ECE3  warm cream background
-   --color-text:    #3A322C  dark brown-gray (primary text)
-   --color-accent:  #6B3245  deep plum/wine (brand accent)
-   --color-accent-light: #8A4E63  lighter plum (hover states)
-   --color-cta:     #D6A73B  muted gold (buttons / CTA)
-   --color-border:  #DCD5C8  soft warm divider
+   --color-bg:      var(--color-bg)  warm cream background
+   --color-text:    var(--color-text)  dark brown-gray (primary text)
+   --color-accent:  var(--color-accent)  deep plum/wine (brand accent)
+   --color-accent-light: var(--color-accent-light)  lighter plum (hover states)
+   --color-cta:     var(--color-cta)  muted gold (buttons / CTA)
+   --color-border:  var(--color-border)  soft warm divider
 */
 
 .headerContainer {
-   --color-bg: #E4E8F0;
-   --color-text: #3A322C;
-   --color-accent: #6B3245;
-   --color-accent-light: #8A4E63;
-   --color-cta: #14315C;
-   --color-border: white;
-
    position: relative;
    z-index: 1000;
    width: 100%;
@@ -131,7 +121,7 @@
    top: -8px;
    right: -8px;
    background-color: var(--color-cta);
-   color: white;
+   color: var(--color-text);
    font-size: 10px;
    font-weight: 700;
    width: 18px;
@@ -185,7 +175,7 @@
    top: -8px;
    right: -8px;
    background-color: var(--color-cta);
-   color: white;
+   color: var(--color-text);
    font-size: 10px;
    font-weight: 700;
    width: 18px;
@@ -201,7 +191,7 @@
    top: -8px;
    right: -8px;
    background-color: var(--color-cta);
-   color: white;
+   color: var(--color-text);
    font-size: 10px;
    font-weight: 700;
    width: 18px;

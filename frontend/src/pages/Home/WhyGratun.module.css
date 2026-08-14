@@ -1,7 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Poppins:wght@400;500;600;700&display=swap');
-
 .whyContainer {
-          background: #E4E8F0;
+          background: var(--color-bg);
           padding: 70px 8%;
           border-bottom: 5px solid white;
 
@@ -37,7 +35,7 @@
           height: 64px;
           margin: 0 auto 20px;
           border-radius: 50%;
-          background: #14315C;
+          background: var(--color-accent);
           color: #ffffff;
           display: flex;
           align-items: center;
@@ -46,17 +44,17 @@
 }
 
 .whyCard h3 {
-          font-family: 'Playfair Display', 'Noto Sans Armenian', Georgia, serif;
+          font-family: var(--font-heading);
           font-size: 1.2rem;
-          color: #6B3245;
+          color: var(--color-accent);
           margin-bottom: 12px;
           font-weight: 700;
 }
 
 .whyCard p {
-          font-family: 'Noto Sans Armenian', 'Poppins', sans-serif;
+          font-family: var(--font-body);
           font-size: 0.95rem;
-          color: #5f5750;
+          color: var(--color-text-secondary);
           line-height: 1.5;
           margin: 0;
 }

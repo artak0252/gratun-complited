@@ -19,11 +19,11 @@
 /* Հիմնական կատեգորիայի կոճակ */
 .categoryBtn {
           background: #ffffff;
-          border: 1px solid #e2e8f0;
+          border: 1px solid var(--color-border);
           padding: 10px 20px;
           border-radius: 30px;
           font-weight: 500;
-          color: #4a5568;
+          color: var(--color-text-secondary);
           cursor: pointer;
           transition: all 0.3s ease;
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
@@ -31,9 +31,9 @@
 
 .categoryBtn:hover,
 .activeCategoryBtn {
-          background: #8e44ad;
+          background: var(--color-accent);
           color: #ffffff;
-          border-color: #8e44ad;
+          border-color: var(--color-accent);
 }
 
 /* Ենթակատեգորիաների խումբ (Գրականության համար) */
@@ -45,30 +45,30 @@
 
 /* Ենթակատեգորիայի փոքրիկ կոճակներ */
 .subCategoryBtn {
-          background: #f1f5f9;
+          background: var(--color-surface);
           border: none;
           padding: 5px 12px;
           border-radius: 20px;
           font-size: 12px;
-          color: #64748b;
+          color: var(--color-text-secondary);
           cursor: pointer;
           transition: all 0.3s ease;
 }
 
 .subCategoryBtn:hover {
-          background: #e2e8f0;
-          color: #1a1a1a;
+          background: var(--color-border);
+          color: var(--color-text);
 }
 
 /* Երբ ընտրված է ենթակատեգորիան */
 .subCategoryBtn.activeCategoryBtn {
-          background: #1a1a1a;
+          background: var(--color-text);
           color: #ffffff;
 }
 
 .myCustomFilter {
           margin-top: 50px;
-          background-color: #f9f9f9;
+          background-color: var(--color-surface);
           border-radius: 10px;
           /* Այստեղ կարող ես գրել ցանկացած ոճ, որը կազդի միայն այս կոմպոնենտի վրա */
 }

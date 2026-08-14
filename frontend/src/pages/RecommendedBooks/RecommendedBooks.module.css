@@ -1,20 +1,15 @@
 /* ===== RecommendedBooks.module.css =====
    Same warm-library palette as Header.module.css:
-   --color-bg:      #F1ECE3
-   --color-text:    #3A322C
-   --color-accent:  #6B3245
-   --color-accent-light: #8A4E63
-   --color-cta:     #D6A73B
-   --color-border:  #DCD5C8
+   --color-bg:      var(--color-bg)
+   --color-text:    var(--color-text)
+   --color-accent:  var(--color-accent)
+   --color-accent-light: var(--color-accent-light)
+   --color-cta:     var(--color-cta)
+   --color-border:  var(--color-border)
 */
 
 .recommendedSection {
-   --color-bg: #E4E8F0;
-   --color-text: #14315C;
-   --color-accent: #6B3245;
-   --color-accent-light: #8A4E63;
-   --color-cta:#14315C;
-   --color-border: #DCD5C8;
+   --color-text: var(--color-accent);
 
    width: 100%;
    background-color: var(--color-bg);
@@ -38,7 +33,7 @@
 }
 
 .sectionTitle {
-   font-family: Georgia, 'Times New Roman', serif;
+   font-family: var(--font-heading);
    font-size: 28px;
    font-weight: 700;
    color: var(--color-accent);
@@ -111,7 +106,7 @@
 }
 
 .bookTitle {
-   font-family: Georgia, 'Times New Roman', serif;
+   font-family: var(--font-heading);
    font-size: 13px;
    font-weight: 700;
    color: var(--color-text);
@@ -141,7 +136,7 @@
 .buyBtn {
    width: 100%;
    background-color: var(--color-cta);
-   color: white;
+   color: var(--color-text);
    border: none;
    border-radius: 6px;
    padding: 7px 10px;

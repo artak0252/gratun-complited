@@ -7,10 +7,10 @@
 .backBtn {
           display: inline-block;
           margin-bottom: 40px;
-          color: #8e44ad;
+          color: var(--color-accent);
           text-decoration: none;
           font-weight: 600;
-          font-family: 'Noto Sans Armenian', 'Poppins', sans-serif;
+          font-family: var(--font-body);
 }
 
 .fullPost {
@@ -38,29 +38,29 @@
 }
 
 .fullPostMeta {
-          color: #888;
+          color: var(--color-text-muted);
           font-size: 13px;
           text-transform: uppercase;
           letter-spacing: 1px;
-          font-family: 'Noto Sans Armenian', 'Poppins', sans-serif;
+          font-family: var(--font-body);
           display: flex;
           gap: 15px;
 }
 
 .fullPostTitle {
-          font-family: 'Noto Serif Armenian', 'Playfair Display', serif;
+          font-family: var(--font-heading);
           font-size: 42px;
           font-weight: 600;
-          color: #1a1a1a;
+          color: var(--color-text);
           margin: 15px 0 30px 0;
           line-height: 1.25;
 }
 
 .fullPostContent {
-          font-family: 'Noto Sans Armenian', 'Poppins', sans-serif;
+          font-family: var(--font-body);
           font-size: 17px;
           line-height: 1.9;
-          color: #333;
+          color: var(--color-text);
           text-align: left;
 }
 

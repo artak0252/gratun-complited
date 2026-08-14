@@ -3,13 +3,13 @@
           z-index: 999;
           width: 100%;
           box-sizing: border-box;
-          background-color: #14315C;
+          background-color: var(--color-accent);
           padding: 10px 40px;
           display: flex;
           align-items: center;
           justify-content: center;
           gap: 24px;
-          font-family: 'Noto Sans Armenian', 'Montserrat', sans-serif;
+          font-family: var(--font-body);
           border-bottom: 5px solid white;
 }
 
@@ -46,7 +46,7 @@
           right: 24px;
           background: none;
           border: none;
-          color: #f5f3f2;
+          color: var(--color-surface);
           font-size: 18px;
           line-height: 1;
           cursor: pointer;

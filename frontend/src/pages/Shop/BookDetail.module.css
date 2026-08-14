@@ -1,16 +1,16 @@
 .detailContainer {
           padding: 70px 8%;
-          background: #f8fafc;
+          background: var(--color-surface);
           min-height: 100vh;
 }
 
 .backBtn {
           display: inline-block;
           margin-bottom: 40px;
-          color: #8e44ad;
+          color: var(--color-accent);
           text-decoration: none;
           font-weight: 600;
-          font-family: 'Noto Sans Armenian', 'Poppins', sans-serif;
+          font-family: var(--font-body);
 }
 
 .bookDetailCard {
@@ -23,7 +23,7 @@
           background: #ffffff;
           border-radius: 24px;
           padding: 50px;
-          border: 1px solid #edf2f7;
+          border: 1px solid var(--color-border);
           box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
 }
 
@@ -32,7 +32,7 @@
           height: 500px;
           flex-shrink: 0;
           object-fit: contain;
-          background-color: #f1f5f9;
+          background-color: var(--color-surface);
           border-radius: 16px;
           padding: 20px;
           box-sizing: border-box;
@@ -56,7 +56,7 @@
           border-radius: 50%;
           border: none;
           background: rgba(255, 255, 255, 0.9);
-          color: #b0b7c3;
+          color: var(--color-text-muted);
           font-size: 20px;
           display: flex;
           align-items: center;
@@ -67,12 +67,12 @@
 }
 
 .favBtn:hover {
-          color: #e74c3c;
+          color: var(--color-danger);
           transform: scale(1.1);
 }
 
 .favBtnActive {
-          color: #e74c3c;
+          color: var(--color-danger);
 }
 
 .bookDetailBody {
@@ -84,34 +84,34 @@
           display: inline-block;
           font-size: 12px;
           font-weight: 600;
-          color: #8e44ad;
-          background: #f3e8f8;
+          color: var(--color-accent);
+          background: var(--color-surface-accent);
           padding: 4px 10px;
           border-radius: 20px;
           margin-bottom: 15px;
 }
 
 .bookDetailTitle {
-          font-family: 'Playfair Display', serif;
+          font-family: var(--font-heading);
           font-size: 40px;
           font-weight: 600;
-          color: #1a1a1a;
+          color: var(--color-text);
           margin: 0 0 10px 0;
           line-height: 1.25;
 }
 
 .bookDetailAuthor {
-          font-family: 'Noto Sans Armenian', 'Poppins', sans-serif;
+          font-family: var(--font-body);
           font-size: 18px;
-          color: #718096;
+          color: var(--color-text-secondary);
           margin: 0 0 30px 0;
 }
 
 .bookDetailDescription {
-          font-family: 'Noto Sans Armenian', 'Poppins', sans-serif;
+          font-family: var(--font-body);
           font-size: 16px;
           line-height: 1.8;
-          color: #333;
+          color: var(--color-text);
           text-align: left;
           margin-bottom: 40px;
 }
@@ -126,11 +126,11 @@
 .bookDetailPrice {
           font-weight: 700;
           font-size: 24px;
-          color: #8e44ad;
+          color: var(--color-accent);
 }
 
 .buyBtn {
-          background: #1a1a1a;
+          background: var(--color-text);
           color: white;
           border: none;
           padding: 16px 30px;
@@ -142,13 +142,13 @@
 }
 
 .buyBtn:hover {
-          background: #8e44ad;
+          background: var(--color-accent);
 }
 
 .loading {
           text-align: center;
           padding: 100px;
-          font-family: 'Playfair Display', serif;
+          font-family: var(--font-heading);
           font-size: 24px;
 }
 

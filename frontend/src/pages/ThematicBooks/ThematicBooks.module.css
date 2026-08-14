@@ -1,8 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600&display=swap');
-
 .pageWrapper {
           padding: 60px 8%;
-          background: #fdfdfd;
+          background: var(--color-surface);
           min-height: 100vh;
           box-sizing: border-box;
 }
@@ -11,7 +9,7 @@
           padding: 100px 0;
           text-align: center;
           font-size: 18px;
-          color: #6b7280;
+          color: var(--color-text-secondary);
 }
 
 /* ===== Page header ===== */
@@ -23,16 +21,16 @@
 }
 
 .pageHeader h1 {
-          font-family: 'Playfair Display', serif;
+          font-family: var(--font-heading);
           font-size: 34px;
-          color: #14315C;
+          color: var(--color-accent);
           margin: 0 0 10px;
 }
 
 .pageHeader p {
-          font-family: 'Noto Sans Armenian', 'Poppins', sans-serif;
+          font-family: var(--font-body);
           font-size: 15px;
-          color: #6b7280;
+          color: var(--color-text-secondary);
           margin: 0;
 }
 
@@ -44,7 +42,7 @@
 }
 
 .publishBtn {
-          background: #14315C;
+          background: var(--color-accent);
           color: #ffffff;
           border: none;
           padding: 15px 30px;
@@ -57,14 +55,14 @@
 }
 
 .publishBtn:hover {
-          background: #d35400;
+          background: var(--color-tertiary);
           transform: scale(1.02);
 }
 
 .cancelBtn {
           background: none;
-          border: 1px solid #e2e8f0;
-          color: #6b7280;
+          border: 1px solid var(--color-border);
+          color: var(--color-text-secondary);
           padding: 15px 24px;
           border-radius: 12px;
           cursor: pointer;
@@ -77,13 +75,13 @@
           border-radius: 24px;
           box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
           margin-bottom: 40px;
-          border: 1px solid #f0f0f0;
+          border: 1px solid var(--color-border);
 }
 
 .adminFormContainer h3 {
           margin-top: 0;
-          font-family: 'Playfair Display', serif;
-          color: #14315C;
+          font-family: var(--font-heading);
+          color: var(--color-accent);
 }
 
 .adminFormContainer form {
@@ -95,7 +93,7 @@
 .adminFormContainer input,
 .adminFormContainer textarea {
           padding: 15px;
-          border: 1px solid #eee;
+          border: 1px solid var(--color-border);
           border-radius: 12px;
           font-size: 16px;
           font-family: inherit;
@@ -112,21 +110,21 @@
 
 .fileLabel {
           padding: 15px;
-          background: #f8f9fa;
-          border: 1px dashed #d1d5db;
+          background: var(--color-surface);
+          border: 1px dashed var(--color-text-muted);
           border-radius: 12px;
           cursor: pointer;
           text-align: center;
-          color: #6b7280;
+          color: var(--color-text-secondary);
           font-size: 14px;
           transition: all 0.3s ease;
           display: block;
 }
 
 .fileLabel:hover {
-          border-color: #14315C;
-          color: #14315C;
-          background: #f4f7fb;
+          border-color: var(--color-accent);
+          color: var(--color-accent);
+          background: var(--color-surface);
 }
 
 /* ===== Search ===== */
@@ -143,7 +141,7 @@
 .searchIcon {
           position: absolute;
           left: 22px;
-          color: #9ca3af;
+          color: var(--color-text-muted);
           font-size: 18px;
           pointer-events: none;
 }
@@ -152,7 +150,7 @@
           width: 100%;
           padding: 15px 50px;
           border-radius: 30px;
-          border: 1px solid #e2e8f0;
+          border: 1px solid var(--color-border);
           font-size: 16px;
           outline: none;
           transition: 0.3s;
@@ -161,7 +159,7 @@
 }
 
 .searchInput:focus {
-          border-color: #14315C;
+          border-color: var(--color-accent);
           box-shadow: 0 0 0 3px rgba(20, 49, 92, 0.1);
 }
 
@@ -170,25 +168,25 @@
           right: 22px;
           background: none;
           border: none;
-          color: #9ca3af;
+          color: var(--color-text-muted);
           cursor: pointer;
           font-size: 18px;
           display: flex;
 }
 
 .clearSearchBtn:hover {
-          color: #d35400;
+          color: var(--color-tertiary);
 }
 
 .resultsCount {
           position: absolute;
           bottom: -26px;
           font-size: 13px;
-          color: #9ca3af;
+          color: var(--color-text-muted);
 }
 
 .highlight {
-          background: #ffe6b3;
+          background: var(--color-surface-gold);
           color: inherit;
           border-radius: 3px;
           padding: 0 2px;
@@ -196,7 +194,7 @@
 
 .noResults {
           text-align: center;
-          color: #9ca3af;
+          color: var(--color-text-muted);
           font-size: 16px;
           padding: 60px 0;
 }
@@ -213,7 +211,7 @@
 
 .itemCard {
           position: relative;
-          background: #E4E8F0;
+          background: var(--color-bg);
           border-radius: 24px;
           padding: 40px 6%;
           display: flex;
@@ -252,7 +250,7 @@
           align-items: center;
           justify-content: center;
           font-size: 48px;
-          color: #14315C;
+          color: var(--color-accent);
 }
 
 .textSide {
@@ -263,24 +261,24 @@
 
 .themeTag {
           display: inline-block;
-          font-family: 'Poppins', sans-serif;
+          font-family: var(--font-body);
           font-size: 13px;
           font-weight: 600;
           letter-spacing: 0.5px;
           text-transform: uppercase;
           color: #ffffff;
-          background: #d35400;
+          background: var(--color-tertiary);
           padding: 6px 14px;
           border-radius: 20px;
           margin-bottom: 14px;
 }
 
 .itemText {
-          font-family: 'Playfair Display', serif;
+          font-family: var(--font-heading);
           font-style: italic;
           font-weight: 600;
           font-size: 20px;
-          color: #14315C;
+          color: var(--color-accent);
           line-height: 1.55;
           margin: 0 0 16px;
 }
@@ -294,24 +292,24 @@
 }
 
 .bookTitle {
-          font-family: 'Poppins', sans-serif;
+          font-family: var(--font-body);
           font-size: 15px;
           font-weight: 700;
-          color: #14315C;
+          color: var(--color-accent);
 }
 
 .bookAuthor {
-          font-family: 'Poppins', sans-serif;
+          font-family: var(--font-body);
           font-size: 14px;
-          color: #6b7280;
+          color: var(--color-text-secondary);
 }
 
 .linkBtn {
           display: inline-block;
-          background: #14315C;
+          background: var(--color-accent);
           color: #ffffff;
           text-decoration: none;
-          font-family: 'Poppins', sans-serif;
+          font-family: var(--font-body);
           font-size: 14px;
           font-weight: 600;
           padding: 10px 22px;
@@ -320,7 +318,7 @@
 }
 
 .linkBtn:hover {
-          background: #d35400;
+          background: var(--color-tertiary);
           transform: scale(1.03);
 }
 

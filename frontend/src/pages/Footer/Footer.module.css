@@ -1,21 +1,16 @@
 /* ===== Footer.module.css =====
    Same warm-library palette as Header.module.css / RecommendedBooks.module.css:
-   --color-bg:      #F1ECE3  warm cream
-   --color-text:    #3A322C  dark brown-gray
-   --color-accent:  #6B3245  deep plum/wine (used here as footer background)
-   --color-cta:     #D6A73B  muted gold (headings / hover accents)
+   --color-bg:      var(--color-bg)  warm cream
+   --color-text:    var(--color-text)  dark brown-gray
+   --color-accent:  var(--color-accent)  deep plum/wine (used here as footer background)
+   --color-cta:     var(--color-cta)  muted gold (headings / hover accents)
 */
 
 .footer {
-          --color-bg: #E4E8F0;
-          --color-text: #3A322C;
-          --color-accent: #6B3245;
-          --color-cta: #3A322C;
-
-          background-color: var(--color-bg);
+          background-color: var(--color-accent);
           color: var(--color-cta);
           padding: 56px 40px 0;
-          font-family: 'Noto Sans Armenian', 'Montserrat', sans-serif;
+          font-family: var(--font-body);
           box-sizing: border-box;
 }
 
@@ -30,7 +25,7 @@
 
 .footerSection h3,
 .footerSection h4 {
-          font-family: Georgia, 'Times New Roman', serif;
+          font-family: var(--font-heading);
           color: var(--color-cta);
           font-size: 20px;
           font-weight: 700;
