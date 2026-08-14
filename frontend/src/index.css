@@ -1,37 +1,6 @@
-:root {
-  /* ===== Gratun brand palette — "warm library" ===== */
-  --color-bg: #F1ECE3;           /* warm cream — page/section background */
-  --color-surface: #FBF8F3;      /* light card background (sits on --color-bg) */
-  --color-surface-accent: #F3E8EC; /* light wine-tinted background (badges/chips) */
-  --color-surface-gold: #FCEFD1; /* light gold-tinted background (highlights) */
-  --color-white: #ffffff;
-
-  --color-text: #3A322C;         /* primary text — dark brown-gray */
-  --color-text-secondary: #6b5f57; /* secondary text — warm medium gray */
-  --color-text-muted: #a39a8f;   /* muted/placeholder text — warm light gray */
-
-  --color-accent: #6B3245;       /* deep plum/wine — links, headings emphasis */
-  --color-accent-light: #8A4E63; /* hover state for accent */
-  --color-accent-dark: #56283a;  /* pressed/darker accent */
-
-  --color-cta: #D6A73B;          /* muted gold — primary buttons/CTA */
-  --color-cta-dark: #B98826;     /* CTA hover/pressed */
-
-  --color-tertiary: #d35400;     /* burnt orange — secondary highlight (dates, tags) */
-  --color-danger: #e74c3c;       /* errors, remove actions, sale badges */
-
-  --color-border: #DCD5C8;       /* soft warm divider */
-  --color-border-light: #EAE3D8; /* lighter divider, subtle separators */
-
-  --font-heading: 'Playfair Display', 'Noto Serif Armenian', Georgia, serif;
-  --font-body: 'Noto Sans Armenian', 'Poppins', sans-serif;
-}
-
 html,
 body {
-          background: var(--color-bg);
-          color: var(--color-text);
-          font-family: var(--font-body);
+          background: #3e3c39;
           overflow-x: hidden;
           width: 100%;
           margin: 0;

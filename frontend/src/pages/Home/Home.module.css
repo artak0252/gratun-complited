@@ -1,12 +1,12 @@
 /* Swiper's own classes (.swiper, .swiper-wrapper, .swiper-slide) are global,
    not part of this CSS module — they have no background by default, so on
-   wide screens the warm page background (--color-bg, set in index.css) shows
+   wide screens the dark body background (#3e3c39, set in index.css) shows
    through around the centered 1400px-wide .heroContainer. Matching their
    background to the hero's own background fixes that. */
 :global(.swiper),
 :global(.swiper-wrapper),
 :global(.swiper-slide) {
-   background-color: var(--color-bg);
+   background-color: #E4E8F0;
 }
 
 .heroContainer {
@@ -18,7 +18,7 @@
    margin: 0 auto;
    min-height: 80vh;
    gap: 30px;
-   background: var(--color-bg);
+   background: #E4E8F0;
    border-bottom: 5px solid white;
    line-height: 2;
    width: 100%;
@@ -36,8 +36,8 @@
 
 .badge {
    display: inline-block;
-   color: var(--color-tertiary);
-   font-family: var(--font-body);
+   color: #d35400;
+   font-family: "Playwrite AU VIC", "Noto Sans Armenian", cursive, sans-serif;
    font-weight: 700;
    font-style: normal;
    font-size: 13px;
@@ -47,36 +47,36 @@
 }
 
 .heroTitle {
-   font-family: var(--font-heading);
-   font-weight: 600;
+   font-family: "Playwrite AU VIC", "Noto Sans Armenian", cursive, sans-serif;
+   font-weight: 400;
    font-style: normal;
    font-size: 30px;
-   color: var(--color-text-secondary);
+   color: #525252;
    margin-bottom: 20px;
    letter-spacing: -1px;
    line-height: 1.4;
 }
 
 .highlight {
-   color: var(--color-accent);
+   color: #14315C;
    font-style: italic;
    font-weight: 400;
    display: block;
 }
 
 .heroDesc {
-   font-family: var(--font-body);
+   font-family: "Playwrite AU VIC", "Noto Sans Armenian", cursive, sans-serif;
    font-weight: 400;
    font-style: normal;
    font-size: 18px;
-   color: var(--color-text);
+   color: #4a4a4a;
    line-height: 1.6;
    margin-bottom: 30px;
    max-width: 500px;
 }
 
 .ctaButton {
-   background: var(--color-accent);
+   background: #14315C;
    color: #fff;
    padding: 15px 35px;
    border: none;
@@ -91,7 +91,7 @@
 }
 
 .ctaButton:hover {
-   background: var(--color-accent);
+   background: #8e44ad;
 }
 
 .heroImageStack {

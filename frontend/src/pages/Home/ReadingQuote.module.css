@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600&display=swap');
+
 .quoteContainer {
-          background: var(--color-bg);
+          background: #E4E8F0;
           border-bottom: 5px solid white;
           padding: 50px 8%;
           box-sizing: border-box;
@@ -25,7 +27,7 @@
           border-radius: 50%;
           object-fit: cover;
           border: 4px solid #ffffff;
-          box-shadow: 0 0 0 3px var(--color-accent);
+          box-shadow: 0 0 0 3px #14315C;
           display: block;
 }
 
@@ -34,8 +36,8 @@
           height: 140px;
           border-radius: 50%;
           border: 4px solid #ffffff;
-          box-shadow: 0 0 0 3px var(--color-accent);
-          background: var(--color-accent);
+          box-shadow: 0 0 0 3px #14315C;
+          background: #14315C;
           color: #ffffff;
           display: flex;
           align-items: center;
@@ -51,29 +53,29 @@
 }
 
 .quoteMark {
-          font-family: var(--font-heading);
+          font-family: 'Playfair Display', 'Noto Serif Armenian', serif;
           font-size: 64px;
           line-height: 0;
-          color: var(--color-tertiary);
+          color: #d35400;
           display: block;
           margin-bottom: 6px;
 }
 
 .quoteText {
-          font-family: var(--font-heading);
+          font-family: 'Playfair Display', 'Noto Serif Armenian', serif;
           font-style: italic;
           font-weight: 600;
           font-size: 22px;
-          color: var(--color-accent);
+          color: #14315C;
           line-height: 1.55;
           margin: 0 0 16px;
 }
 
 .author {
-          font-family: var(--font-body);
+          font-family: 'Poppins', 'Noto Sans Armenian', sans-serif;
           font-size: 15px;
           font-weight: 600;
-          color: var(--color-text-secondary);
+          color: #525252;
           letter-spacing: 0.5px;
 }
 

@@ -3,16 +3,16 @@
           width: 100%;
           padding: 12px 16px;
           margin-top: 10px;
-          border: 2px solid var(--color-border);
+          border: 2px solid #ddd;
           border-radius: 8px;
           background-color: white;
           font-size: 16px;
-          color: var(--color-text);
+          color: #333;
           cursor: pointer;
           transition: border-color 0.3s;
 }
 
 .adminSelect:focus {
-          border-color: var(--color-accent);
+          border-color: #8e44ad;
           outline: none;
 }

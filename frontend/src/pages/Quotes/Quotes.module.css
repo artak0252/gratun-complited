@@ -1,6 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600&display=swap');
+
 .quotesPage {
           padding: 60px 8%;
-          background: var(--color-surface);
+          background: #fdfdfd;
           min-height: 100vh;
           box-sizing: border-box;
 }
@@ -9,7 +11,7 @@
           padding: 100px 0;
           text-align: center;
           font-size: 18px;
-          color: var(--color-text-secondary);
+          color: #6b7280;
 }
 
 /* ===== Page header ===== */
@@ -21,16 +23,16 @@
 }
 
 .pageHeader h1 {
-          font-family: var(--font-heading);
+          font-family: 'Playfair Display', 'Noto Serif Armenian', serif;
           font-size: 34px;
-          color: var(--color-accent);
+          color: #14315C;
           margin: 0 0 10px;
 }
 
 .pageHeader p {
-          font-family: var(--font-body);
+          font-family: 'Noto Sans Armenian', 'Poppins', sans-serif;
           font-size: 15px;
-          color: var(--color-text-secondary);
+          color: #6b7280;
           margin: 0;
 }
 
@@ -42,7 +44,7 @@
 }
 
 .publishBtn {
-          background: var(--color-accent);
+          background: #14315C;
           color: #ffffff;
           border: none;
           padding: 15px 30px;
@@ -55,14 +57,14 @@
 }
 
 .publishBtn:hover {
-          background: var(--color-tertiary);
+          background: #d35400;
           transform: scale(1.02);
 }
 
 .cancelBtn {
           background: none;
-          border: 1px solid var(--color-border);
-          color: var(--color-text-secondary);
+          border: 1px solid #e2e8f0;
+          color: #6b7280;
           padding: 15px 24px;
           border-radius: 12px;
           cursor: pointer;
@@ -75,13 +77,13 @@
           border-radius: 24px;
           box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
           margin-bottom: 40px;
-          border: 1px solid var(--color-border);
+          border: 1px solid #f0f0f0;
 }
 
 .adminFormContainer h3 {
           margin-top: 0;
-          font-family: var(--font-heading);
-          color: var(--color-accent);
+          font-family: 'Playfair Display', 'Noto Serif Armenian', serif;
+          color: #14315C;
 }
 
 .adminFormContainer form {
@@ -93,7 +95,7 @@
 .adminFormContainer input,
 .adminFormContainer textarea {
           padding: 15px;
-          border: 1px solid var(--color-border);
+          border: 1px solid #eee;
           border-radius: 12px;
           font-size: 16px;
           font-family: inherit;
@@ -110,21 +112,21 @@
 
 .fileLabel {
           padding: 15px;
-          background: var(--color-surface);
-          border: 1px dashed var(--color-text-muted);
+          background: #f8f9fa;
+          border: 1px dashed #d1d5db;
           border-radius: 12px;
           cursor: pointer;
           text-align: center;
-          color: var(--color-text-secondary);
+          color: #6b7280;
           font-size: 14px;
           transition: all 0.3s ease;
           display: block;
 }
 
 .fileLabel:hover {
-          border-color: var(--color-accent);
-          color: var(--color-accent);
-          background: var(--color-surface);
+          border-color: #14315C;
+          color: #14315C;
+          background: #f4f7fb;
 }
 
 /* ===== Search (the "powerful" search bar) ===== */
@@ -141,7 +143,7 @@
 .searchIcon {
           position: absolute;
           left: 22px;
-          color: var(--color-text-muted);
+          color: #9ca3af;
           font-size: 18px;
           pointer-events: none;
 }
@@ -150,7 +152,7 @@
           width: 100%;
           padding: 15px 50px;
           border-radius: 30px;
-          border: 1px solid var(--color-border);
+          border: 1px solid #e2e8f0;
           font-size: 16px;
           outline: none;
           transition: 0.3s;
@@ -159,7 +161,7 @@
 }
 
 .searchInput:focus {
-          border-color: var(--color-accent);
+          border-color: #14315C;
           box-shadow: 0 0 0 3px rgba(20, 49, 92, 0.1);
 }
 
@@ -168,25 +170,25 @@
           right: 22px;
           background: none;
           border: none;
-          color: var(--color-text-muted);
+          color: #9ca3af;
           cursor: pointer;
           font-size: 18px;
           display: flex;
 }
 
 .clearSearchBtn:hover {
-          color: var(--color-tertiary);
+          color: #d35400;
 }
 
 .resultsCount {
           position: absolute;
           bottom: -26px;
           font-size: 13px;
-          color: var(--color-text-muted);
+          color: #9ca3af;
 }
 
 .highlight {
-          background: var(--color-surface-gold);
+          background: #ffe6b3;
           color: inherit;
           border-radius: 3px;
           padding: 0 2px;
@@ -194,7 +196,7 @@
 
 .noResults {
           text-align: center;
-          color: var(--color-text-muted);
+          color: #9ca3af;
           font-size: 16px;
           padding: 60px 0;
 }
@@ -211,7 +213,7 @@
 
 .quoteCard {
           position: relative;
-          background: var(--color-bg);
+          background: #E4E8F0;
           border-radius: 24px;
           padding: 40px 6%;
           display: flex;
@@ -235,7 +237,7 @@
           border-radius: 50%;
           object-fit: cover;
           border: 4px solid #ffffff;
-          box-shadow: 0 0 0 3px var(--color-accent);
+          box-shadow: 0 0 0 3px #14315C;
           display: block;
 }
 
@@ -245,12 +247,12 @@
           border-radius: 50%;
           background: #ffffff;
           border: 4px solid #ffffff;
-          box-shadow: 0 0 0 3px var(--color-accent);
+          box-shadow: 0 0 0 3px #14315C;
           display: flex;
           align-items: center;
           justify-content: center;
           font-size: 44px;
-          color: var(--color-accent);
+          color: #14315C;
 }
 
 .textSide {
@@ -260,29 +262,29 @@
 }
 
 .quoteMark {
-          font-family: var(--font-heading);
+          font-family: 'Playfair Display', 'Noto Serif Armenian', serif;
           font-size: 56px;
           line-height: 0;
-          color: var(--color-tertiary);
+          color: #d35400;
           display: block;
           margin-bottom: 6px;
 }
 
 .quoteText {
-          font-family: var(--font-heading);
+          font-family: 'Playfair Display', 'Noto Serif Armenian', serif;
           font-style: italic;
           font-weight: 600;
           font-size: 20px;
-          color: var(--color-accent);
+          color: #14315C;
           line-height: 1.55;
           margin: 0 0 14px;
 }
 
 .author {
-          font-family: var(--font-body);
+          font-family: 'Poppins', 'Noto Sans Armenian', sans-serif;
           font-size: 15px;
           font-weight: 600;
-          color: var(--color-text-secondary);
+          color: #525252;
           letter-spacing: 0.5px;
 }
 

@@ -2,7 +2,7 @@
 
 .shopContainer {
    padding: 80px 10%;
-   background-color: var(--color-surface);
+   background-color: #f8fafc;
    min-height: 100vh;
 }
 
@@ -13,14 +13,14 @@
    border-radius: 24px;
    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
    margin-bottom: 60px;
-   border: 1px solid var(--color-border);
+   border: 1px solid #edf2f7;
 }
 
 .adminFormContainer h3 {
-   font-family: var(--font-heading);
+   font-family: 'Playfair Display', 'Noto Serif Armenian', serif;
    font-size: 28px;
    margin-bottom: 25px;
-   color: var(--color-text);
+   color: #1a1a1a;
 }
 
 .adminFormContainer form {
@@ -31,7 +31,7 @@
 
 .adminFormContainer input {
    padding: 12px 20px;
-   border: 1px solid var(--color-border);
+   border: 1px solid #e2e8f0;
    border-radius: 12px;
    flex: 1;
    min-width: 200px;
@@ -54,7 +54,7 @@
 }
 
 .searchInput:focus {
-   border-color: var(--color-accent);
+   border-color: #8e44ad;
 }
 
 /* Թաքցնում ենք բուն input-ը */
@@ -65,38 +65,38 @@
 /* Label-ը դարձնում ենք գեղեցիկ կոճակ */
 .fileLabel {
    padding: 12px 20px;
-   background: var(--color-surface);
-   color: var(--color-text-secondary);
+   background: #f1f5f9;
+   color: #4a5568;
    border-radius: 12px;
    cursor: pointer;
    text-align: center;
    font-weight: 500;
    transition: 0.3s;
-   border: 1px dashed var(--color-text-muted);
+   border: 1px dashed #cbd5e0;
 }
 
 .fileLabel:hover {
-   background: var(--color-border);
-   border-color: var(--color-accent);
-   color: var(--color-accent);
+   background: #e2e8f0;
+   border-color: #8e44ad;
+   color: #8e44ad;
 }
 
 /* Ընտրացանկ ժանրի համար ադմինի ֆորմայում */
 .genreSelect {
    padding: 12px 20px;
-   border: 1px solid var(--color-border);
+   border: 1px solid #e2e8f0;
    border-radius: 12px;
    flex: 1;
    min-width: 200px;
    background: #fff;
-   color: var(--color-text);
+   color: #1a1a1a;
    cursor: pointer;
 }
 
 /* Նկարագրության textarea admin ֆորմայում */
 .descriptionInput {
    padding: 12px 20px;
-   border: 1px solid var(--color-border);
+   border: 1px solid #e2e8f0;
    border-radius: 12px;
    flex: 1 1 100%;
    min-width: 200px;
@@ -120,15 +120,15 @@
    background: #ffffff;
    border-radius: 20px;
    padding: 25px 20px;
-   border: 1px solid var(--color-border);
+   border: 1px solid #edf2f7;
    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
 }
 
 .genreSidebarTitle {
-   font-family: var(--font-heading);
+   font-family: 'Playfair Display', 'Noto Serif Armenian', serif;
    font-size: 20px;
    margin: 0 0 18px 0;
-   color: var(--color-text);
+   color: #1a1a1a;
 }
 
 .genreList {
@@ -148,24 +148,24 @@
    padding: 10px 14px;
    border-radius: 10px;
    font-size: 15px;
-   color: var(--color-text-secondary);
+   color: #4a5568;
    cursor: pointer;
    transition: 0.25s;
 }
 
 .genreBtn:hover {
-   background: var(--color-surface);
-   color: var(--color-accent);
+   background: #f1f5f9;
+   color: #8e44ad;
 }
 
 .activeGenreBtn {
-   background: var(--color-accent);
+   background: #8e44ad;
    color: #fff !important;
    font-weight: 600;
 }
 
 .activeGenreBtn:hover {
-   background: var(--color-accent-dark);
+   background: #6c3483;
    color: #fff;
 }
 
@@ -175,8 +175,8 @@
    align-self: flex-start;
    font-size: 12px;
    font-weight: 600;
-   color: var(--color-accent);
-   background: var(--color-surface-accent);
+   color: #8e44ad;
+   background: #f3e8f8;
    padding: 4px 10px;
    border-radius: 20px;
    margin-bottom: 10px;
@@ -185,7 +185,7 @@
 .noResults {
    grid-column: 1 / -1;
    text-align: center;
-   color: var(--color-text-secondary);
+   color: #718096;
    font-size: 16px;
    padding: 40px 0;
 }
@@ -225,7 +225,7 @@
    padding: 20px;
    border-radius: 24px;
    transition: all 0.5s ease;
-   border: 1px solid var(--color-surface);
+   border: 1px solid #f1f5f9;
    text-align: left;
    display: flex;
    flex-direction: column;
@@ -241,7 +241,7 @@
    height: 350px;
    object-fit: contain;
    /* cover-ի փոխարեն */
-   background-color: var(--color-surface);
+   background-color: #f1f5f9;
    /* միասնական մոխրագույն ֆոն */
    border-radius: 16px;
    margin-bottom: 20px;
@@ -259,7 +259,7 @@
    width: 100%;
    height: 350px;
    object-fit: contain;
-   background-color: var(--color-surface);
+   background-color: #f1f5f9;
    border-radius: 16px;
    margin-bottom: 20px;
    padding: 12px;
@@ -276,7 +276,7 @@
    border-radius: 50%;
    border: none;
    background: rgba(255, 255, 255, 0.9);
-   color: var(--color-text-muted);
+   color: #b0b7c3;
    font-size: 18px;
    display: flex;
    align-items: center;
@@ -287,34 +287,34 @@
 }
 
 .favBtn:hover {
-   color: var(--color-danger);
+   color: #e74c3c;
    transform: scale(1.1);
 }
 
 .favBtnActive {
-   color: var(--color-danger);
+   color: #e74c3c;
 }
 .bookCard h3 {
-   font-family: var(--font-heading);
+   font-family: 'Playfair Display', 'Noto Serif Armenian', serif;
    font-size: 22px;
    margin: 0 0 5px 0;
 }
 
 .bookCard p {
-   color: var(--color-text-secondary);
+   color: #718096;
    margin-bottom: 15px;
 }
 
 .bookCard span {
    font-weight: 700;
    font-size: 18px;
-   color: var(--color-accent);
+   color: #8e44ad;
    display: block;
    margin-bottom: 15px;
 }
 
 .buyBtn {
-   background: var(--color-text);
+   background: #1a1a1a;
    color: white;
    border: none;
    padding: 14px;
@@ -326,7 +326,7 @@
 }
 
 .buyBtn:hover {
-   background: var(--color-accent);
+   background: #8e44ad;
 }
 
 /* Քարտի ներքևի կոճակների տողը՝ Դիտել + Ավելացնել զամբյուղ */
@@ -340,8 +340,8 @@
 .viewBtn {
    flex: 0 0 auto;
    background: #fff;
-   color: var(--color-text);
-   border: 1px solid var(--color-text);
+   color: #1a1a1a;
+   border: 1px solid #1a1a1a;
    padding: 14px 18px;
    border-radius: 12px;
    font-weight: 600;
@@ -353,7 +353,7 @@
 }
 
 .viewBtn:hover {
-   background: var(--color-text);
+   background: #1a1a1a;
    color: #fff;
 }
 
@@ -369,8 +369,8 @@
 /* Ջնջելու կոճակի ոճը */
 .deleteBtn {
    background: #fff;
-   color: var(--color-danger);
-   border: 1px solid var(--color-danger);
+   color: #e74c3c;
+   border: 1px solid #e74c3c;
    padding: 10px;
    border-radius: 10px;
    cursor: pointer;
@@ -380,7 +380,7 @@
 }
 
 .deleteBtn:hover {
-   background: var(--color-danger);
+   background: #e74c3c;
    color: #fff;
    transform: scale(1.05);
 }
@@ -388,8 +388,8 @@
 /* Խմբագրելու կոճակի ոճը */
 .editBtn {
    background: #fff;
-   color: var(--color-accent);
-   border: 1px solid var(--color-accent);
+   color: #8e44ad;
+   border: 1px solid #8e44ad;
    padding: 10px;
    border-radius: 10px;
    cursor: pointer;
@@ -399,14 +399,14 @@
 }
 
 .editBtn:hover {
-   background: var(--color-accent);
+   background: #8e44ad;
    color: #fff;
    transform: scale(1.05);
 }
 
 /* Ավելացնելու կոճակի (Form Submit) ոճը */
 .adminFormContainer button[type="submit"] {
-   background: var(--color-accent);
+   background: #8e44ad;
    color: white;
    border: none;
    padding: 12px 25px;
@@ -417,12 +417,12 @@
 }
 
 .adminFormContainer button[type="submit"]:hover {
-   background: var(--color-accent-dark);
+   background: #6c3483;
 }
 
 .loading {
    text-align: center;
    padding: 100px;
-   font-family: var(--font-heading);
+   font-family: 'Playfair Display', 'Noto Serif Armenian', serif;
    font-size: 24px;
 }

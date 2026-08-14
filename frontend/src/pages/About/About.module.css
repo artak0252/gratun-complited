@@ -10,47 +10,47 @@
 .aboutHeader {
           text-align: center;
           padding-bottom: 40px;
-          border-bottom: 2px solid var(--color-border);
+          border-bottom: 2px solid #f0f0f0;
           margin-bottom: 40px;
 }
 
 .aboutHeader h1 {
-          font-family: var(--font-heading);
+          font-family: 'Georgia', 'Noto Serif Armenian', serif;
           font-size: 3rem;
-          color: var(--color-text);
+          color: #1a1a1a;
           margin-bottom: 10px;
 }
 
 .aboutHeader p {
           font-style: italic;
-          color: var(--color-text-secondary);
+          color: #666;
           font-size: 1.2rem;
 }
 
 .aboutText {
-          font-family: var(--font-heading);
+          font-family: 'Georgia', 'Noto Serif Armenian', serif;
           font-size: 1.15rem;
-          color: var(--color-text);
+          color: #333;
           line-height: 1.9;
 }
 
 .aboutText h2 {
-          color: var(--color-text);
+          color: #2c3e50;
           margin-top: 30px;
 }
 
 .aboutValues {
-          background: var(--color-surface);
+          background: #fdfaf6;
           padding: 30px;
           border-radius: 8px;
-          border-left: 5px solid var(--color-cta);
+          border-left: 5px solid #d4a373;
           margin-top: 40px;
 }
 
 .aboutValues h3 {
           margin-top: 0;
-          color: var(--color-text-secondary);
-          font-family: var(--font-body);
+          color: #5c4033;
+          font-family: 'Arial', 'Noto Sans Armenian', sans-serif;
           text-transform: uppercase;
           letter-spacing: 1px;
 }

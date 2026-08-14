@@ -1,4 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Poppins:wght@400;500;600;700&display=swap');
+
 .blogSection {
+   --color-bg: #E4E8F0;
+   --color-text: white;
+   --color-accent: #6B3245;
+   --color-accent-light: #8A4E63;
+   --color-cta: #14315C;
+   --color-border: #DCD5C8;
+
    width: 100%;
    background-color: var(--color-bg);
    padding: 45px 8% 50px;
@@ -21,18 +30,18 @@
 }
 
 .sectionTitle {
-   font-family: var(--font-heading);
+   font-family: 'Playfair Display', 'Noto Serif Armenian', Georgia, serif;
    font-size: 30px;
    font-weight: 700;
-   color: var(--color-accent);
+   color: #14315C;
    margin: 0 0 8px 0;
    line-height: 1.2;
 }
 
 .sectionSubtitle {
-   font-family: var(--font-body);
+   font-family: 'Poppins', 'Noto Sans Armenian', sans-serif;
    font-size: 15px;
-   color: var(--color-accent);
+   color: #14315C;
    opacity: 0.8;
    margin: 0;
 }
@@ -80,18 +89,18 @@
 }
 
 .postTitle {
-   font-family: var(--font-heading);
+   font-family: 'Playfair Display', 'Noto Serif Armenian', Georgia, serif;
    font-size: 18px;
    font-weight: 700;
-   color: var(--color-text);
+   color: #2A2A2A;
    margin: 0 0 8px 0;
    line-height: 1.35;
 }
 
 .postExcerpt {
-   font-family: var(--font-body);
+   font-family: 'Poppins', 'Noto Sans Armenian', sans-serif;
    font-size: 13px;
-   color: var(--color-text);
+   color: #4A4A4A;
    opacity: 0.9;
    line-height: 1.5;
    margin: 0 0 12px 0;
@@ -102,7 +111,7 @@
 }
 
 .readMore {
-   font-family: var(--font-body);
+   font-family: 'Poppins', 'Noto Sans Armenian', sans-serif;
    font-size: 13px;
    font-weight: 600;
    color: var(--color-accent);
@@ -117,7 +126,7 @@
    display: inline-block;
    background-color: var(--color-cta);
    color: var(--color-text);
-   font-family: var(--font-body);
+   font-family: 'Poppins', 'Noto Sans Armenian', sans-serif;
    font-weight: 600;
    font-size: 15px;
    padding: 12px 30px;
