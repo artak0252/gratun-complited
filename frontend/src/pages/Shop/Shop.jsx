@@ -5,7 +5,7 @@ import { AuthContext } from '../../context/AuthContext.jsx';
 import { CartContext } from '../../context/CartContext';
 import { FavoritesContext } from '../../context/FavoritesContext';
 import toast from 'react-hot-toast';
-import styles from './Shop.module.css';
+import styles from './shopStyles.js';
 import { bookGenres } from './genreConstants';
 import GenreFilter from './GenreFilter';
 import { FiHeart } from 'react-icons/fi';
@@ -141,11 +141,11 @@ const Shop = () => {
             />
             {isAdmin && (
                 <div className={styles.adminFormContainer}>
-                    <h3>{state.editingId ? 'Խմբագրել Գիրքը' : 'Ավելացնել Նոր Գիրք'}</h3>
-                    <form onSubmit={handleSubmit}>
-                        <input type="text" placeholder="Վերնագիր" value={state.formData.title} onChange={e => dispatch({ type: 'SET_FORM', payload: { title: e.target.value } })} required />
-                        <input type="text" placeholder="Հեղինակ" value={state.formData.author} onChange={e => dispatch({ type: 'SET_FORM', payload: { author: e.target.value } })} required />
-                        <input type="number" placeholder="Գինը" value={state.formData.price} onChange={e => dispatch({ type: 'SET_FORM', payload: { price: e.target.value } })} required />
+                    <h3 className={styles.adminFormContainerH3}>{state.editingId ? 'Խմբագրել Գիրքը' : 'Ավելացնել Նոր Գիրք'}</h3>
+                    <form onSubmit={handleSubmit} className={styles.form}>
+                        <input type="text" placeholder="Վերնագիր" value={state.formData.title} onChange={e => dispatch({ type: 'SET_FORM', payload: { title: e.target.value } })} required className={styles.formInput} />
+                        <input type="text" placeholder="Հեղինակ" value={state.formData.author} onChange={e => dispatch({ type: 'SET_FORM', payload: { author: e.target.value } })} required className={styles.formInput} />
+                        <input type="number" placeholder="Գինը" value={state.formData.price} onChange={e => dispatch({ type: 'SET_FORM', payload: { price: e.target.value } })} required className={styles.formInput} />
                         <select
                             className={styles.genreSelect}
                             value={state.formData.genre}
@@ -166,7 +166,7 @@ const Shop = () => {
                             {state.formData.image ? state.formData.image.name : (state.editingId ? "Փոխել նկարը (ընտրովի)" : "Ընտրել նկարը")}
                         </label>
                         <input id="file-upload" type="file" className={styles.fileInput} onChange={e => dispatch({ type: 'SET_FORM', payload: { image: e.target.files[0] } })} required={!state.editingId} />
-                        <button type="submit">{state.editingId ? 'Պահպանել փոփոխությունները' : 'Ավելացնել'}</button>
+                        <button type="submit" className={styles.submitBtn}>{state.editingId ? 'Պահպանել փոփոխությունները' : 'Ավելացնել'}</button>
                         {state.editingId && <button type="button" onClick={handleCancelEdit} style={{ marginLeft: '10px' }}>Չեղարկել</button>}
                     </form>
                 </div>
@@ -202,6 +202,7 @@ const Shop = () => {
                                     onError={(e) => {
                                         e.target.style.display = 'none';
                                     }}
+                                    className={styles.bookCardImg}
                                 />
                                 <button
                                     className={`${styles.favBtn} ${isFavorite(book._id) ? styles.favBtnActive : ''}`}
@@ -211,10 +212,10 @@ const Shop = () => {
                                     <FiHeart />
                                 </button>
                             </div>
-                            <h3>{book.title}</h3>
-                            <p>{book.author}</p>
+                            <h3 className={styles.bookCardH3}>{book.title}</h3>
+                            <p className={styles.bookCardP}>{book.author}</p>
                             <span className={styles.genreTag}>{bookGenres.find(g => g.id === book.genre)?.label || book.genre}</span>
-                            <span>{book.price} ֏</span>
+                            <span className={styles.bookCardPriceSpan}>{book.price} ֏</span>
                             <div className={styles.bookCardActions}>
                                 <Link to={`/shop/${book._id}`} className={styles.viewBtn}>Դիտել</Link>
                                 <button className={styles.buyBtn} onClick={() => handleAddToCart(book)}>Ավելացնել զամբյուղ</button>

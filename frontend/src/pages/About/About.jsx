@@ -1,23 +1,24 @@
 import React from 'react';
-import styles from './About.module.css';
 import Seo from '../Seo/Seo';
 
 const About = () => {
   return (
-    <div className={styles.aboutContainer}>
+    <div className="max-w-[800px] mx-auto my-[60px] p-10 bg-white shadow-[0_4px_20px_rgba(0,0,0,0.05)] rounded-xl max-[600px]:m-5 max-[600px]:p-5">
       <Seo
         title="Մեր մասին"
         description="Իմացեք Գրատուն առցանց գրախանութի պատմության և առաքելության մասին։"
         url="https://www.gratunhub.am/about"
       />
-      <header className={styles.aboutHeader}>
-        <h1>Մեր պատմությունը</h1>
-        <p>Մենք սիրահարված ենք գրքերին և գաղափարներին</p>
+      <header className="text-center pb-10 border-b-2 border-[#f0f0f0] mb-10">
+        <h1 className="font-['Georgia','Noto_Serif_Armenian',serif] text-[3rem] text-[#1a1a1a] mb-2.5 max-[600px]:text-[2rem]">
+          Մեր պատմությունը
+        </h1>
+        <p className="italic text-[#666] text-[1.2rem]">Մենք սիրահարված ենք գրքերին և գաղափարներին</p>
       </header>
 
-      <section className={styles.aboutContent}>
-        <div className={styles.aboutText}>
-          <h2>Ինչո՞ւ ստեղծեցինք այս հարթակը</h2>
+      <section>
+        <div className="font-['Georgia','Noto_Serif_Armenian',serif] text-[1.15rem] text-[#333] leading-[1.9]">
+          <h2 className="text-[#2c3e50] mt-[30px]">Ինչո՞ւ ստեղծեցինք այս հարթակը</h2>
           <p>
             Բարի գալուստ մեր գրքերի և կրթական բովանդակության հարթակ։
             Մենք ստեղծել ենք այս կայքը մեկ կարևոր նպատակով՝ գիտելիքը, կրթությունը և ընթերցանության արժեքները հասանելի դարձնելու յուրաքանչյուր մարդու համար։ Ժամանակակից աշխարհում տեղեկատվությունը մեծ արագությամբ է տարածվում, սակայն որակյալ և վստահելի բովանդակություն գտնելը հաճախ դժվար է։ Հենց այդ պատճառով մենք ձգտում ենք մեկ վայրում համախմբել օգտակար գրքեր, կրթական հոդվածներ, ուսուցողական նյութեր և զարգացմանն ուղղված բովանդակություն, որոնք կարող են օգնել յուրաքանչյուրին ընդլայնել իր գիտելիքները և ձեռք բերել նոր հմտություններ։
@@ -31,12 +32,14 @@ const About = () => {
             Այստեղ մենք կիսվում ենք մեր ընթերցանության փորձով, վերլուծում ենք փիլիսոփայական մտքեր և փորձել ստեղծել մի համայնք, որտեղ գրքերը դառնում են զրույցի առարկա:
           </p>
         </div>
-        <div className={styles.aboutValues}>
-          <h3>Մեր սկզբունքները</h3>
-          <ul>
-            <li><span>📚</span> Խորը վերլուծություն</li>
-            <li><span>🔍</span> Ճշմարտացի կարծիքներ</li>
-            <li><span>💡</span> Մտքերի փոխանակում</li>
+        <div className="bg-[#fdfaf6] p-[30px] rounded-lg border-l-[5px] border-[#d4a373] mt-10">
+          <h3 className="mt-0 text-[#5c4033] font-['Arial','Noto_Sans_Armenian',sans-serif] uppercase tracking-[1px]">
+            Մեր սկզբունքները
+          </h3>
+          <ul className="list-none p-0">
+            <li className="mb-[15px] flex items-center text-[1.1rem]"><span>📚</span>&nbsp;Խորը վերլուծություն</li>
+            <li className="mb-[15px] flex items-center text-[1.1rem]"><span>🔍</span>&nbsp;Ճշմարտացի կարծիքներ</li>
+            <li className="mb-[15px] flex items-center text-[1.1rem]"><span>💡</span>&nbsp;Մտքերի փոխանակում</li>
           </ul>
         </div>
       </section>

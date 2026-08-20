@@ -1,8 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Noto+Sans+Armenian:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Poppins:wght@400;500;600;700&display=swap');
+
+@import "tailwindcss";
+
 html,
 body {
-          background: #3e3c39;
-          overflow-x: hidden;
-          width: 100%;
-          margin: 0;
-          padding: 0;
+  background: #3e3c39;
+  overflow-x: hidden;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Swiper's own classes (.swiper, .swiper-wrapper, .swiper-slide) have no
+   background by default, so on wide screens the dark body background shows
+   through around the centered hero. Matching it to the hero's background
+   fixes that (moved here from Home.module.css :global()). */
+.swiper,
+.swiper-wrapper,
+.swiper-slide {
+  background-color: #E4E8F0;
 }

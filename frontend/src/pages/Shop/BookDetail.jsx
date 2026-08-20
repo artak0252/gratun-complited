@@ -4,7 +4,7 @@ import api from '../../api/axiosInstance';
 import { CartContext } from '../../context/CartContext';
 import { FavoritesContext } from '../../context/FavoritesContext';
 import toast from 'react-hot-toast';
-import styles from './BookDetail.module.css';
+import styles from './bookDetailStyles.js';
 import { bookGenres } from './genreConstants';
 import { FiHeart } from 'react-icons/fi';
 import Seo from '../Seo/Seo';

@@ -2,7 +2,7 @@ import React, { useReducer, useEffect, useState, useContext, useMemo } from 'rea
 import api from '../../api/axiosInstance';
 import { AuthContext } from '../../context/AuthContext.jsx';
 import { FiSearch, FiX, FiUser } from 'react-icons/fi';
-import styles from './Quotes.module.css';
+import styles from './quotesStyles.js';
 import Seo from '../Seo/Seo';
 
 const initialState = {
@@ -133,8 +133,8 @@ const Quotes = () => {
             />
 
             <div className={styles.pageHeader}>
-                <h1>Մեջբերումներ գրքերից</h1>
-                <p>Ընտրյալ մտքեր և տողեր, որոնք արժե պահել հիշողության մեջ</p>
+                <h1 className={styles.pageHeaderH1}>Մեջբերումներ գրքերից</h1>
+                <p className={styles.pageHeaderP}>Ընտրյալ մտքեր և տողեր, որոնք արժե պահել հիշողության մեջ</p>
             </div>
 
             {isAdmin && (
@@ -144,13 +144,14 @@ const Quotes = () => {
                     </button>
                     {isFormVisible && (
                         <div className={styles.adminFormContainer}>
-                            <h3>{editingId ? 'Խմբագրել մեջբերումը' : 'Ավելացնել նոր մեջբերում'}</h3>
-                            <form onSubmit={handleFormSubmit}>
+                            <h3 className={styles.adminFormContainerH3}>{editingId ? 'Խմբագրել մեջբերումը' : 'Ավելացնել նոր մեջբերում'}</h3>
+                            <form onSubmit={handleFormSubmit} className={styles.form}>
                                 <textarea
                                     placeholder="Մեջբերման տեքստը"
                                     value={formData.text}
                                     onChange={e => dispatch({ type: 'SET_FORM_FIELD', field: 'text', value: e.target.value })}
                                     required
+                                    className={styles.formTextarea}
                                 />
                                 <input
                                     type="text"
@@ -158,6 +159,7 @@ const Quotes = () => {
                                     value={formData.author}
                                     onChange={e => dispatch({ type: 'SET_FORM_FIELD', field: 'author', value: e.target.value })}
                                     required
+                                    className={styles.formInput}
                                 />
                                 <label htmlFor="quote-file" className={styles.fileLabel}>
                                     {formData.image ? formData.image.name : (editingId ? "Փոխել հեղինակի նկարը (ընտրովի)" : "Ընտրել հեղինակի նկարը (ընտրովի)")}
@@ -208,8 +210,8 @@ const Quotes = () => {
                         <article key={quote._id} className={styles.quoteCard}>
                             {isAdmin && (
                                 <div className={styles.adminQuoteActions}>
-                                    <button className={styles.editQuoteBtn} onClick={() => handleEdit(quote)}>✏️</button>
-                                    <button className={styles.deleteQuoteBtn} onClick={() => handleDelete(quote._id)}>🗑️</button>
+                                    <button className={styles.editDeleteQuoteBtn} onClick={() => handleEdit(quote)}>✏️</button>
+                                    <button className={styles.editDeleteQuoteBtn} onClick={() => handleDelete(quote._id)}>🗑️</button>
                                 </div>
                             )}
                             <div className={styles.imageSide}>

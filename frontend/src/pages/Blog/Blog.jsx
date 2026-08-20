@@ -3,8 +3,7 @@ import { blogCategories } from './constants';
 import api from '../../api/axiosInstance';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext.jsx';
-import styles from './Blog.module.css';
-import adminStyles from './AdminFilter.module.css';
+import styles from './blogStyles.js';
 import Seo from '../Seo/Seo';
 
 const initialState = {
@@ -115,12 +114,12 @@ const Blog = () => {
                     </button>
                     {isFormVisible && (
                         <div className={styles.adminFormContainer}>
-                            <h3>{editingId ? 'Խմբագրել հոդվածը' : 'Ավելացնել նոր հոդված'}</h3>
-                            <form onSubmit={handleFormSubmit}>
-                                <input type="text" placeholder="Վերնագիր" value={formData.title} onChange={e => dispatch({ type: 'SET_FORM_FIELD', field: 'title', value: e.target.value })} required />
-                                <input type="text" placeholder="Կարճ նկարագրություն" value={formData.excerpt} onChange={e => dispatch({ type: 'SET_FORM_FIELD', field: 'excerpt', value: e.target.value })} required />
-                                <textarea placeholder="Բովանդակություն" value={formData.content} onChange={e => dispatch({ type: 'SET_FORM_FIELD', field: 'content', value: e.target.value })} required />
-                                <select className={adminStyles.adminSelect} value={formData.category} onChange={e => dispatch({ type: 'SET_FORM_FIELD', field: 'category', value: e.target.value })} required>
+                            <h3 className={styles.adminFormContainerH3}>{editingId ? 'Խմբագրել հոդվածը' : 'Ավելացնել նոր հոդված'}</h3>
+                            <form onSubmit={handleFormSubmit} className={styles.form}>
+                                <input type="text" placeholder="Վերնագիր" value={formData.title} onChange={e => dispatch({ type: 'SET_FORM_FIELD', field: 'title', value: e.target.value })} required className={styles.formInput} />
+                                <input type="text" placeholder="Կարճ նկարագրություն" value={formData.excerpt} onChange={e => dispatch({ type: 'SET_FORM_FIELD', field: 'excerpt', value: e.target.value })} required className={styles.formInput} />
+                                <textarea placeholder="Բովանդակություն" value={formData.content} onChange={e => dispatch({ type: 'SET_FORM_FIELD', field: 'content', value: e.target.value })} required className={styles.formTextarea} />
+                                <select className={styles.adminSelect} value={formData.category} onChange={e => dispatch({ type: 'SET_FORM_FIELD', field: 'category', value: e.target.value })} required>
                                     {blogCategories.filter(c => c.id !== 'all').map(c =>
                                         c.subCategories ? c.subCategories.map(s => <option key={s.id} value={s.id}>{c.label} - {s.label}</option>) : <option key={c.id} value={c.id}>{c.label}</option>
                                     )}
@@ -144,8 +143,8 @@ const Blog = () => {
                     <article key={post._id} className={styles.postCard}>
                         {isAdmin && (
                             <div className={styles.adminPostActions}>
-                                <button className={styles.editPostBtn} onClick={() => handleEdit(post)}>✏️</button>
-                                <button className={styles.deletePostBtn} onClick={() => handleDelete(post._id)}>🗑️</button>
+                                <button className={styles.editDeletePostBtn} onClick={() => handleEdit(post)}>✏️</button>
+                                <button className={styles.editDeletePostBtn} onClick={() => handleDelete(post._id)}>🗑️</button>
                             </div>
                         )}
                         <img
@@ -158,9 +157,9 @@ const Blog = () => {
                             }}
                         />
                         <div className={styles.postContent}>
-                            <h2>{post.title}</h2>
-                            <p>{post.excerpt}</p>
-                            <Link to={`/blog/${post._id}`}>Կարդալ ավելին →</Link>
+                            <h2 className={styles.postContentH2}>{post.title}</h2>
+                            <p className={styles.postContentP}>{post.excerpt}</p>
+                            <Link to={`/blog/${post._id}`} className={styles.postContentLink}>Կարդալ ավելին →</Link>
                         </div>
                     </article>
                 ))}

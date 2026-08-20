@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import api from '../../api/axiosInstance';
 import { AuthContext } from '../../context/AuthContext.jsx';
 import { FiSearch, FiX, FiBookOpen } from 'react-icons/fi';
-import styles from './ThematicBooks.module.css';
+import styles from './thematicBooksStyles.js';
 import Seo from '../Seo/Seo';
 
 const initialFormData = { theme: '', text: '', bookTitle: '', bookAuthor: '', link: '', image: null };
@@ -143,8 +143,8 @@ const ThematicBooks = () => {
                               />
 
                               <div className={styles.pageHeader}>
-                                        <h1>Ինչ գիրք կարդալ հիմա</h1>
-                                        <p>Ընտրված գրքեր՝ ըստ Ձեր տրամադրության և կարիքի</p>
+                                        <h1 className={styles.pageHeaderH1}>Ինչ գիրք կարդալ հիմա</h1>
+                                        <p className={styles.pageHeaderP}>Ընտրված գրքեր՝ ըստ Ձեր տրամադրության և կարիքի</p>
                               </div>
 
                               {isAdmin && (
@@ -154,20 +154,22 @@ const ThematicBooks = () => {
                                                   </button>
                                                   {isFormVisible && (
                                                             <div className={styles.adminFormContainer}>
-                                                                      <h3>{editingId ? 'Խմբագրել երաշխավորությունը' : 'Ավելացնել նոր երաշխավորություն'}</h3>
-                                                                      <form onSubmit={handleFormSubmit}>
+                                                                      <h3 className={styles.adminFormContainerH3}>{editingId ? 'Խմբագրել երաշխավորությունը' : 'Ավելացնել նոր երաշխավորություն'}</h3>
+                                                                      <form onSubmit={handleFormSubmit} className={styles.form}>
                                                                                 <input
                                                                                           type="text"
                                                                                           placeholder="Թեման (օր.՝ Երբ կորցրել եք հույսը)"
                                                                                           value={formData.theme}
                                                                                           onChange={e => dispatch({ type: 'SET_FORM_FIELD', field: 'theme', value: e.target.value })}
                                                                                           required
+                                                                                          className={styles.formInput}
                                                                                 />
                                                                                 <textarea
                                                                                           placeholder="Տեքստը (օր.՝ Կարդացեք այս գիրքը, այն կօգնի...)"
                                                                                           value={formData.text}
                                                                                           onChange={e => dispatch({ type: 'SET_FORM_FIELD', field: 'text', value: e.target.value })}
                                                                                           required
+                                                                                          className={styles.formTextarea}
                                                                                 />
                                                                                 <input
                                                                                           type="text"
@@ -175,18 +177,21 @@ const ThematicBooks = () => {
                                                                                           value={formData.bookTitle}
                                                                                           onChange={e => dispatch({ type: 'SET_FORM_FIELD', field: 'bookTitle', value: e.target.value })}
                                                                                           required
+                                                                                          className={styles.formInput}
                                                                                 />
                                                                                 <input
                                                                                           type="text"
                                                                                           placeholder="Հեղինակը (ընտրովի)"
                                                                                           value={formData.bookAuthor}
                                                                                           onChange={e => dispatch({ type: 'SET_FORM_FIELD', field: 'bookAuthor', value: e.target.value })}
+                                                                                          className={styles.formInput}
                                                                                 />
                                                                                 <input
                                                                                           type="text"
                                                                                           placeholder="Հղում խանութի գրքին (ընտրովի, օր.՝ /shop/ID)"
                                                                                           value={formData.link}
                                                                                           onChange={e => dispatch({ type: 'SET_FORM_FIELD', field: 'link', value: e.target.value })}
+                                                                                          className={styles.formInput}
                                                                                 />
                                                                                 <label htmlFor="thematic-file" className={styles.fileLabel}>
                                                                                           {formData.image ? formData.image.name : (editingId ? "Փոխել գրքի նկարը (ընտրովի)" : "Ընտրել գրքի նկարը (ընտրովի)")}
@@ -235,8 +240,8 @@ const ThematicBooks = () => {
                                                             <article key={item._id} className={styles.itemCard}>
                                                                       {isAdmin && (
                                                                                 <div className={styles.adminActions}>
-                                                                                          <button className={styles.editBtn} onClick={() => handleEdit(item)}>✏️</button>
-                                                                                          <button className={styles.deleteBtn} onClick={() => handleDelete(item._id)}>🗑️</button>
+                                                                                          <button className={styles.editDeleteBtn} onClick={() => handleEdit(item)}>✏️</button>
+                                                                                          <button className={styles.editDeleteBtn} onClick={() => handleDelete(item._id)}>🗑️</button>
                                                                                 </div>
                                                                       )}
                                                                       <div className={styles.imageSide}>

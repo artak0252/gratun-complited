@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { CartContext } from '../../context/CartContext';
 import toast from 'react-hot-toast';
 import api from '../../api/axiosInstance';
-import styles from './Cart.module.css';
+import styles from './cartStyles.js';
 
 const Cart = () => {
     const { cartItems, removeFromCart, updateQuantity, clearCart } = useContext(CartContext);
@@ -41,9 +41,9 @@ const Cart = () => {
 
     if (cartItems.length === 0) {
         return (
-            <div className={`${styles.cartContainer} ${styles.emptyCart}`}>
-                <h2>Ձեր զամբյուղը դատարկ է</h2>
-                <p>Վերադարձեք խանութ՝ գրքեր ավելացնելու համար:</p>
+            <div className={`${styles.cartContainer} ${styles.emptyCartWrapper}`}>
+                <h2 className={styles.emptyCartH2}>Ձեր զամբյուղը դատարկ է</h2>
+                <p className={styles.emptyCartP}>Վերադարձեք խանութ՝ գրքեր ավելացնելու համար:</p>
             </div>
         );
     }
@@ -59,7 +59,7 @@ const Cart = () => {
                                 <div key={item._id} className={styles.cartItemCard}>
                                     <img src={item.image} alt={item.title} className={styles.cartItemImage} />
                                     <div className={styles.cartItemDetails}>
-                                        <h3>{item.title}</h3>
+                                        <h3 className={styles.cartItemDetailsH3}>{item.title}</h3>
                                         <p className={styles.cartItemAuthor}>{item.author}</p>
                                         <p className={styles.cartItemPrice}>{item.price} ֏</p>
                                     </div>
@@ -73,7 +73,7 @@ const Cart = () => {
                             ))}
                         </div>
                         <div className={styles.cartSummaryPanel}>
-                            <h3>Պատվերի Ամփոփում</h3>
+                            <h3 className={styles.cartSummaryPanelH3}>Պատվերի Ամփոփում</h3>
                             <hr className={styles.summaryDivider} />
                             <div className={styles.summaryRow}>
                                 <span>Ապրանքներ</span>
@@ -90,15 +90,15 @@ const Cart = () => {
                 </>
             ) : (
                 <div className={styles.orderFormContainer}>
-                    <h3>Լրացրեք Ձեր տվյալները</h3>
+                    <h3 className={styles.orderFormContainerH3}>Լրացրեք Ձեր տվյալները</h3>
                     <form onSubmit={submitOrder}>
-                        <input name="name" placeholder="Անուն, Ազգանուն" required onChange={handleInputChange} />
-                        <input name="phone" placeholder="Հեռախոսահամար" required onChange={handleInputChange} />
-                        <input name="address" placeholder="Էլ․ հասցե" required onChange={handleInputChange} />
-                        <button type="submit" className={styles.checkoutBtn} disabled={isSubmitting}>
+                        <input name="name" placeholder="Անուն, Ազգանուն" required onChange={handleInputChange} className={styles.orderInput} />
+                        <input name="phone" placeholder="Հեռախոսահամար" required onChange={handleInputChange} className={styles.orderInput} />
+                        <input name="address" placeholder="Էլ․ հասցե" required onChange={handleInputChange} className={styles.orderInput} />
+                        <button type="submit" className={styles.orderCheckoutBtn} disabled={isSubmitting}>
                             {isSubmitting ? 'Ուղարկվում է...' : 'Հաստատել Պատվերը'}
                         </button>
-                        <button type="button" onClick={() => setShowForm(false)} className={styles.clearCartBtn}>Հետ</button>
+                        <button type="button" onClick={() => setShowForm(false)} className={styles.orderClearCartBtn}>Հետ</button>
                     </form>
                 </div>
             )}
