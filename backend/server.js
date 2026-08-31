@@ -18,6 +18,7 @@ import quoteRoutes from './routes/quoteRoutes.js';
 import thematicBookRoutes from './routes/thematicBookRoutes.js';
 import sitemapRouter from './routes/sitemap.js';
 
+import Message from './models/Message.js';
 import Post from './models/Post.js';
 import { isSocialCrawler, renderSocialHtml, SITE_URL } from './utils/socialMeta.js';
 import { adminOnly } from './middleware/adminMiddleware.js';
@@ -269,6 +270,56 @@ app.post('/api/orders', orderLimiter, async (req, res) => {
     } catch (error) {
         console.error('Պատվերի սխալ:', error.message);
         res.status(500).json({ message: "Սխալ պատվերի ժամանակ" });
+    }
+});
+
+// Կապվեք մեզ հետ ձևից նամակների սահմանափակում՝ spam-ից պաշտպանվելու համար
+const contactLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 րոպե
+    max: 5,
+    message: { message: 'Չափազանց շատ նամակներ են ուղարկվել։ Խնդրում ենք փորձել 15 րոպե անց։' },
+    standardHeaders: true,
+    legacyHeaders: false,
+});
+
+app.post('/api/contact', contactLimiter, async (req, res) => {
+    try {
+        const { name, email, subject, text } = req.body;
+
+        if (!name || !email || !text) {
+            return res.status(400).json({ message: 'Լրացրու անունը, էլ. փոստը և հաղորդագրությունը' });
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            return res.status(400).json({ message: 'Խնդրում ենք մուտքագրել վավեր էլ. փոստի հասցե' });
+        }
+        if (text.length > 3000) {
+            return res.status(400).json({ message: 'Հաղորդագրությունը չափազանց երկար է' });
+        }
+
+        const newMessage = await Message.create({ name, email, subject, text });
+
+        const mailOptions = {
+            from: "safaryanartak81@gmail.com",
+            to: "safaryanartak81@gmail.com",
+            replyTo: email,
+            subject: `Նոր նամակ կայքից՝ ${subject || 'Առանց վերնագրի'}`,
+            text: `Անուն՝ ${name}\nԷլ. փոստ՝ ${email}\nԹեմա՝ ${subject || '-'}\n\nՀաղորդագրություն՝\n${text}`
+        };
+
+        try {
+            await transporter.sendMail(mailOptions);
+            newMessage.emailSent = true;
+            await newMessage.save();
+        } catch (mailError) {
+            console.error('Նամակ ուղարկելու սխալ (հաղորդագրությունը պահված է DB-ում):', mailError.message);
+        }
+
+        res.status(200).json({ message: 'Ձեր նամակը հաջողությամբ ուղարկվեց։ Շնորհակալություն դիմելու համար' });
+    } catch (error) {
+        console.error('Կապի ձևի սխալ:', error.message);
+        res.status(500).json({ message: 'Սխալ նամակն ուղարկելիս' });
     }
 });
 

@@ -79,7 +79,7 @@ const Header = () => {
           >
             <FiShoppingBag />
             {cartCount > 0 && (
-              <span className="absolute -top-2 -right-2 bg-[#14315C] text-[#3A322C] text-[10px] font-bold w-[18px] h-[18px] rounded-full flex items-center justify-center">
+              <span className="absolute -top-2 -right-2 bg-[#14315C] text-white text-[10px] font-bold w-[18px] h-[18px] rounded-full flex items-center justify-center">
                 {cartCount}
               </span>
             )}
