@@ -41,7 +41,7 @@ const Contact = () => {
         description="Ունե՞ք հարցեր կամ առաջարկներ Գրատուն առցանց գրախանութի վերաբերյալ։ Կապվեք մեզ հետ։"
         url="https://www.gratunhub.am/contact"
       />
-      <h1 className="font-['Playfair_Display',Noto_Sans_Armenian,Georgia,serif] text-[2.8rem] text-[white] mb-5 font-bold text-center">
+      <h1 className="font-['Playfair_Display',Noto_Sans_Armenian,Georgia,serif] text-[2.8rem] text-[#1a1a1a] mb-5 font-bold text-center">
         Կապվեք մեզ հետ
       </h1>
       <p className="font-[Noto_Sans_Armenian,Poppins,sans-serif] text-[1.1rem] text-[#666] leading-[1.6] mb-[50px] max-w-[500px] mx-auto text-center">
