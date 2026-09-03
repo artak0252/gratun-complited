@@ -47,6 +47,7 @@ const Header = () => {
             >
               Մեջբերումներ
             </Link>
+            <Link to="/literature" className="text-lg font-medium tracking-[0.3px] text-[#3A322C] no-underline whitespace-nowrap transition-colors duration-200 hover:text-[#6B3245] max-lg:text-sm max-md:w-full max-md:px-6 max-md:py-3.5 max-md:border-b max-md:border-white max-md:text-base" onClick={() => setIsOpen(false)}>Գրականություն</Link>
             <Link to="/thematic" className="text-lg font-medium tracking-[0.3px] text-[#3A322C] no-underline whitespace-nowrap transition-colors duration-200 hover:text-[#6B3245] max-lg:text-sm max-md:w-full max-md:px-6 max-md:py-3.5 max-md:border-b max-md:border-white max-md:text-base" onClick={() => setIsOpen(false)}>Թեմատիկ</Link>
             <Link to="/contact" className="text-lg font-medium tracking-[0.3px] text-[#3A322C] no-underline whitespace-nowrap transition-colors duration-200 hover:text-[#6B3245] max-lg:text-sm max-md:w-full max-md:px-6 max-md:py-3.5 max-md:border-b max-md:border-white max-md:text-base" onClick={() => setIsOpen(false)}>Հետադարձ կապ</Link>
             <Link to="/about" className="text-lg font-medium tracking-[0.3px] text-[#3A322C] no-underline whitespace-nowrap transition-colors duration-200 hover:text-[#6B3245] max-lg:text-sm max-md:w-full max-md:px-6 max-md:py-3.5 max-md:border-b max-md:border-white max-md:text-base" onClick={() => setIsOpen(false)}>Մեր մասին</Link>

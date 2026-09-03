@@ -16,10 +16,12 @@ import bookRoutes from './routes/bookRoutes.js';
 import postRoutes from './routes/postRoutes.js';
 import quoteRoutes from './routes/quoteRoutes.js';
 import thematicBookRoutes from './routes/thematicBookRoutes.js';
+import literatureRoutes from './routes/literatureRoutes.js';
 import sitemapRouter from './routes/sitemap.js';
 
 import Message from './models/Message.js';
 import Post from './models/Post.js';
+import Literature from './models/Literature.js';
 import { isSocialCrawler, renderSocialHtml, SITE_URL } from './utils/socialMeta.js';
 import { adminOnly } from './middleware/adminMiddleware.js';
 import { checkAuth } from './middleware/checkAuth.js';
@@ -192,6 +194,7 @@ app.use('/api/books', bookRoutes);
 app.use('/api/posts', postRoutes);
 app.use('/api/quotes', quoteRoutes);
 app.use('/api/thematic-books', thematicBookRoutes);
+app.use('/api/literature', literatureRoutes);
 app.use('/', sitemapRouter);
 
 const orderLimiter = rateLimit({
@@ -368,10 +371,29 @@ app.get('/blog/:id', async (req, res, next) => {
     }
 });
 
-// Homepage/listing էջերի (/, /shop, /blog, /about, /contact) համար crawler-ներին
+app.get('/literature/:id', async (req, res, next) => {
+    if (!isSocialCrawler(req.headers['user-agent'])) return next();
+    try {
+        const item = await Literature.findById(req.params.id);
+        if (!item) return next();
+        const image = item.image.startsWith('http') ? item.image : `https://ik.imagekit.io/hmtd5pr9d/${item.image}`;
+        const html = renderSocialHtml(FRONTEND_BUILD_DIR, {
+            title: `${item.title}${item.author ? ` — ${item.author}` : ''}`,
+            description: item.excerpt || item.content?.slice(0, 160),
+            image,
+            url: `${SITE_URL}/literature/${item._id}`,
+            type: 'article',
+        });
+        res.send(html);
+    } catch (error) {
+        next();
+    }
+});
+
+// Homepage/listing էջերի (/, /shop, /blog, /literature, /about, /contact) համար crawler-ներին
 // ուղարկում ենք default site-wide meta tags-ով HTML (նույն template-ը, առանց
 // կոնկրետ գրքի/հոդվածի տվյալների)
-app.get(['/', '/shop', '/blog', '/about', '/contact'], (req, res, next) => {
+app.get(['/', '/shop', '/blog', '/literature', '/about', '/contact'], (req, res, next) => {
     if (!isSocialCrawler(req.headers['user-agent'])) return next();
     const html = renderSocialHtml(FRONTEND_BUILD_DIR, { url: `${SITE_URL}${req.path === '/' ? '/' : req.path}` });
     res.send(html);

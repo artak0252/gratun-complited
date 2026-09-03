@@ -2,6 +2,7 @@
 import express from 'express';
 import Book from '../models/Book.js';
 import Post from '../models/Post.js';
+import Literature from '../models/Literature.js';
 
 const router = express.Router();
 
@@ -10,15 +11,18 @@ const SITE_URL = 'https://www.gratunhub.am';
 router.get('/sitemap.xml', async (req, res) => {
     try {
         // Երկուսն էլ զուգահեռ, որ ավելի արագ լինի
-        const [books, posts] = await Promise.all([
+        const [books, posts, literatureItems] = await Promise.all([
             Book.find({}, '_id updatedAt'),
-            Post.find({}, '_id updatedAt')
+            Post.find({}, '_id updatedAt'),
+            Literature.find({}, '_id updatedAt')
         ]);
 
         const staticUrls = [
             { loc: `${SITE_URL}/`, priority: '1.0', changefreq: 'daily' },
             { loc: `${SITE_URL}/shop`, priority: '0.9', changefreq: 'daily' },
             { loc: `${SITE_URL}/blog`, priority: '0.9', changefreq: 'daily' },
+            { loc: `${SITE_URL}/quotes`, priority: '0.7', changefreq: 'weekly' },
+            { loc: `${SITE_URL}/literature`, priority: '0.8', changefreq: 'daily' },
             { loc: `${SITE_URL}/thematic`, priority: '0.7', changefreq: 'weekly' },
             { loc: `${SITE_URL}/about`, priority: '0.5', changefreq: 'monthly' },
             { loc: `${SITE_URL}/contact`, priority: '0.5', changefreq: 'monthly' },
@@ -41,7 +45,14 @@ router.get('/sitemap.xml', async (req, res) => {
             changefreq: 'weekly'
         }));
 
-        const allUrls = [...staticUrls, ...bookUrls, ...postUrls];
+        const literatureUrls = literatureItems.map(item => ({
+            loc: `${SITE_URL}/literature/${item._id}`,
+            lastmod: item.updatedAt ? item.updatedAt.toISOString() : undefined,
+            priority: '0.6',
+            changefreq: 'weekly'
+        }));
+
+        const allUrls = [...staticUrls, ...bookUrls, ...postUrls, ...literatureUrls];
 
         let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
         xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';

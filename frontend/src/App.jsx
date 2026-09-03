@@ -13,6 +13,8 @@ import Contact from './pages/Contact/Contact';
 import About from './pages/About/About';
 import SinglePost from './pages/Blog/SinglePost';
 import Quotes from './pages/Quotes/Quotes';
+import Literature from './pages/Literature/Literature';
+import SingleLiterature from './pages/Literature/SingleLiterature';
 import ThematicBooks from './pages/ThematicBooks/ThematicBooks';
 import Login from './pages/Login/Login';
 import Register from './pages/Login/Register';
@@ -37,6 +39,8 @@ function App() {
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:id" element={<SinglePost />} />
         <Route path="/quotes" element={<Quotes />} />
+        <Route path="/literature" element={<Literature />} />
+        <Route path="/literature/:id" element={<SingleLiterature />} />
         <Route path="/thematic" element={<ThematicBooks />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/shop/:id" element={<BookDetail />} />
