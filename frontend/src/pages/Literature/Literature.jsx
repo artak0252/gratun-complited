@@ -1,288 +1,54 @@
-import React, { useReducer, useEffect, useState, useContext, useMemo } from 'react';
-import { Link } from 'react-router-dom';
-import { FiSearch, FiX } from 'react-icons/fi';
-import api from '../../api/axiosInstance';
-import { AuthContext } from '../../context/AuthContext.jsx';
-import { literatureCategories, literatureFormCategories, getCategoryLabel } from './constants';
-import styles from './literatureStyles.js';
-import Seo from '../Seo/Seo';
+// Tailwind class-string map "Գրականություն" բաժնի համար.
+// Palette-ը նույնն է, ինչ Quotes/ThematicBooks էջերինը (navy #14315C + terracotta #d35400),
+// քանի որ Գրականությունը նավիգացիայում գտնվում է հենց այս երկուսի արանքում։
+const styles = {
+    pageWrapper: "px-[8%] py-[60px] bg-[#fdfdfd] min-h-screen box-border max-[700px]:px-[6%] max-[700px]:py-10",
+    loading: "py-[100px] text-center text-lg text-[#6b7280]",
+    pageHeader: "text-center max-w-[700px] mx-auto mb-10",
+    pageHeaderH1: "font-['Playfair_Display','Noto_Serif_Armenian',serif] text-[34px] text-[#14315C] mb-2.5 max-[700px]:text-[26px]",
+    pageHeaderP: "font-[Noto_Sans_Armenian,Poppins,sans-serif] text-[15px] text-[#6b7280] m-0",
 
-const initialFormData = { title: '', category: 'poetry', author: '', excerpt: '', content: '', answer: '', image: null };
+    adminSection: "max-w-[900px] mx-auto mb-[30px]",
+    publishBtn: "bg-[#14315C] text-white border-none px-[30px] py-[15px] rounded-xl font-semibold cursor-pointer transition-all duration-300 w-fit mb-5 hover:bg-[#d35400] hover:scale-[1.02] max-[480px]:w-full max-[480px]:text-center",
+    cancelBtn: "bg-none border border-[#e2e8f0] text-[#6b7280] px-6 py-[15px] rounded-xl cursor-pointer ml-2.5",
+    adminFormContainer: "bg-white p-10 rounded-3xl shadow-[0_10px_30px_rgba(0,0,0,0.05)] mb-10 border border-[#f0f0f0] max-[700px]:p-6",
+    adminFormContainerH3: "mt-0 font-['Playfair_Display','Noto_Serif_Armenian',serif] text-[#14315C]",
+    form: "flex flex-col gap-[15px]",
+    formInput: "p-[15px] border border-[#eee] rounded-xl text-base font-[inherit]",
+    // resize-y + h-[260px] + whitespace-pre-wrap. պոեզիայի/բանաստեղծության տողերը
+    // տեղադրելիս (paste) տողադարձերը (Enter-ները) պահպանվում են ճիշտ այնպես, ինչպես
+    // բնօրինակում են եղել, այլ ոչ թե միանում իրար կողքի մեկ տողի մեջ
+    formTextarea: "p-[15px] border border-[#eee] rounded-xl text-base font-[inherit] resize-y h-[260px] whitespace-pre-wrap",
+    adminSelect: "w-full px-4 py-3.5 border border-[#eee] rounded-xl bg-white text-base text-[#333] cursor-pointer transition-colors duration-300 focus:border-[#14315C] focus:outline-none",
+    fileInput: "hidden",
+    fileLabel: "p-[15px] bg-[#f8f9fa] border border-dashed border-[#d1d5db] rounded-xl cursor-pointer text-center text-[#6b7280] text-sm transition-all duration-300 block hover:border-[#14315C] hover:text-[#14315C] hover:bg-[#f4f7fb]",
 
-const initialState = {
-    items: [],
-    loading: true,
-    searchTerm: '',
-    activeCategory: 'all',
-    editingId: null,
-    formData: initialFormData
+    categoryTabs: "flex flex-wrap justify-center gap-3 max-w-[900px] mx-auto mb-10 max-[480px]:gap-2",
+    categoryTabBtn: "bg-white border border-[#e2e8f0] px-5 py-2.5 rounded-full font-medium text-[15px] text-[#3A322C] cursor-pointer transition-all duration-300 shadow-[0_2px_4px_rgba(0,0,0,0.02)] hover:bg-[#14315C] hover:text-white hover:border-[#14315C] max-[480px]:px-4 max-[480px]:py-2 max-[480px]:text-sm",
+    categoryTabBtnActive: "!bg-[#14315C] !text-white !border-[#14315C]",
+
+    searchContainer: "relative mx-auto mb-[50px] max-w-[600px] flex items-center justify-center",
+    searchIcon: "absolute left-[22px] text-[#9ca3af] text-lg pointer-events-none",
+    searchInput: "w-full px-[50px] py-[15px] rounded-full border border-[#e2e8f0] text-base outline-none transition-[0.3s] shadow-[0_4px_6px_rgba(0,0,0,0.05)] box-border focus:border-[#14315C] focus:shadow-[0_0_0_3px_rgba(20,49,92,0.1)]",
+    clearSearchBtn: "absolute right-[22px] bg-none border-none text-[#9ca3af] cursor-pointer text-lg flex hover:text-[#d35400]",
+    resultsCount: "absolute -bottom-[26px] text-[13px] text-[#9ca3af]",
+    highlight: "bg-[#ffe6b3] text-inherit rounded-[3px] px-0.5",
+
+    noResults: "text-center text-[#9ca3af] text-base py-[60px]",
+
+    itemsGrid: "grid grid-cols-1 gap-[30px] max-w-[1100px] mx-auto max-[900px]:gap-[25px] max-[480px]:gap-5",
+    itemCard: "relative bg-white p-5 rounded-3xl border border-[#f5f5f5] transition-[0.4s] flex flex-row items-start gap-[30px] hover:-translate-y-1.5 hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] max-[480px]:flex-col max-[480px]:p-[18px]",
+    itemImg: "w-[220px] h-[220px] shrink-0 object-cover rounded-2xl max-[900px]:w-[180px] max-[900px]:h-[180px] max-[480px]:w-full max-[480px]:h-[200px]",
+    itemContent: "flex flex-col flex-1 min-h-[220px] justify-center py-1.5",
+    itemCategoryTag: "inline-block w-fit font-[Noto_Sans_Armenian,Poppins,sans-serif] text-[12px] uppercase tracking-[0.5px] font-semibold text-[#d35400] mb-2.5",
+    itemContentH2: "font-['Playfair_Display','Noto_Serif_Armenian',serif] text-2xl font-semibold text-[#14315C] mb-2 leading-[1.3]",
+    itemAuthor: "font-[Noto_Sans_Armenian,Poppins,sans-serif] text-sm text-[#6B3245] font-medium mb-2.5",
+    // whitespace-pre-line ավելացված է, որպեսզի, եթե ցանկի քարտի վրայի կարճ
+    // նկարագրության մեջ պատահաբար մի քանի տող լինի, դրանք երևան իրար տակ, ոչ թե իրար կողքի
+    itemContentP: "font-[Noto_Sans_Armenian,Poppins,sans-serif] text-[15px] leading-[1.7] text-[#6b7280] mb-[15px] whitespace-pre-line",
+    itemContentLink: "font-[Noto_Sans_Armenian,Poppins,sans-serif] text-[#14315C] font-semibold no-underline hover:text-[#d35400]",
+    adminItemActions: "absolute top-5 right-5 flex gap-2 z-[2]",
+    editDeleteBtn: "bg-[rgba(255,255,255,0.9)] border-none rounded-lg cursor-pointer text-lg px-2 py-1 transition-transform duration-200 hover:scale-110",
 };
 
-const literatureReducer = (state, action) => {
-    switch (action.type) {
-        case 'FETCH_SUCCESS': return { ...state, items: action.payload, loading: false };
-        case 'SET_LOADING': return { ...state, loading: action.payload };
-        case 'ADD_ITEM': return { ...state, items: [action.payload, ...state.items], formData: initialFormData, editingId: null };
-        case 'UPDATE_ITEM': return { ...state, items: state.items.map(i => i._id === action.payload._id ? action.payload : i), formData: initialFormData, editingId: null };
-        case 'DELETE_ITEM': return { ...state, items: state.items.filter(i => i._id !== action.payload) };
-        case 'SET_FORM_FIELD': return { ...state, formData: { ...state.formData, [action.field]: action.value } };
-        case 'START_EDIT': return {
-            ...state,
-            editingId: action.payload._id,
-            formData: {
-                title: action.payload.title,
-                category: action.payload.category,
-                author: action.payload.author || '',
-                excerpt: action.payload.excerpt,
-                content: action.payload.content,
-                answer: action.payload.answer || '',
-                image: null
-            }
-        };
-        case 'CANCEL_EDIT': return { ...state, editingId: null, formData: initialFormData };
-        case 'SET_SEARCH': return { ...state, searchTerm: action.payload };
-        case 'SET_CATEGORY': return { ...state, activeCategory: action.payload };
-        default: return state;
-    }
-};
-
-// Quotes.jsx-ի նույն "AND" տրամաբանությամբ որոնումը՝ վերնագրի, հեղինակի և
-// հատվածի (excerpt) մեջ միաժամանակ
-const normalize = (str = '') => str.toLowerCase().trim();
-const getSearchTerms = (query) => normalize(query).split(/\s+/).filter(Boolean);
-const itemMatchesSearch = (item, terms) => {
-    if (terms.length === 0) return true;
-    const haystack = `${normalize(item.title)} ${normalize(item.author)} ${normalize(item.excerpt)}`;
-    return terms.every(term => haystack.includes(term));
-};
-
-const Literature = () => {
-    const [state, dispatch] = useReducer(literatureReducer, initialState);
-    const [isFormVisible, setIsFormVisible] = useState(false);
-    const { items, loading, formData, searchTerm, activeCategory, editingId } = state;
-    const { isAdmin } = useContext(AuthContext);
-
-    useEffect(() => {
-        const fetchItems = async () => {
-            try {
-                const res = await api.get('/literature');
-                dispatch({ type: 'FETCH_SUCCESS', payload: res.data });
-            } catch (err) { dispatch({ type: 'SET_LOADING', payload: false }); }
-        };
-        fetchItems();
-    }, []);
-
-    const handleDelete = async (id) => {
-        if (!window.confirm('Ջնջե՞լ այս նյութը:')) return;
-        try {
-            await api.delete(`/literature/${id}`);
-            dispatch({ type: 'DELETE_ITEM', payload: id });
-        } catch (err) { alert('Մուտքը մերժված է'); }
-    };
-
-    const handleFormSubmit = async (e) => {
-        e.preventDefault();
-        const data = new FormData();
-        Object.keys(formData).forEach(key => {
-            // Խմբագրելիս, եթե admin-ը նոր նկար չի ընտրել, image դաշտը չենք ուղարկում,
-            // որպեսզի backend-ը հին նկարը թողնի անփոփոխ
-            if (key === 'image' && !formData.image) return;
-            data.append(key, formData[key]);
-        });
-
-        try {
-            if (editingId) {
-                const res = await api.put(`/literature/${editingId}`, data);
-                dispatch({ type: 'UPDATE_ITEM', payload: res.data });
-                setIsFormVisible(false);
-                alert('Նյութը հաջողությամբ խմբագրվեց!');
-            } else {
-                const res = await api.post('/literature', data);
-                dispatch({ type: 'ADD_ITEM', payload: res.data });
-                setIsFormVisible(false);
-                alert('Նյութը հաջողությամբ ավելացվեց!');
-            }
-        } catch (err) {
-            console.error(err);
-            alert(editingId ? 'Սխալ՝ խմբագրումը չհաջողվեց' : 'Սխալ՝ միայն ադմինները կարող են ավելացնել');
-        }
-    };
-
-    const handleEdit = (item) => {
-        dispatch({ type: 'START_EDIT', payload: item });
-        setIsFormVisible(true);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    };
-
-    const handleCancelEdit = () => {
-        dispatch({ type: 'CANCEL_EDIT' });
-        setIsFormVisible(false);
-    };
-
-    const searchTerms = useMemo(() => getSearchTerms(searchTerm), [searchTerm]);
-
-    const filteredItems = useMemo(() => items.filter(item => {
-        const matchesCategory = activeCategory === 'all' || item.category === activeCategory;
-        return matchesCategory && itemMatchesSearch(item, searchTerms);
-    }), [items, activeCategory, searchTerms]);
-
-    if (loading) return <div className={styles.loading}>Բեռնվում է...</div>;
-
-    return (
-        <div className={styles.pageWrapper}>
-            <Seo
-                title="Գրականություն"
-                description="Պոեզիա, առակներ, հեքիաթներ, մանկական բանաստեղծություններ և հանելուկներ Գրատուն կայքում։"
-                url="https://www.gratunhub.am/literature"
-            />
-
-            <div className={styles.pageHeader}>
-                <h1 className={styles.pageHeaderH1}>Գրականություն</h1>
-                <p className={styles.pageHeaderP}>Պոեզիա, առակներ, հեքիաթներ, մանկական բանաստեղծություններ և հանելուկներ</p>
-            </div>
-
-            {isAdmin && (
-                <div className={styles.adminSection}>
-                    <button className={styles.publishBtn} onClick={() => isFormVisible ? handleCancelEdit() : setIsFormVisible(true)}>
-                        {isFormVisible ? 'Փակել ֆորման' : '+ Նոր նյութ ավելացնել'}
-                    </button>
-                    {isFormVisible && (
-                        <div className={styles.adminFormContainer}>
-                            <h3 className={styles.adminFormContainerH3}>{editingId ? 'Խմբագրել նյութը' : 'Ավելացնել նոր նյութ'}</h3>
-                            <form onSubmit={handleFormSubmit} className={styles.form}>
-                                <select
-                                    className={styles.adminSelect}
-                                    value={formData.category}
-                                    onChange={e => dispatch({ type: 'SET_FORM_FIELD', field: 'category', value: e.target.value })}
-                                    required
-                                >
-                                    {literatureFormCategories.map(c => <option key={c.id} value={c.id}>{c.label}</option>)}
-                                </select>
-                                <input
-                                    type="text"
-                                    placeholder="Վերնագիր"
-                                    value={formData.title}
-                                    onChange={e => dispatch({ type: 'SET_FORM_FIELD', field: 'title', value: e.target.value })}
-                                    required
-                                    className={styles.formInput}
-                                />
-                                <input
-                                    type="text"
-                                    placeholder="Հեղինակը (ընտրովի, ժողովրդական դեպքում թողնել դատարկ)"
-                                    value={formData.author}
-                                    onChange={e => dispatch({ type: 'SET_FORM_FIELD', field: 'author', value: e.target.value })}
-                                    className={styles.formInput}
-                                />
-                                <input
-                                    type="text"
-                                    placeholder="Կարճ նկարագրություն"
-                                    value={formData.excerpt}
-                                    onChange={e => dispatch({ type: 'SET_FORM_FIELD', field: 'excerpt', value: e.target.value })}
-                                    required
-                                    className={styles.formInput}
-                                />
-                                <textarea
-                                    placeholder="Բովանդակություն"
-                                    value={formData.content}
-                                    onChange={e => dispatch({ type: 'SET_FORM_FIELD', field: 'content', value: e.target.value })}
-                                    required
-                                    className={styles.formTextarea}
-                                />
-                                {formData.category === 'riddles' && (
-                                    <input
-                                        type="text"
-                                        placeholder="Պատասխանը (ընտրովի)"
-                                        value={formData.answer}
-                                        onChange={e => dispatch({ type: 'SET_FORM_FIELD', field: 'answer', value: e.target.value })}
-                                        className={styles.formInput}
-                                    />
-                                )}
-                                <label htmlFor="literature-file" className={styles.fileLabel}>
-                                    {formData.image ? formData.image.name : (editingId ? "Փոխել նկարը (ընտրովի)" : "Ընտրել նկարը")}
-                                </label>
-                                <input
-                                    id="literature-file"
-                                    type="file"
-                                    accept="image/*"
-                                    className={styles.fileInput}
-                                    onChange={e => dispatch({ type: 'SET_FORM_FIELD', field: 'image', value: e.target.files[0] })}
-                                    required={!editingId}
-                                />
-                                <button type="submit" className={styles.publishBtn}>
-                                    {editingId ? 'Պահպանել փոփոխությունները' : 'Հրապարակել'}
-                                </button>
-                                {editingId && <button type="button" onClick={handleCancelEdit} className={styles.cancelBtn}>Չեղարկել</button>}
-                            </form>
-                        </div>
-                    )}
-                </div>
-            )}
-
-            <div className={styles.categoryTabs}>
-                {literatureCategories.map(c => (
-                    <button
-                        key={c.id}
-                        className={`${styles.categoryTabBtn} ${activeCategory === c.id ? styles.categoryTabBtnActive : ''}`}
-                        onClick={() => dispatch({ type: 'SET_CATEGORY', payload: c.id })}
-                    >
-                        {c.label}
-                    </button>
-                ))}
-            </div>
-
-            <div className={styles.searchContainer}>
-                <FiSearch className={styles.searchIcon} />
-                <input
-                    className={styles.searchInput}
-                    type="text"
-                    placeholder="Որոնել վերնագրով կամ հեղինակով..."
-                    value={searchTerm}
-                    onChange={e => dispatch({ type: 'SET_SEARCH', payload: e.target.value })}
-                />
-                {searchTerm && (
-                    <button className={styles.clearSearchBtn} onClick={() => dispatch({ type: 'SET_SEARCH', payload: '' })} aria-label="Մաքրել որոնումը">
-                        <FiX />
-                    </button>
-                )}
-                {searchTerm && (
-                    <span className={styles.resultsCount}>{filteredItems.length} արդյունք</span>
-                )}
-            </div>
-
-            {filteredItems.length === 0 ? (
-                <p className={styles.noResults}>Նյութեր չեն գտնվել</p>
-            ) : (
-                <div className={styles.itemsGrid}>
-                    {filteredItems.map(item => (
-                        <article key={item._id} className={styles.itemCard}>
-                            {isAdmin && (
-                                <div className={styles.adminItemActions}>
-                                    <button className={styles.editDeleteBtn} onClick={() => handleEdit(item)}>✏️</button>
-                                    <button className={styles.editDeleteBtn} onClick={() => handleDelete(item._id)}>🗑️</button>
-                                </div>
-                            )}
-                            <img
-                                className={styles.itemImg}
-                                src={item.image.startsWith('http') ? item.image : `https://ik.imagekit.io/hmtd5pr9d/${item.image}`}
-                                alt={item.title}
-                                loading="lazy"
-                                onError={(e) => {
-                                    e.target.src = "https://via.placeholder.com/150";
-                                }}
-                            />
-                            <div className={styles.itemContent}>
-                                <span className={styles.itemCategoryTag}>{getCategoryLabel(item.category)}</span>
-                                <h2 className={styles.itemContentH2}>{item.title}</h2>
-                                {item.author && <span className={styles.itemAuthor}>{item.author}</span>}
-                                <p className={styles.itemContentP}>{item.excerpt}</p>
-                                <Link to={`/literature/${item._id}`} className={styles.itemContentLink}>Կարդալ ավելին →</Link>
-                            </div>
-                        </article>
-                    ))}
-                </div>
-            )}
-        </div>
-    );
-};
-
-export default Literature;
+export default styles;
