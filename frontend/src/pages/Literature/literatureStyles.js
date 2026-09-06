@@ -15,7 +15,10 @@ const styles = {
     adminFormContainerH3: "mt-0 font-['Playfair_Display','Noto_Serif_Armenian',serif] text-[#14315C]",
     form: "flex flex-col gap-[15px]",
     formInput: "p-[15px] border border-[#eee] rounded-xl text-base font-[inherit]",
-    formTextarea: "p-[15px] border border-[#eee] rounded-xl text-base font-[inherit] resize-none h-[120px]",
+    // resize-y + h-[260px] + whitespace-pre-wrap. պոեզիայի/բանաստեղծության տողերը
+    // տեղադրելիս (paste) տողադարձերը (Enter-ները) պահպանվում են ճիշտ այնպես, ինչպես
+    // բնօրինակում են եղել, այլ ոչ թե միանում իրար կողքի մեկ տողի մեջ
+    formTextarea: "p-[15px] border border-[#eee] rounded-xl text-base font-[inherit] resize-y h-[260px] whitespace-pre-wrap",
     adminSelect: "w-full px-4 py-3.5 border border-[#eee] rounded-xl bg-white text-base text-[#333] cursor-pointer transition-colors duration-300 focus:border-[#14315C] focus:outline-none",
     fileInput: "hidden",
     fileLabel: "p-[15px] bg-[#f8f9fa] border border-dashed border-[#d1d5db] rounded-xl cursor-pointer text-center text-[#6b7280] text-sm transition-all duration-300 block hover:border-[#14315C] hover:text-[#14315C] hover:bg-[#f4f7fb]",
@@ -40,7 +43,9 @@ const styles = {
     itemCategoryTag: "inline-block w-fit font-[Noto_Sans_Armenian,Poppins,sans-serif] text-[12px] uppercase tracking-[0.5px] font-semibold text-[#d35400] mb-2.5",
     itemContentH2: "font-['Playfair_Display','Noto_Serif_Armenian',serif] text-2xl font-semibold text-[#14315C] mb-2 leading-[1.3]",
     itemAuthor: "font-[Noto_Sans_Armenian,Poppins,sans-serif] text-sm text-[#6B3245] font-medium mb-2.5",
-    itemContentP: "font-[Noto_Sans_Armenian,Poppins,sans-serif] text-[15px] leading-[1.7] text-[#6b7280] mb-[15px]",
+    // whitespace-pre-line ավելացված է, որպեսզի, եթե ցանկի քարտի վրայի կարճ
+    // նկարագրության մեջ պատահաբար մի քանի տող լինի, դրանք երևան իրար տակ, ոչ թե իրար կողքի
+    itemContentP: "font-[Noto_Sans_Armenian,Poppins,sans-serif] text-[15px] leading-[1.7] text-[#6b7280] mb-[15px] whitespace-pre-line",
     itemContentLink: "font-[Noto_Sans_Armenian,Poppins,sans-serif] text-[#14315C] font-semibold no-underline hover:text-[#d35400]",
     adminItemActions: "absolute top-5 right-5 flex gap-2 z-[2]",
     editDeleteBtn: "bg-[rgba(255,255,255,0.9)] border-none rounded-lg cursor-pointer text-lg px-2 py-1 transition-transform duration-200 hover:scale-110",
