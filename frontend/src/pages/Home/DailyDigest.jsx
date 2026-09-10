@@ -140,7 +140,7 @@ const DailyDigest = () => {
                                                                                 aria-label={`${label} — սեղմիր մեծացնելու համար`}
                                                                                 className="group relative flex-1 max-w-[680px] bg-white p-4 rounded-[16px] border-none cursor-zoom-in shadow-[0_10px_25px_rgba(0,0,0,0.08)] transition-[transform,box-shadow] duration-[250ms] hover:-translate-y-1.5 hover:shadow-[0_18px_36px_rgba(107,50,69,0.18)] max-[700px]:w-full max-[700px]:max-w-[560px]"
                                                                       >
-                                                                                <span className="block overflow-hidden rounded-[10px] aspect-[210/265] bg-[#f2f0ec]">
+                                                                                <span className="block overflow-hidden rounded-[10px] aspect-[210/219] bg-[#f2f0ec]">
                                                                                           <img
                                                                                                     src={src}
                                                                                                     alt={label}
