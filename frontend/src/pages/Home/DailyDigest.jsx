@@ -138,14 +138,14 @@ const DailyDigest = () => {
                                                                                 type="button"
                                                                                 onClick={() => setLightbox(side)}
                                                                                 aria-label={`${label} — սեղմիր մեծացնելու համար`}
-                                                                                className="group relative flex-1 max-w-[680px] bg-white p-3 pb-4 rounded-[14px] border-none cursor-zoom-in shadow-[0_10px_25px_rgba(0,0,0,0.08)] transition-[transform,box-shadow] duration-[250ms] hover:-translate-y-1.5 hover:shadow-[0_18px_36px_rgba(107,50,69,0.18)] max-[700px]:w-full max-[700px]:max-w-[560px]"
+                                                                                className="group relative flex-1 max-w-[680px] bg-white p-4 rounded-[16px] border-none cursor-zoom-in shadow-[0_10px_25px_rgba(0,0,0,0.08)] transition-[transform,box-shadow] duration-[250ms] hover:-translate-y-1.5 hover:shadow-[0_18px_36px_rgba(107,50,69,0.18)] max-[700px]:w-full max-[700px]:max-w-[560px]"
                                                                       >
-                                                                                <span className="block overflow-hidden rounded-[8px] aspect-[210/297] bg-[#f2f0ec]">
+                                                                                <span className="block overflow-hidden rounded-[10px] aspect-[210/265] bg-[#f2f0ec]">
                                                                                           <img
                                                                                                     src={src}
                                                                                                     alt={label}
                                                                                                     loading="lazy"
-                                                                                                    className="w-full h-full object-cover transition-transform duration-[400ms] group-hover:scale-[1.04]"
+                                                                                                    className="w-full h-full object-cover rounded-[10px] transition-transform duration-[400ms] group-hover:scale-[1.04]"
                                                                                           />
                                                                                 </span>
                                                                                 <span className="absolute top-6 right-6 w-9 h-9 rounded-full bg-[#14315C]/90 text-white flex items-center justify-center text-[1.1rem] opacity-0 group-hover:opacity-100 transition-opacity duration-200">
