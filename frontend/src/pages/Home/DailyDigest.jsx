@@ -113,7 +113,7 @@ const DailyDigest = () => {
                               className="bg-[#E4E8F0] border-b-[5px] border-white px-[8%] py-[60px] box-border max-[700px]:px-[6%] max-[700px]:py-10"
                               aria-label="Օրը մեկ էջում"
                     >
-                              <div className="max-w-[1000px] mx-auto">
+                              <div className="max-w-[1400px] mx-auto">
                                         {digest && (
                                                   <div className="text-center mb-9 max-[700px]:mb-6">
                                                             <h2 className="font-['Playfair_Display','Noto_Serif_Armenian',serif] text-[2rem] text-[#14315C] font-bold m-0 mb-2 max-[600px]:text-[1.5rem]">
@@ -138,7 +138,7 @@ const DailyDigest = () => {
                                                                                 type="button"
                                                                                 onClick={() => setLightbox(side)}
                                                                                 aria-label={`${label} — սեղմիր մեծացնելու համար`}
-                                                                                className="group relative flex-1 max-w-[400px] bg-white p-3 pb-4 rounded-[14px] border-none cursor-zoom-in shadow-[0_10px_25px_rgba(0,0,0,0.08)] transition-[transform,box-shadow] duration-[250ms] hover:-translate-y-1.5 hover:shadow-[0_18px_36px_rgba(107,50,69,0.18)] max-[700px]:w-full max-[700px]:max-w-[420px]"
+                                                                                className="group relative flex-1 max-w-[680px] bg-white p-3 pb-4 rounded-[14px] border-none cursor-zoom-in shadow-[0_10px_25px_rgba(0,0,0,0.08)] transition-[transform,box-shadow] duration-[250ms] hover:-translate-y-1.5 hover:shadow-[0_18px_36px_rgba(107,50,69,0.18)] max-[700px]:w-full max-[700px]:max-w-[560px]"
                                                                       >
                                                                                 <span className="block overflow-hidden rounded-[8px] aspect-[210/297] bg-[#f2f0ec]">
                                                                                           <img
