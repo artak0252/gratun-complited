@@ -1,6 +1,8 @@
 import express from 'express';
 import DailyDigest from '../models/DailyDigest.js';
 import { adminOnly } from '../middleware/adminMiddleware.js';
+import imagekit from '../utils/imagekit.js';
+import upload from '../utils/upload.js';
 
 const router = express.Router();
 
@@ -16,25 +18,37 @@ router.get('/', async (req, res) => {
           }
 });
 
-// 2. POST: Հրապարակել նոր "Օրը մեկ էջում" (միայն admin)
+// 2. POST: Հրապարակել նոր "Օրը մեկ էջում" (միայն admin) — 2 նկար (ձախ + աջ)
 // Կարևոր. նոր տարբերակը հրապարակելիս նախորդն ամբողջությամբ ջնջվում է,
 // որպեսզի կայքում միշտ երևա միայն մեկ, ամենաթարմ տարբերակը
-router.post('/', adminOnly, async (req, res) => {
+router.post('/', adminOnly, (req, res, next) => {
+          upload.fields([{ name: 'left', maxCount: 1 }, { name: 'right', maxCount: 1 }])(req, res, (err) => {
+                    if (err) {
+                              return res.status(400).json({ message: err.message || 'Ֆայլի վերբեռնման սխալ' });
+                    }
+                    next();
+          });
+}, async (req, res) => {
           try {
-                    const { date, items } = req.body;
+                    const leftFile = req.files?.left?.[0];
+                    const rightFile = req.files?.right?.[0];
 
-                    if (!date || !Array.isArray(items) || items.length === 0) {
-                              return res.status(400).json({ message: 'Լրացրու ամսաթիվը և առնվազն մեկ բաժին' });
+                    if (!leftFile || !rightFile) {
+                              return res.status(400).json({ message: 'Պետք է վերբեռնել երկու նկարն էլ (ձախ և աջ)' });
                     }
 
-                    for (const item of items) {
-                              if (!item.category || !item.icon || !item.title || !item.text) {
-                                        return res.status(400).json({ message: 'Յուրաքանչյուր բաժին պետք է ունենա category, icon, title և text' });
-                              }
-                    }
+                    const [leftUpload, rightUpload] = await Promise.all([
+                              imagekit.upload({ file: leftFile.buffer, fileName: `${Date.now()}_left_${leftFile.originalname}` }),
+                              imagekit.upload({ file: rightFile.buffer, fileName: `${Date.now()}_right_${rightFile.originalname}` })
+                    ]);
 
+                    // Singleton-պես վարքագիծ. նոր "Օրը մեկ էջում" ավելացնելիս հին տարբերակը ջնջվում է
                     await DailyDigest.deleteMany({});
-                    const newDigest = new DailyDigest({ date, items });
+                    const newDigest = new DailyDigest({
+                              date: req.body.date || '',
+                              leftImage: leftUpload.url,
+                              rightImage: rightUpload.url
+                    });
                     const saved = await newDigest.save();
 
                     res.status(201).json(saved);
