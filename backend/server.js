@@ -18,7 +18,7 @@ import quoteRoutes from './routes/quoteRoutes.js';
 import thematicBookRoutes from './routes/thematicBookRoutes.js';
 import literatureRoutes from './routes/literatureRoutes.js';
 import sitemapRouter from './routes/sitemap.js';
-
+import dailyDigestRoutes from './routes/dailyDigestRoutes.js';
 import Message from './models/Message.js';
 import Post from './models/Post.js';
 import Literature from './models/Literature.js';
@@ -193,6 +193,7 @@ app.post('/api/register', authLimiter, async (req, res) => {
 app.use('/api/books', bookRoutes);
 app.use('/api/posts', postRoutes);
 app.use('/api/quotes', quoteRoutes);
+app.use('/api/daily-digest', dailyDigestRoutes);
 app.use('/api/thematic-books', thematicBookRoutes);
 app.use('/api/literature', literatureRoutes);
 app.use('/', sitemapRouter);
