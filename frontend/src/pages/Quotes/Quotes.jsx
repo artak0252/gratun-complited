@@ -1,4 +1,5 @@
 import React, { useReducer, useEffect, useState, useContext, useMemo } from 'react';
+import { Link } from 'react-router-dom';
 import api from '../../api/axiosInstance';
 import { AuthContext } from '../../context/AuthContext.jsx';
 import { FiSearch, FiX, FiUser } from 'react-icons/fi';
@@ -10,7 +11,7 @@ const initialState = {
     loading: true,
     searchTerm: '',
     editingId: null,
-    formData: { text: '', author: '', image: null }
+    formData: { text: '', author: '', authorBio: '', image: null }
 };
 
 const quotesReducer = (state, action) => {
@@ -21,7 +22,7 @@ const quotesReducer = (state, action) => {
         case 'UPDATE_QUOTE': return { ...state, quotes: state.quotes.map(q => q._id === action.payload._id ? action.payload : q), formData: initialState.formData, editingId: null };
         case 'DELETE_QUOTE': return { ...state, quotes: state.quotes.filter(q => q._id !== action.payload) };
         case 'SET_FORM_FIELD': return { ...state, formData: { ...state.formData, [action.field]: action.value } };
-        case 'START_EDIT': return { ...state, editingId: action.payload._id, formData: { text: action.payload.text, author: action.payload.author, image: null } };
+        case 'START_EDIT': return { ...state, editingId: action.payload._id, formData: { text: action.payload.text, author: action.payload.author, authorBio: action.payload.authorBio || '', image: null } };
         case 'CANCEL_EDIT': return { ...state, editingId: null, formData: initialState.formData };
         case 'SET_SEARCH': return { ...state, searchTerm: action.payload };
         default: return state;
@@ -84,6 +85,7 @@ const Quotes = () => {
         const data = new FormData();
         data.append('text', formData.text);
         data.append('author', formData.author);
+        data.append('authorBio', formData.authorBio || '');
         if (formData.image) data.append('image', formData.image);
 
         try {
@@ -135,6 +137,9 @@ const Quotes = () => {
             <div className={styles.pageHeader}>
                 <h1 className={styles.pageHeaderH1}>Մեջբերումներ գրքերից</h1>
                 <p className={styles.pageHeaderP}>Ընտրյալ մտքեր և տողեր, որոնք արժե պահել հիշողության մեջ</p>
+                <Link to="/authors" className="inline-block mt-3 text-[13px] text-[#14315C] font-[Noto_Sans_Armenian,Poppins,sans-serif] underline decoration-[#d35400] underline-offset-4 hover:text-[#d35400]">
+                    Տեսնել բոլոր հեղինակներին →
+                </Link>
             </div>
 
             {isAdmin && (
@@ -160,6 +165,12 @@ const Quotes = () => {
                                     onChange={e => dispatch({ type: 'SET_FORM_FIELD', field: 'author', value: e.target.value })}
                                     required
                                     className={styles.formInput}
+                                />
+                                <textarea
+                                    placeholder="Հեղինակի կենսագրություն (ընտրովի, երևում է միայն նոր «Հեղինակներ» էջում)"
+                                    value={formData.authorBio}
+                                    onChange={e => dispatch({ type: 'SET_FORM_FIELD', field: 'authorBio', value: e.target.value })}
+                                    className={styles.formTextarea}
                                 />
                                 <label htmlFor="quote-file" className={styles.fileLabel}>
                                     {formData.image ? formData.image.name : (editingId ? "Փոխել հեղինակի նկարը (ընտրովի)" : "Ընտրել հեղինակի նկարը (ընտրովի)")}
