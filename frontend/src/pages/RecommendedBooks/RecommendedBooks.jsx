@@ -59,7 +59,7 @@ const RecommendedBooks = () => {
           {books.map(book => (
             <div
               key={book._id}
-              className="relative bg-white border border-[rgba(220,213,200,0.5)] rounded-[10px] p-2.5 overflow-hidden flex flex-col items-center text-center shadow-[0_6px_14px_rgba(58,50,44,0.1)] transition-[transform,box-shadow] duration-[250ms] hover:-translate-y-1 hover:shadow-[0_12px_22px_rgba(58,50,44,0.16)] max-md:flex-[0_0_130px] max-[480px]:flex-[0_0_115px] max-[480px]:p-2"
+              className="relative bg-white border border-[rgba(220,213,200,0.5)] rounded-[10px] p-2.5 overflow-hidden flex flex-col items-center text-center h-full shadow-[0_6px_14px_rgba(58,50,44,0.1)] transition-[transform,box-shadow] duration-[250ms] hover:-translate-y-1 hover:shadow-[0_12px_22px_rgba(58,50,44,0.16)] max-md:flex-[0_0_130px] max-[480px]:flex-[0_0_115px] max-[480px]:p-2"
             >
               <div className="w-full aspect-[3/4] overflow-hidden rounded-md mb-2 bg-[#E4E8F0]">
                 <img
@@ -73,15 +73,17 @@ const RecommendedBooks = () => {
                 {book.title}
               </h3>
               <p className="text-[11px] italic text-[#14315C] opacity-70 mb-1.5">{book.author}</p>
-              <span className="inline-block text-xs font-bold text-[#6B3245] bg-[rgba(107,50,69,0.08)] px-2.5 py-0.5 rounded-full mb-2">
-                {book.price} ֏
-              </span>
-              <button
-                className="w-full bg-[#14315C] text-white border-none rounded-md px-2.5 py-[7px] text-xs font-semibold cursor-pointer transition-[background-color,transform] duration-200 hover:bg-[#6B3245] hover:text-white active:scale-[0.97]"
-                onClick={() => handleAddToCart(book)}
-              >
-                Ավելացնել զամբյուղ
-              </button>
+              <div className="w-full mt-auto flex flex-col items-center">
+                <span className="inline-block text-xs font-bold text-[#6B3245] bg-[rgba(107,50,69,0.08)] px-2.5 py-0.5 rounded-full mb-2">
+                  {book.price} ֏
+                </span>
+                <button
+                  className="w-full bg-[#14315C] text-white border-none rounded-md px-2.5 py-[7px] text-xs font-semibold cursor-pointer transition-[background-color,transform] duration-200 hover:bg-[#6B3245] hover:text-white active:scale-[0.97]"
+                  onClick={() => handleAddToCart(book)}
+                >
+                  Ավելացնել զամբյուղ
+                </button>
+              </div>
             </div>
           ))}
         </div>
