@@ -22,6 +22,7 @@ import Login from './pages/Login/Login';
 import Register from './pages/Login/Register';
 import Header from './pages/Header/Header';
 import AnnouncementBar from './pages/AnnouncementBar/AnnouncementBar';
+import FreeCourseAd from './pages/FreeCourseAd/FreeCourseAd';
 import Footer from './pages/Footer/Footer';
 import Seo from './pages/Seo/Seo';
 
@@ -33,6 +34,7 @@ function App() {
           index.html-ի static tags-ի հետ կրկնապատկվելու։ */}
       <Seo />
       <Toaster />
+      <FreeCourseAd />
       <Header />
       <AnnouncementBar />
 
