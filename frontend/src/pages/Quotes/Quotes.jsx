@@ -6,46 +6,73 @@ import { FiSearch, FiX, FiUser } from 'react-icons/fi';
 import styles from './quotesStyles.js';
 import Seo from '../Seo/Seo';
 
+const emptyForm = { text: '', author: '', authorBio: '', authorNationality: '', authorEra: '', image: null };
+
 const initialState = {
-    quotes: [],
+    authors: [],
     loading: true,
     searchTerm: '',
-    editingId: null,
-    formData: { text: '', author: '', authorBio: '', image: null }
+    formData: emptyForm
 };
 
 const quotesReducer = (state, action) => {
     switch (action.type) {
-        case 'FETCH_SUCCESS': return { ...state, quotes: action.payload, loading: false };
+        case 'FETCH_SUCCESS': return { ...state, authors: action.payload, loading: false };
         case 'SET_LOADING': return { ...state, loading: action.payload };
-        case 'ADD_QUOTE': return { ...state, quotes: [action.payload, ...state.quotes], formData: initialState.formData, editingId: null };
-        case 'UPDATE_QUOTE': return { ...state, quotes: state.quotes.map(q => q._id === action.payload._id ? action.payload : q), formData: initialState.formData, editingId: null };
-        case 'DELETE_QUOTE': return { ...state, quotes: state.quotes.filter(q => q._id !== action.payload) };
+        case 'ADD_AUTHOR_FROM_QUOTE': {
+            // Նոր մեջբերում ավելացնելուց հետո՝ կամ նոր հեղինակի բոքս ենք ավելացնում,
+            // կամ թարմացնում ենք գոյություն ունեցող հեղինակի quotesCount-ը/նկարը
+            const q = action.payload;
+            const key = q.author.trim().toLowerCase();
+            const existing = state.authors.find(a => a.author.trim().toLowerCase() === key);
+            if (existing) {
+                return {
+                    ...state,
+                    authors: state.authors.map(a => a.author.trim().toLowerCase() === key
+                        ? {
+                            ...a,
+                            quotesCount: a.quotesCount + 1,
+                            authorImage: a.authorImage || q.authorImage,
+                            authorBio: a.authorBio || q.authorBio,
+                            authorNationality: a.authorNationality || q.authorNationality,
+                            authorEra: a.authorEra || q.authorEra
+                        }
+                        : a),
+                    formData: emptyForm
+                };
+            }
+            return {
+                ...state,
+                authors: [{
+                    author: q.author,
+                    authorImage: q.authorImage || '',
+                    authorBio: q.authorBio || '',
+                    authorNationality: q.authorNationality || '',
+                    authorEra: q.authorEra || '',
+                    quotesCount: 1
+                }, ...state.authors],
+                formData: emptyForm
+            };
+        }
         case 'SET_FORM_FIELD': return { ...state, formData: { ...state.formData, [action.field]: action.value } };
-        case 'START_EDIT': return { ...state, editingId: action.payload._id, formData: { text: action.payload.text, author: action.payload.author, authorBio: action.payload.authorBio || '', image: null } };
-        case 'CANCEL_EDIT': return { ...state, editingId: null, formData: initialState.formData };
+        case 'RESET_FORM': return { ...state, formData: emptyForm };
         case 'SET_SEARCH': return { ...state, searchTerm: action.payload };
         default: return state;
     }
 };
 
-// Փոքրիկ, բայց "հզոր" որոնման util. մի քանի բառ մուտքագրելիս (օր.՝ "հեմինգուեյ գիրք")
-// յուրաքանչյուր բառ պետք է հանդիպի կամ մեջբերման տեքստում, կամ հեղինակի անվան մեջ (AND տրամաբանություն),
-// ոչ թե ամբողջ query-ն որպես մեկ substring, ինչպես սովորական .includes() որոնումը
 const normalize = (str = '') => str.toLowerCase().trim();
 
 const getSearchTerms = (query) => normalize(query).split(/\s+/).filter(Boolean);
 
-const quoteMatchesSearch = (quote, terms) => {
+const authorMatchesSearch = (author, terms) => {
     if (terms.length === 0) return true;
-    const haystack = `${normalize(quote.text)} ${normalize(quote.author)}`;
+    const haystack = `${normalize(author.author)} ${normalize(author.authorNationality)} ${normalize(author.authorEra)}`;
     return terms.every(term => haystack.includes(term));
 };
 
-// Համապատասխան հատվածները ընդգծում ենք <mark>-ով, որպեսզի օգտատերը տեսնի,
-// թե կոնկրետ ինչի հիման վրա է մեջբերումը հայտնվել արդյունքներում
 const highlightText = (text, terms) => {
-    if (terms.length === 0) return text;
+    if (!text || terms.length === 0) return text;
     const pattern = terms.map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|');
     const regex = new RegExp(`(${pattern})`, 'gi');
     const parts = text.split(regex);
@@ -59,26 +86,18 @@ const highlightText = (text, terms) => {
 const Quotes = () => {
     const [state, dispatch] = useReducer(quotesReducer, initialState);
     const [isFormVisible, setIsFormVisible] = useState(false);
-    const { quotes, loading, formData, searchTerm, editingId } = state;
+    const { authors, loading, formData, searchTerm } = state;
     const { isAdmin } = useContext(AuthContext);
 
     useEffect(() => {
-        const fetchQuotes = async () => {
+        const fetchAuthors = async () => {
             try {
-                const res = await api.get('/quotes');
+                const res = await api.get('/quotes/authors/list');
                 dispatch({ type: 'FETCH_SUCCESS', payload: res.data });
             } catch (err) { dispatch({ type: 'SET_LOADING', payload: false }); }
         };
-        fetchQuotes();
+        fetchAuthors();
     }, []);
-
-    const handleDelete = async (id) => {
-        if (!window.confirm('Ջնջե՞լ այս մեջբերումը:')) return;
-        try {
-            await api.delete(`/quotes/${id}`);
-            dispatch({ type: 'DELETE_QUOTE', payload: id });
-        } catch (err) { alert('Մուտքը մերժված է'); }
-    };
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
@@ -86,42 +105,31 @@ const Quotes = () => {
         data.append('text', formData.text);
         data.append('author', formData.author);
         data.append('authorBio', formData.authorBio || '');
+        data.append('authorNationality', formData.authorNationality || '');
+        data.append('authorEra', formData.authorEra || '');
         if (formData.image) data.append('image', formData.image);
 
         try {
-            if (editingId) {
-                const res = await api.put(`/quotes/${editingId}`, data);
-                dispatch({ type: 'UPDATE_QUOTE', payload: res.data });
-                setIsFormVisible(false);
-                alert('Մեջբերումը հաջողությամբ խմբագրվեց!');
-            } else {
-                const res = await api.post('/quotes', data);
-                dispatch({ type: 'ADD_QUOTE', payload: res.data });
-                setIsFormVisible(false);
-                alert('Մեջբերումը հաջողությամբ ավելացվեց!');
-            }
+            const res = await api.post('/quotes', data);
+            dispatch({ type: 'ADD_AUTHOR_FROM_QUOTE', payload: res.data });
+            setIsFormVisible(false);
+            alert('Մեջբերումը հաջողությամբ ավելացվեց!');
         } catch (err) {
             console.error(err);
-            alert(editingId ? 'Սխալ՝ խմբագրումը չհաջողվեց' : 'Սխալ՝ միայն ադմինները կարող են ավելացնել');
+            alert('Սխալ՝ միայն ադմինները կարող են ավելացնել');
         }
     };
 
-    const handleEdit = (quote) => {
-        dispatch({ type: 'START_EDIT', payload: quote });
-        setIsFormVisible(true);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    };
-
-    const handleCancelEdit = () => {
-        dispatch({ type: 'CANCEL_EDIT' });
+    const handleCancel = () => {
+        dispatch({ type: 'RESET_FORM' });
         setIsFormVisible(false);
     };
 
     const searchTerms = useMemo(() => getSearchTerms(searchTerm), [searchTerm]);
 
-    const filteredQuotes = useMemo(
-        () => quotes.filter(q => quoteMatchesSearch(q, searchTerms)),
-        [quotes, searchTerms]
+    const filteredAuthors = useMemo(
+        () => authors.filter(a => authorMatchesSearch(a, searchTerms)),
+        [authors, searchTerms]
     );
 
     if (loading) return <div className={styles.loading}>Բեռնվում է...</div>;
@@ -136,20 +144,17 @@ const Quotes = () => {
 
             <div className={styles.pageHeader}>
                 <h1 className={styles.pageHeaderH1}>Մեջբերումներ գրքերից</h1>
-                <p className={styles.pageHeaderP}>Ընտրյալ մտքեր և տողեր, որոնք արժե պահել հիշողության մեջ</p>
-                <Link to="/authors" className="inline-block mt-3 text-[13px] text-[#14315C] font-[Noto_Sans_Armenian,Poppins,sans-serif] underline decoration-[#d35400] underline-offset-4 hover:text-[#d35400]">
-                    Տեսնել բոլոր հեղինակներին →
-                </Link>
+                <p className={styles.pageHeaderP}>Ընտրեք հեղինակին՝ նրա մասին ավելին իմանալու և բոլոր մեջբերումները տեսնելու համար</p>
             </div>
 
             {isAdmin && (
                 <div className={styles.adminSection}>
-                    <button className={styles.publishBtn} onClick={() => isFormVisible ? handleCancelEdit() : setIsFormVisible(true)}>
+                    <button className={styles.publishBtn} onClick={() => isFormVisible ? handleCancel() : setIsFormVisible(true)}>
                         {isFormVisible ? 'Փակել ֆորման' : '+ Նոր մեջբերում ավելացնել'}
                     </button>
                     {isFormVisible && (
                         <div className={styles.adminFormContainer}>
-                            <h3 className={styles.adminFormContainerH3}>{editingId ? 'Խմբագրել մեջբերումը' : 'Ավելացնել նոր մեջբերում'}</h3>
+                            <h3 className={styles.adminFormContainerH3}>Ավելացնել նոր մեջբերում</h3>
                             <form onSubmit={handleFormSubmit} className={styles.form}>
                                 <textarea
                                     placeholder="Մեջբերման տեքստը"
@@ -160,20 +165,36 @@ const Quotes = () => {
                                 />
                                 <input
                                     type="text"
-                                    placeholder="Հեղինակի անունը (օր.՝ Էռնեստ Հեմինգուեյ)"
+                                    placeholder="Հեղինակի անուն ազգանունը (օր.՝ Ֆրանց Կաֆկա)"
                                     value={formData.author}
                                     onChange={e => dispatch({ type: 'SET_FORM_FIELD', field: 'author', value: e.target.value })}
                                     required
                                     className={styles.formInput}
                                 />
+                                <div className={styles.formRow}>
+                                    <input
+                                        type="text"
+                                        placeholder="Ազգություն (օր.՝ Չեխ)"
+                                        value={formData.authorNationality}
+                                        onChange={e => dispatch({ type: 'SET_FORM_FIELD', field: 'authorNationality', value: e.target.value })}
+                                        className={styles.formInput}
+                                    />
+                                    <input
+                                        type="text"
+                                        placeholder="Ժամանակաշրջան (օր.՝ 1883–1924)"
+                                        value={formData.authorEra}
+                                        onChange={e => dispatch({ type: 'SET_FORM_FIELD', field: 'authorEra', value: e.target.value })}
+                                        className={styles.formInput}
+                                    />
+                                </div>
                                 <textarea
-                                    placeholder="Հեղինակի կենսագրություն (ընտրովի, երևում է միայն նոր «Հեղինակներ» էջում)"
+                                    placeholder="Հեղինակի կենսագրություն (ընտրովի, երևում է հեղինակի մանրամասն էջում)"
                                     value={formData.authorBio}
                                     onChange={e => dispatch({ type: 'SET_FORM_FIELD', field: 'authorBio', value: e.target.value })}
                                     className={styles.formTextarea}
                                 />
                                 <label htmlFor="quote-file" className={styles.fileLabel}>
-                                    {formData.image ? formData.image.name : (editingId ? "Փոխել հեղինակի նկարը (ընտրովի)" : "Ընտրել հեղինակի նկարը (ընտրովի)")}
+                                    {formData.image ? formData.image.name : "Ընտրել հեղինակի նկարը (ընտրովի)"}
                                 </label>
                                 <input
                                     id="quote-file"
@@ -182,10 +203,8 @@ const Quotes = () => {
                                     className={styles.fileInput}
                                     onChange={e => dispatch({ type: 'SET_FORM_FIELD', field: 'image', value: e.target.files[0] })}
                                 />
-                                <button type="submit" className={styles.publishBtn}>
-                                    {editingId ? 'Պահպանել փոփոխությունները' : 'Հրապարակել'}
-                                </button>
-                                {editingId && <button type="button" onClick={handleCancelEdit} className={styles.cancelBtn}>Չեղարկել</button>}
+                                <button type="submit" className={styles.publishBtn}>Հրապարակել</button>
+                                <button type="button" onClick={handleCancel} className={styles.cancelBtn}>Չեղարկել</button>
                             </form>
                         </div>
                     )}
@@ -197,7 +216,7 @@ const Quotes = () => {
                 <input
                     className={styles.searchInput}
                     type="text"
-                    placeholder="Որոնել մեջբերում կամ հեղինակ..."
+                    placeholder="Որոնել հեղինակ, ազգություն կամ ժամանակաշրջան..."
                     value={searchTerm}
                     onChange={e => dispatch({ type: 'SET_SEARCH', payload: e.target.value })}
                 />
@@ -208,43 +227,34 @@ const Quotes = () => {
                 )}
                 {searchTerm && (
                     <span className={styles.resultsCount}>
-                        {filteredQuotes.length} արդյունք
+                        {filteredAuthors.length} արդյունք
                     </span>
                 )}
             </div>
 
-            {filteredQuotes.length === 0 ? (
-                <p className={styles.noResults}>Մեջբերումներ չեն գտնվել</p>
+            {filteredAuthors.length === 0 ? (
+                <p className={styles.noResults}>Հեղինակներ չեն գտնվել</p>
             ) : (
-                <div className={styles.quotesGrid}>
-                    {filteredQuotes.map(quote => (
-                        <article key={quote._id} className={styles.quoteCard}>
-                            {isAdmin && (
-                                <div className={styles.adminQuoteActions}>
-                                    <button className={styles.editDeleteQuoteBtn} onClick={() => handleEdit(quote)}>✏️</button>
-                                    <button className={styles.editDeleteQuoteBtn} onClick={() => handleDelete(quote._id)}>🗑️</button>
-                                </div>
-                            )}
-                            <div className={styles.imageSide}>
-                                {quote.authorImage ? (
-                                    <img
-                                        className={styles.authorPhoto}
-                                        src={quote.authorImage}
-                                        alt={quote.author}
-                                        loading="lazy"
-                                    />
+                <div className={styles.authorsGrid}>
+                    {filteredAuthors.map(a => (
+                        <Link key={a.author} to={`/quotes/${encodeURIComponent(a.author)}`} className={styles.authorCard}>
+                            <div className={styles.authorImageWrap}>
+                                {a.authorImage ? (
+                                    <img className={styles.authorPhoto} src={a.authorImage} alt={a.author} loading="lazy" />
                                 ) : (
-                                    <div className={styles.authorPhotoFallback}>
-                                        <FiUser />
-                                    </div>
+                                    <div className={styles.authorPhotoFallback}><FiUser /></div>
                                 )}
+                                <span className={styles.authorTag}>
+                                    {a.authorNationality || `${a.quotesCount} մեջբերում`}
+                                </span>
                             </div>
-                            <div className={styles.textSide}>
-                                <span className={styles.quoteMark}>&#8221;</span>
-                                <p className={styles.quoteText}>{highlightText(quote.text, searchTerms)}</p>
-                                <span className={styles.author}>— {highlightText(quote.author, searchTerms)}</span>
+                            <div className={styles.authorNameWrap}>
+                                <h2 className={styles.authorName}>{highlightText(a.author, searchTerms)}</h2>
+                                <p className={styles.authorMeta}>
+                                    {[a.authorEra, `${a.quotesCount} մեջբերում`].filter(Boolean).join(' • ')}
+                                </p>
                             </div>
-                        </article>
+                        </Link>
                     ))}
                 </div>
             )}

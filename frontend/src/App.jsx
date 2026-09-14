@@ -41,6 +41,7 @@ function App() {
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:id" element={<SinglePost />} />
         <Route path="/quotes" element={<Quotes />} />
+        <Route path="/quotes/:author" element={<AuthorDetail />} />
         <Route path="/authors" element={<Authors />} />
         <Route path="/authors/:author" element={<AuthorDetail />} />
         <Route path="/literature" element={<Literature />} />

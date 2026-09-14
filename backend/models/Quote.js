@@ -7,9 +7,12 @@ const quoteSchema = new mongoose.Schema({
     // ցույց կտա generic icon/avatar
     authorImage: { type: String, default: '' },
     // Ընտրովի է. հեղինակի մասին կարճ կենսագրական տեղեկություն, օգտագործվում է
-    // նոր «Հեղինակներ» բաժնում (/authors). Չի ազդում ներկայիս մեջբերումների
-    // քարտի տեսքի վրա՝ Quotes.jsx-ը այս դաշտը երբեք չի ցուցադրում
-    authorBio: { type: String, default: '', trim: true }
+    // «Հեղինակներ» մանրամասն էջում (/quotes/:author)
+    authorBio: { type: String, default: '', trim: true },
+    // Ընտրովի է. հեղինակի ազգությունը (օր.՝ «Ֆրանսիացի»)
+    authorNationality: { type: String, default: '', trim: true },
+    // Ընտրովի է. հեղինակի ապրած ժամանակաշրջանը (օր.՝ «1883–1924»)
+    authorEra: { type: String, default: '', trim: true }
 }, { timestamps: true });
 
 export default mongoose.model('Quote', quoteSchema);

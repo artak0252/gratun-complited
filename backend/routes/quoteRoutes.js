@@ -31,15 +31,19 @@ router.get('/authors/list', async (req, res) => {
                     author: quote.author.trim(),
                     authorImage: quote.authorImage || '',
                     authorBio: quote.authorBio || '',
+                    authorNationality: quote.authorNationality || '',
+                    authorEra: quote.authorEra || '',
                     quotesCount: 0
                 });
             }
             const entry = byAuthor.get(key);
             entry.quotesCount += 1;
             // Քանի որ quotes-ը արդեն սորտավորված է ամենավերջինից, առաջին
-            // ոչ-դատարկ նկարը/կենսագրությունը որ գտնենք՝ ամենավերջինն է
+            // ոչ-դատարկ նկարը/կենսագրությունը/ազգությունը/ժամանակաշրջանը որ գտնենք՝ ամենավերջինն է
             if (!entry.authorImage && quote.authorImage) entry.authorImage = quote.authorImage;
             if (!entry.authorBio && quote.authorBio) entry.authorBio = quote.authorBio;
+            if (!entry.authorNationality && quote.authorNationality) entry.authorNationality = quote.authorNationality;
+            if (!entry.authorEra && quote.authorEra) entry.authorEra = quote.authorEra;
         });
 
         res.status(200).json(Array.from(byAuthor.values()));
@@ -62,11 +66,15 @@ router.get('/authors/:author', async (req, res) => {
 
         const authorImage = quotes.find(q => q.authorImage)?.authorImage || '';
         const authorBio = quotes.find(q => q.authorBio)?.authorBio || '';
+        const authorNationality = quotes.find(q => q.authorNationality)?.authorNationality || '';
+        const authorEra = quotes.find(q => q.authorEra)?.authorEra || '';
 
         res.status(200).json({
             author: quotes[0].author,
             authorImage,
             authorBio,
+            authorNationality,
+            authorEra,
             quotes
         });
     } catch (error) {
@@ -95,7 +103,7 @@ router.post('/', adminOnly, (req, res, next) => {
     });
 }, async (req, res) => {
     try {
-        const { text, author, authorBio } = req.body;
+        const { text, author, authorBio, authorNationality, authorEra } = req.body;
         if (!text || !author) {
             return res.status(400).json({ message: 'Լրացրու մեջբերումը և հեղինակի անունը' });
         }
@@ -109,7 +117,14 @@ router.post('/', adminOnly, (req, res, next) => {
             authorImage = uploadResponse.url;
         }
 
-        const newQuote = new Quote({ text, author, authorImage, authorBio: authorBio || '' });
+        const newQuote = new Quote({
+            text,
+            author,
+            authorImage,
+            authorBio: authorBio || '',
+            authorNationality: authorNationality || '',
+            authorEra: authorEra || ''
+        });
         const savedQuote = await newQuote.save();
         res.status(201).json(savedQuote);
     } catch (error) {
@@ -127,12 +142,18 @@ router.put('/:id', adminOnly, (req, res, next) => {
     });
 }, async (req, res) => {
     try {
-        const { text, author, authorBio } = req.body;
+        const { text, author, authorBio, authorNationality, authorEra } = req.body;
         if (!text || !author) {
             return res.status(400).json({ message: 'Լրացրու մեջբերումը և հեղինակի անունը' });
         }
 
-        const updateData = { text, author, authorBio: authorBio || '' };
+        const updateData = {
+            text,
+            author,
+            authorBio: authorBio || '',
+            authorNationality: authorNationality || '',
+            authorEra: authorEra || ''
+        };
 
         if (req.file) {
             const uploadResponse = await imagekit.upload({
