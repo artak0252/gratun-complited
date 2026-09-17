@@ -1,6 +1,7 @@
 import express from 'express';
 import LiteraryNews from '../models/LiteraryNews.js';
 import { adminOnly } from '../middleware/adminMiddleware.js';
+import { validateObjectId } from '../middleware/validateObjectId.js';
 import imagekit from '../utils/imagekit.js';
 import upload from '../utils/upload.js';
 
@@ -60,7 +61,7 @@ router.post('/', adminOnly, (req, res, next) => {
 });
 
 // 3. DELETE: Ջնջել կոնկրետ նորություն id-ով (միայն admin)
-router.delete('/:id', adminOnly, async (req, res) => {
+router.delete('/:id', adminOnly, validateObjectId, async (req, res) => {
           try {
                     const deleted = await LiteraryNews.findByIdAndDelete(req.params.id);
                     if (!deleted) {

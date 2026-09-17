@@ -1,6 +1,7 @@
 import express from 'express';
 import ThematicBook from '../models/ThematicBook.js';
 import { adminOnly } from '../middleware/adminMiddleware.js';
+import { validateObjectId } from '../middleware/validateObjectId.js';
 import imagekit from '../utils/imagekit.js';
 import upload from '../utils/upload.js';
 
@@ -17,7 +18,7 @@ router.get('/', async (req, res) => {
 });
 
 // 2. GET: Ստանալ մեկը՝ ըստ ID-ի
-router.get('/:id', async (req, res) => {
+router.get('/:id', validateObjectId, async (req, res) => {
           try {
                     const item = await ThematicBook.findById(req.params.id);
                     if (!item) return res.status(404).json({ message: 'Չգտնվեց' });
@@ -67,7 +68,7 @@ router.post('/', adminOnly, (req, res, next) => {
 });
 
 // 4. PUT: Խմբագրել առկա գրառումը (նկարը փոխելը ընտրովի է)
-router.put('/:id', adminOnly, (req, res, next) => {
+router.put('/:id', adminOnly, validateObjectId, (req, res, next) => {
           upload.single('image')(req, res, (err) => {
                     if (err) {
                               return res.status(400).json({ message: err.message || 'Ֆայլի վերբեռնման սխալ' });
@@ -101,7 +102,7 @@ router.put('/:id', adminOnly, (req, res, next) => {
 });
 
 // 5. DELETE: Ջնջել գրառումը
-router.delete('/:id', adminOnly, async (req, res) => {
+router.delete('/:id', adminOnly, validateObjectId, async (req, res) => {
           try {
                     const item = await ThematicBook.findByIdAndDelete(req.params.id);
                     if (!item) return res.status(404).json({ message: 'Չգտնվեց' });

@@ -19,6 +19,7 @@ const DEFAULT_DESCRIPTION =
  *   url={`${SITE_URL}/shop/${book._id}`}
  *   type="product" // կամ "article", "website"
  *   jsonLd={{ ... }} // ցանկության դեպքում
+ *   noindex // user-specific էջերի համար (cart, favorites, login...), որ Google-ը դրանք չինդեքսավորի
  * />
  */
 const Seo = ({
@@ -28,6 +29,7 @@ const Seo = ({
           url = SITE_URL,
           type = 'website',
           jsonLd = null,
+          noindex = false,
 }) => {
           const fullTitle = title ? `${title} | ${SITE_NAME}` : `${SITE_NAME} — Գրախանութ Online`;
           const trimmedDescription =
@@ -38,6 +40,7 @@ const Seo = ({
                               <title>{fullTitle}</title>
                               <meta name="description" content={trimmedDescription} />
                               <link rel="canonical" href={url} />
+                              <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
 
                               {/* Open Graph */}
                               <meta property="og:type" content={type} />

@@ -3,6 +3,7 @@ import { CartContext } from '../../context/CartContext';
 import toast from 'react-hot-toast';
 import api from '../../api/axiosInstance';
 import styles from './cartStyles.js';
+import Seo from '../Seo/Seo';
 
 const Cart = () => {
     const { cartItems, removeFromCart, updateQuantity, clearCart } = useContext(CartContext);
@@ -42,6 +43,7 @@ const Cart = () => {
     if (cartItems.length === 0) {
         return (
             <div className={`${styles.cartContainer} ${styles.emptyCartWrapper}`}>
+                <Seo title="Զամբյուղ" noindex />
                 <h2 className={styles.emptyCartH2}>Ձեր զամբյուղը դատարկ է</h2>
                 <p className={styles.emptyCartP}>Վերադարձեք խանութ՝ գրքեր ավելացնելու համար:</p>
             </div>
@@ -50,6 +52,7 @@ const Cart = () => {
 
     return (
         <div className={styles.cartContainer}>
+            <Seo title="Զամբյուղ" noindex />
             {!showForm ? (
                 <>
                     <h2 className={styles.cartPageTitle}>Ձեր Զամբյուղը</h2>

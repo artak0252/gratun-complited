@@ -3,6 +3,7 @@ import express from 'express';
 import Book from '../models/Book.js';
 import Post from '../models/Post.js';
 import Literature from '../models/Literature.js';
+import Quote from '../models/Quote.js';
 
 const router = express.Router();
 
@@ -11,10 +12,11 @@ const SITE_URL = 'https://www.gratunhub.am';
 router.get('/sitemap.xml', async (req, res) => {
     try {
         // Երկուսն էլ զուգահեռ, որ ավելի արագ լինի
-        const [books, posts, literatureItems] = await Promise.all([
+        const [books, posts, literatureItems, quotes] = await Promise.all([
             Book.find({}, '_id updatedAt'),
             Post.find({}, '_id updatedAt'),
-            Literature.find({}, '_id updatedAt')
+            Literature.find({}, '_id updatedAt'),
+            Quote.find({}, 'author updatedAt')
         ]);
 
         const staticUrls = [
@@ -52,7 +54,24 @@ router.get('/sitemap.xml', async (req, res) => {
             changefreq: 'weekly'
         }));
 
-        const allUrls = [...staticUrls, ...bookUrls, ...postUrls, ...literatureUrls];
+        // Հեղինակների անհատական էջեր (/quotes/:author). Դեդուպլիկացնում ենք
+        // author անունով (case-insensitive), ինչպես quoteRoutes.js /authors/list-ում
+        const authorsMap = new Map();
+        quotes.forEach(quote => {
+            const key = quote.author.trim().toLowerCase();
+            const existing = authorsMap.get(key);
+            if (!existing || (quote.updatedAt && quote.updatedAt > existing.updatedAt)) {
+                authorsMap.set(key, { author: quote.author.trim(), updatedAt: quote.updatedAt });
+            }
+        });
+        const authorUrls = Array.from(authorsMap.values()).map(({ author, updatedAt }) => ({
+            loc: `${SITE_URL}/quotes/${encodeURIComponent(author)}`,
+            lastmod: updatedAt ? updatedAt.toISOString() : undefined,
+            priority: '0.5',
+            changefreq: 'monthly'
+        }));
+
+        const allUrls = [...staticUrls, ...bookUrls, ...postUrls, ...literatureUrls, ...authorUrls];
 
         let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
         xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';

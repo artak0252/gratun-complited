@@ -5,6 +5,7 @@ import { CartContext } from '../../context/CartContext';
 import toast from 'react-hot-toast';
 import { bookGenres } from '../Shop/genreConstants';
 import { FiHeart } from 'react-icons/fi';
+import Seo from '../Seo/Seo';
 
 const Favorites = () => {
   const { favorites, removeFavorite } = useContext(FavoritesContext);
@@ -23,6 +24,7 @@ const Favorites = () => {
   if (favorites.length === 0) {
     return (
       <div className="px-[10%] py-20 bg-[#14315C] text-white min-h-screen text-center flex flex-col items-center justify-center">
+        <Seo title="Հավանածներ" noindex />
         <h2 className="font-['Playfair_Display','Noto_Serif_Armenian',serif] text-white mb-2.5">Հավանած գրքեր դեռ չկան</h2>
         <p className="text-white mb-[25px]">Խանութում գրքի նկարի սրտիկին սեղմիր, որ այն հայտնվի այստեղ։</p>
         <Link to="/shop" className="bg-[#14315C] text-white px-7 py-3.5 rounded-xl font-semibold no-underline transition-[0.3s] hover:bg-[#14315C]">
@@ -34,6 +36,7 @@ const Favorites = () => {
 
   return (
     <div className="px-[10%] py-20 bg-[#14315C] text-white min-h-screen">
+      <Seo title="Հավանածներ" noindex />
       <h2 className="font-['Playfair_Display','Noto_Serif_Armenian',serif] text-[32px] text-white mb-10">Հավանած Գրքերը</h2>
 
       <div className="grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-10">

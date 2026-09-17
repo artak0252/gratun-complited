@@ -1,6 +1,7 @@
 import express from 'express';
 import Literature from '../models/Literature.js';
 import { adminOnly } from '../middleware/adminMiddleware.js';
+import { validateObjectId } from '../middleware/validateObjectId.js';
 import imagekit from '../utils/imagekit.js';
 import upload from '../utils/upload.js';
 
@@ -21,7 +22,7 @@ router.get('/', async (req, res) => {
 });
 
 // 2. GET: Ստանալ մեկ նյութ ըստ ID-ի
-router.get('/:id', async (req, res) => {
+router.get('/:id', validateObjectId, async (req, res) => {
     try {
         const item = await Literature.findById(req.params.id);
         if (!item) return res.status(404).json({ message: 'Նյութը չգտնվեց' });
@@ -65,7 +66,7 @@ router.post('/', adminOnly, (req, res, next) => {
 });
 
 // 4. PUT: Խմբագրել առկա նյութը (նկարը փոխելը ընտրովի է)
-router.put('/:id', adminOnly, (req, res, next) => {
+router.put('/:id', adminOnly, validateObjectId, (req, res, next) => {
     upload.single('image')(req, res, (err) => {
         if (err) {
             return res.status(400).json({ message: err.message || 'Ֆայլի վերբեռնման սխալ' });
@@ -100,7 +101,7 @@ router.put('/:id', adminOnly, (req, res, next) => {
 });
 
 // 5. DELETE: Ջնջել նյութը
-router.delete('/:id', adminOnly, async (req, res) => {
+router.delete('/:id', adminOnly, validateObjectId, async (req, res) => {
     try {
         const item = await Literature.findByIdAndDelete(req.params.id);
         if (!item) return res.status(404).json({ message: 'Նյութը չգտնվեց' });

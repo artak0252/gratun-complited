@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import api from '../../api/axiosInstance';
 import { loginContainer, loginTitle, loginForm, loginInput, loginButton } from './loginStyles.js';
+import Seo from '../Seo/Seo';
 
 const Register = () => {
   const [formData, setFormData] = useState({ username: '', email: '', password: '' });
@@ -25,6 +26,7 @@ const Register = () => {
 
   return (
     <div className={loginContainer}>
+      <Seo title="Գրանցում" noindex />
       <h2 className={loginTitle}>Գրանցում</h2>
       <form onSubmit={handleRegister} className={loginForm}>
         <input type="text" name="username" placeholder="Օգտանուն" onChange={handleChange} className={loginInput} required />

@@ -31,9 +31,9 @@ const WhyGratun = () => {
             <div className="w-16 h-16 mx-auto mb-5 rounded-full bg-[#14315C] text-white flex items-center justify-center text-[1.8rem]">
               {item.icon}
             </div>
-            <h3 className="font-['Playfair_Display',Noto_Sans_Armenian,Georgia,serif] text-[1.2rem] text-[#6B3245] mb-3 font-bold">
+            <h2 className="font-['Playfair_Display',Noto_Sans_Armenian,Georgia,serif] text-[1.2rem] text-[#6B3245] mb-3 font-bold">
               {item.title}
-            </h3>
+            </h2>
             <p className="font-[Noto_Sans_Armenian,Poppins,sans-serif] text-[0.95rem] text-[#5f5750] leading-[1.5] m-0">
               {item.text}
             </p>

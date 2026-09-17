@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import api from '../../api/axiosInstance';
 import { AuthContext } from '../../context/AuthContext.jsx';
 import { loginContainer, loginTitle, loginForm, loginInput, passwordWrapper, passwordInput, passwordToggle, loginButton } from './loginStyles.js';
+import Seo from '../Seo/Seo';
 
 const Login = () => {
   const [credentials, setCredentials] = useState({ username: '', password: '' });
@@ -32,6 +33,7 @@ const Login = () => {
 
   return (
     <div className={loginContainer}>
+      <Seo title="Մուտք" noindex />
       <h2 className={loginTitle}>Ադմին մուտք</h2>
       <form onSubmit={handleLogin} className={loginForm}>
         <input

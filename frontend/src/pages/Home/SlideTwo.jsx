@@ -6,10 +6,10 @@ const SlideTwo = () => (
   <div className={heroContainer}>
     <div className={heroContent}>
       <span className={badge}>Քո նյութը՝ այստեղ</span>
-      <h1 className={heroTitle}>
+      <h2 className={heroTitle}>
         Շատ ուրախ կլինենք՝ տեսնել քո նյութը մեր կայքէջում։ <br />
         <span className={highlight}>Ձևաչափին ծանոթացիր Բլոգ բաժնում</span>
-      </h1>
+      </h2>
       <p className={heroDesc}>
         Կիսվիր Քո գիտելիքներով
       </p>

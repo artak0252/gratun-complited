@@ -1,6 +1,7 @@
 import express from 'express';
 import Quote from '../models/Quote.js';
 import { adminOnly } from '../middleware/adminMiddleware.js';
+import { validateObjectId } from '../middleware/validateObjectId.js';
 import imagekit from '../utils/imagekit.js';
 import upload from '../utils/upload.js';
 
@@ -83,7 +84,7 @@ router.get('/authors/:author', async (req, res) => {
 });
 
 // 4. GET: Ստանալ մեկ մեջբերում ըստ ID-ի
-router.get('/:id', async (req, res) => {
+router.get('/:id', validateObjectId, async (req, res) => {
     try {
         const quote = await Quote.findById(req.params.id);
         if (!quote) return res.status(404).json({ message: 'Մեջբերումը չգտնվեց' });
@@ -133,7 +134,7 @@ router.post('/', adminOnly, (req, res, next) => {
 });
 
 // 6. PUT: Խմբագրել առկա մեջբերումը (նկարը փոխելը ընտրովի է)
-router.put('/:id', adminOnly, (req, res, next) => {
+router.put('/:id', adminOnly, validateObjectId, (req, res, next) => {
     upload.single('image')(req, res, (err) => {
         if (err) {
             return res.status(400).json({ message: err.message || 'Ֆայլի վերբեռնման սխալ' });
@@ -173,7 +174,7 @@ router.put('/:id', adminOnly, (req, res, next) => {
 });
 
 // 7. DELETE: Ջնջել մեջբերումը
-router.delete('/:id', adminOnly, async (req, res) => {
+router.delete('/:id', adminOnly, validateObjectId, async (req, res) => {
     try {
         const quote = await Quote.findByIdAndDelete(req.params.id);
         if (!quote) return res.status(404).json({ message: 'Մեջբերումը չգտնվեց' });

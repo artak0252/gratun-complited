@@ -331,6 +331,11 @@ app.post('/api/contact', contactLimiter, async (req, res) => {
 
 const FRONTEND_BUILD_DIR = path.join(__dirname, '../frontend/build');
 
+// /authors-ը միացված է /quotes-ի հետ (տես frontend/src/pages/Authors/Authors.jsx):
+// server-side 301-ը ապահովում է, որ crawler-ները և հին էջանիշերը ուղիղ HTTP
+// redirect ստանան՝ առանց client-side JS-ի սպասելու
+app.get('/authors', (req, res) => res.redirect(301, '/quotes'));
+
 // Այս 2 route-երը միայն social-media crawler-ների համար են (Facebook, WhatsApp,
 // Twitter/X, Telegram, LinkedIn և այլն), որոնք JavaScript չեն կատարում, ուստի
 // React-ի client-side meta tags-ը (react-helmet-async) նրանց համար անտեսանելի են։
