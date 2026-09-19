@@ -3,6 +3,7 @@ import express from 'express';
 import Book from '../models/Book.js';
 import Post from '../models/Post.js';
 import Literature from '../models/Literature.js';
+import Armenian from '../models/Armenian.js';
 import Quote from '../models/Quote.js';
 
 const router = express.Router();
@@ -12,10 +13,11 @@ const SITE_URL = 'https://www.gratunhub.am';
 router.get('/sitemap.xml', async (req, res) => {
     try {
         // Երկուսն էլ զուգահեռ, որ ավելի արագ լինի
-        const [books, posts, literatureItems, quotes] = await Promise.all([
+        const [books, posts, literatureItems, armenianItems, quotes] = await Promise.all([
             Book.find({}, '_id updatedAt'),
             Post.find({}, '_id updatedAt'),
             Literature.find({}, '_id updatedAt'),
+            Armenian.find({}, '_id updatedAt'),
             Quote.find({}, 'author updatedAt')
         ]);
 
@@ -25,6 +27,7 @@ router.get('/sitemap.xml', async (req, res) => {
             { loc: `${SITE_URL}/blog`, priority: '0.9', changefreq: 'daily' },
             { loc: `${SITE_URL}/quotes`, priority: '0.7', changefreq: 'weekly' },
             { loc: `${SITE_URL}/literature`, priority: '0.8', changefreq: 'daily' },
+            { loc: `${SITE_URL}/armenian`, priority: '0.8', changefreq: 'daily' },
             { loc: `${SITE_URL}/thematic`, priority: '0.7', changefreq: 'weekly' },
             { loc: `${SITE_URL}/about`, priority: '0.5', changefreq: 'monthly' },
             { loc: `${SITE_URL}/contact`, priority: '0.5', changefreq: 'monthly' },
@@ -54,6 +57,13 @@ router.get('/sitemap.xml', async (req, res) => {
             changefreq: 'weekly'
         }));
 
+        const armenianUrls = armenianItems.map(item => ({
+            loc: `${SITE_URL}/armenian/${item._id}`,
+            lastmod: item.updatedAt ? item.updatedAt.toISOString() : undefined,
+            priority: '0.6',
+            changefreq: 'weekly'
+        }));
+
         // Հեղինակների անհատական էջեր (/quotes/:author). Դեդուպլիկացնում ենք
         // author անունով (case-insensitive), ինչպես quoteRoutes.js /authors/list-ում
         const authorsMap = new Map();
@@ -71,7 +81,7 @@ router.get('/sitemap.xml', async (req, res) => {
             changefreq: 'monthly'
         }));
 
-        const allUrls = [...staticUrls, ...bookUrls, ...postUrls, ...literatureUrls, ...authorUrls];
+        const allUrls = [...staticUrls, ...bookUrls, ...postUrls, ...literatureUrls, ...armenianUrls, ...authorUrls];
 
         let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
         xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
