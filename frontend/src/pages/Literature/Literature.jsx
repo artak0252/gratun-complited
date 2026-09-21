@@ -1,201 +1,291 @@
-import React, { useReducer, useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import axios from 'axios';
-import { FiZoomIn, FiX } from 'react-icons/fi';
-
+import React, { useReducer, useEffect, useState, useContext, useMemo } from 'react';
+import { Link } from 'react-router-dom';
+import { FiSearch, FiX } from 'react-icons/fi';
+import api from '../../api/axiosInstance';
+import { AuthContext } from '../../context/AuthContext.jsx';
+import { literatureCategories, literatureFormCategories, getCategoryLabel } from './constants';
+import styles from './literatureStyles.js';
 import Seo from '../Seo/Seo';
-import { getCategoryLabel } from './constants';
 
-const SITE_URL = 'https://www.gratunhub.am';
+const initialFormData = { title: '', category: 'poetry', author: '', excerpt: '', content: '', answer: '', image: null };
 
 const initialState = {
-    item: null,
+    items: [],
     loading: true,
-    error: null
+    searchTerm: '',
+    activeCategory: 'all',
+    editingId: null,
+    formData: initialFormData
 };
 
-const itemReducer = (state, action) => {
+const literatureReducer = (state, action) => {
     switch (action.type) {
-        case 'FETCH_START':
-            return { ...state, loading: true };
-        case 'FETCH_SUCCESS':
-            return { ...state, item: action.payload, loading: false };
-        case 'FETCH_ERROR':
-            return { ...state, error: action.payload, loading: false };
-        default:
-            return state;
+        case 'FETCH_SUCCESS': return { ...state, items: action.payload, loading: false };
+        case 'SET_LOADING': return { ...state, loading: action.payload };
+        case 'ADD_ITEM': return { ...state, items: [action.payload, ...state.items], formData: initialFormData, editingId: null };
+        case 'UPDATE_ITEM': return { ...state, items: state.items.map(i => i._id === action.payload._id ? action.payload : i), formData: initialFormData, editingId: null };
+        case 'DELETE_ITEM': return { ...state, items: state.items.filter(i => i._id !== action.payload) };
+        case 'SET_FORM_FIELD': return { ...state, formData: { ...state.formData, [action.field]: action.value } };
+        case 'START_EDIT': return {
+            ...state,
+            editingId: action.payload._id,
+            formData: {
+                title: action.payload.title,
+                category: action.payload.category,
+                author: action.payload.author || '',
+                excerpt: action.payload.excerpt,
+                content: action.payload.content,
+                answer: action.payload.answer || '',
+                image: null
+            }
+        };
+        case 'CANCEL_EDIT': return { ...state, editingId: null, formData: initialFormData };
+        case 'SET_SEARCH': return { ...state, searchTerm: action.payload };
+        case 'SET_CATEGORY': return { ...state, activeCategory: action.payload };
+        default: return state;
     }
 };
 
-const SingleLiterature = () => {
-    const { id } = useParams();
-    const [state, dispatch] = useReducer(itemReducer, initialState);
-    const { item, loading, error } = state;
-    const [showAnswer, setShowAnswer] = useState(false);
-    const [userAnswer, setUserAnswer] = useState('');
-    const [isImageZoomed, setIsImageZoomed] = useState(false);
+// Quotes.jsx-ի նույն "AND" տրամաբանությամբ որոնումը՝ վերնագրի, հեղինակի և
+// հատվածի (excerpt) մեջ միաժամանակ
+const normalize = (str = '') => str.toLowerCase().trim();
+const getSearchTerms = (query) => normalize(query).split(/\s+/).filter(Boolean);
+const itemMatchesSearch = (item, terms) => {
+    if (terms.length === 0) return true;
+    const haystack = `${normalize(item.title)} ${normalize(item.author)} ${normalize(item.excerpt)}`;
+    return terms.every(term => haystack.includes(term));
+};
 
-    const API_URL = '/api';
+const Literature = () => {
+    const [state, dispatch] = useReducer(literatureReducer, initialState);
+    const [isFormVisible, setIsFormVisible] = useState(false);
+    const { items, loading, formData, searchTerm, activeCategory, editingId } = state;
+    const { isAdmin } = useContext(AuthContext);
 
     useEffect(() => {
-        const fetchItem = async () => {
-            dispatch({ type: 'FETCH_START' });
-            setShowAnswer(false);
-            setUserAnswer('');
+        const fetchItems = async () => {
             try {
-                const response = await axios.get(`${API_URL}/literature/${id}`);
-                dispatch({ type: 'FETCH_SUCCESS', payload: response.data });
-            } catch (err) {
-                dispatch({ type: 'FETCH_ERROR', payload: 'Նյութը չգտնվեց' });
+                const res = await api.get('/literature');
+                dispatch({ type: 'FETCH_SUCCESS', payload: res.data });
+            } catch (err) { dispatch({ type: 'SET_LOADING', payload: false }); }
+        };
+        fetchItems();
+    }, []);
+
+    const handleDelete = async (id) => {
+        if (!window.confirm('Ջնջե՞լ այս նյութը:')) return;
+        try {
+            await api.delete(`/literature/${id}`);
+            dispatch({ type: 'DELETE_ITEM', payload: id });
+        } catch (err) { alert('Մուտքը մերժված է'); }
+    };
+
+    const handleFormSubmit = async (e) => {
+        e.preventDefault();
+        // «Խաղեր և առաջադրանքներ» կատեգորիայի համար ֆորմայում ցուցադրվում են
+        // միայն Վերնագիր և Նկար դաշտերը, այնպես որ մյուս դաշտերը (եթե դրանցում
+        // մնացել է հին տվյալ նախորդ կատեգորիայից) ուղարկելիս մաքրում ենք
+        const isGamesTasks = formData.category === 'riddles';
+        const payload = isGamesTasks
+            ? { ...formData, author: '', excerpt: '', content: '', answer: '' }
+            : formData;
+
+        const data = new FormData();
+        Object.keys(payload).forEach(key => {
+            // Խմբագրելիս, եթե admin-ը նոր նկար չի ընտրել, image դաշտը չենք ուղարկում,
+            // որպեսզի backend-ը հին նկարը թողնի անփոփոխ
+            if (key === 'image' && !payload.image) return;
+            data.append(key, payload[key]);
+        });
+
+        try {
+            if (editingId) {
+                const res = await api.put(`/literature/${editingId}`, data);
+                dispatch({ type: 'UPDATE_ITEM', payload: res.data });
+                setIsFormVisible(false);
+                alert('Նյութը հաջողությամբ խմբագրվեց!');
+            } else {
+                const res = await api.post('/literature', data);
+                dispatch({ type: 'ADD_ITEM', payload: res.data });
+                setIsFormVisible(false);
+                alert('Նյութը հաջողությամբ ավելացվեց!');
             }
-        };
-        fetchItem();
-    }, [id]);
+        } catch (err) {
+            console.error(err);
+            alert(editingId ? 'Սխալ՝ խմբագրումը չհաջողվեց' : 'Սխալ՝ միայն ադմինները կարող են ավելացնել');
+        }
+    };
 
-    // Նկարը մեծացված ցուցադրելիս՝ արգելափակել էջի scroll-ը և Escape-ով փակել
-    useEffect(() => {
-        if (!isImageZoomed) return;
-        const handleKeyDown = (e) => {
-            if (e.key === 'Escape') setIsImageZoomed(false);
-        };
-        document.addEventListener('keydown', handleKeyDown);
-        document.body.style.overflow = 'hidden';
-        return () => {
-            document.removeEventListener('keydown', handleKeyDown);
-            document.body.style.overflow = '';
-        };
-    }, [isImageZoomed]);
+    const handleEdit = (item) => {
+        dispatch({ type: 'START_EDIT', payload: item });
+        setIsFormVisible(true);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
 
-    if (loading) return <div className="text-center py-[100px] font-['Noto_Serif_Armenian','Playfair_Display',serif] text-2xl">Բեռնվում է...</div>;
-    if (error) return <div className="text-center py-[100px] font-['Noto_Serif_Armenian','Playfair_Display',serif] text-2xl">{error}</div>;
+    const handleCancelEdit = () => {
+        dispatch({ type: 'CANCEL_EDIT' });
+        setIsFormVisible(false);
+    };
 
-    const itemImage = item.image.startsWith('http')
-        ? item.image
-        : `https://ik.imagekit.io/hmtd5pr9d/${item.image}`;
+    const searchTerms = useMemo(() => getSearchTerms(searchTerm), [searchTerm]);
+
+    const filteredItems = useMemo(() => items.filter(item => {
+        const matchesCategory = activeCategory === 'all' || item.category === activeCategory;
+        return matchesCategory && itemMatchesSearch(item, searchTerms);
+    }), [items, activeCategory, searchTerms]);
+
+    if (loading) return <div className={styles.loading}>Բեռնվում է...</div>;
 
     return (
-        <div className="px-[8%] py-[70px] bg-white min-h-screen max-[900px]:px-[6%] max-[900px]:py-[50px] max-[480px]:px-[5%] max-[480px]:py-[35px]">
+        <div className={styles.pageWrapper}>
             <Seo
-                title={`${item.title}${item.author ? ` — ${item.author}` : ''}`}
-                description={item.excerpt || item.content?.slice(0, 160) || item.title}
-                image={itemImage}
-                url={`${SITE_URL}/literature/${item._id}`}
-                type="article"
-                jsonLd={{
-                    '@context': 'https://schema.org',
-                    '@type': 'CreativeWork',
-                    headline: item.title,
-                    image: itemImage,
-                    datePublished: item.date,
-                    description: item.excerpt,
-                    author: { '@type': item.author ? 'Person' : 'Organization', name: item.author || 'Գրատուն' },
-                    mainEntityOfPage: `${SITE_URL}/literature/${item._id}`,
-                }}
+                title="Գրականություն"
+                description="Պոեզիա, առակներ, հեքիաթներ, մանկական բանաստեղծություններ և հանելուկներ Գրատուն կայքում։"
+                url="https://www.gratunhub.am/literature"
             />
-            <Link to="/literature" className="inline-block mb-10 text-[#14315C] no-underline font-semibold font-[Noto_Sans_Armenian,Poppins,sans-serif] hover:text-[#d35400] max-[480px]:mb-[25px]">← Հետ դեպի Գրականություն</Link>
 
-            <article className="flex flex-row items-start gap-[60px] max-w-[1200px] mx-auto max-[900px]:gap-[35px] max-[700px]:flex-col">
-                <button
-                    type="button"
-                    onClick={() => setIsImageZoomed(true)}
-                    aria-label="Մեծացնել նկարը"
-                    className="group relative w-[400px] h-[520px] shrink-0 rounded-3xl sticky top-[100px] p-0 border-none bg-transparent cursor-zoom-in max-[900px]:w-[280px] max-[900px]:h-[400px] max-[900px]:static max-[700px]:w-full max-[700px]:h-[260px] max-[700px]:static max-[480px]:h-[220px] max-[480px]:rounded-2xl"
-                >
-                    <img
-                        className="w-full h-full object-cover rounded-3xl transition-transform duration-300 group-hover:scale-[1.02] max-[480px]:rounded-2xl"
-                        src={itemImage}
-                        alt={item.title}
-                        loading="lazy"
-                        onError={(e) => {
-                            e.target.src = "https://via.placeholder.com/150";
-                        }}
-                    />
-                    <span className="absolute bottom-3 right-3 flex items-center justify-center w-9 h-9 rounded-full bg-white/85 text-[#14315C] shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 max-[900px]:opacity-100">
-                        <FiZoomIn size={18} />
-                    </span>
-                </button>
+            <div className={styles.pageHeader}>
+                <h1 className={styles.pageHeaderH1}>Գրականություն</h1>
+                <p className={styles.pageHeaderP}>Պոեզիա, առակներ, հեքիաթներ, մանկական բանաստեղծություններ և հանելուկներ</p>
+            </div>
 
-                {isImageZoomed && (
-                    <div
-                        className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/80 px-[5%] py-[5%]"
-                        onClick={() => setIsImageZoomed(false)}
-                    >
-                        <button
-                            type="button"
-                            onClick={() => setIsImageZoomed(false)}
-                            aria-label="Փակել"
-                            className="absolute top-5 right-5 flex items-center justify-center w-11 h-11 rounded-full bg-white/15 text-white border-none cursor-pointer hover:bg-white/25 transition-colors max-[480px]:top-3 max-[480px]:right-3"
-                        >
-                            <FiX size={24} />
-                        </button>
-                        <img
-                            src={itemImage}
-                            alt={item.title}
-                            className="max-w-full max-h-full object-contain rounded-2xl shadow-2xl"
-                            onClick={(e) => e.stopPropagation()}
-                        />
-                    </div>
-                )}
-
-                <div className="flex-1 min-w-0">
-                    <div className="text-[#d35400] text-[13px] uppercase tracking-[1px] font-[Noto_Sans_Armenian,Poppins,sans-serif] font-semibold flex gap-[15px]">
-                        <span>{getCategoryLabel(item.category)}</span>
-                        {item.date && (
-                            <span className="text-[#888] font-normal normal-case tracking-normal">
-                                {new Date(item.date).toLocaleDateString('hy-AM')}
-                            </span>
-                        )}
-                    </div>
-                    <h1 className="font-['Noto_Serif_Armenian','Playfair_Display',serif] text-[42px] font-semibold text-[#14315C] my-[15px] mb-2.5 leading-[1.25] max-[900px]:text-[32px] max-[480px]:text-[26px] max-[480px]:my-3">{item.title}</h1>
-                    {item.author && (
-                        <p className="font-[Noto_Sans_Armenian,Poppins,sans-serif] text-[17px] text-[#6B3245] font-medium mb-[30px] max-[480px]:mb-5">{item.author}</p>
-                    )}
-
-                    {item.content && item.content.trim() && (
-                        <div className="font-[Noto_Sans_Armenian,Poppins,sans-serif] text-[17px] leading-[1.9] text-[#333] text-left max-[480px]:text-base">
-                            <p style={{ whiteSpace: 'pre-wrap' }}>{item.content}</p>
-                        </div>
-                    )}
-
-                    {item.category === 'riddles' && (
-                        <div className="mt-[30px] p-6 bg-[#E4E8F0] rounded-2xl">
-                            <label
-                                htmlFor="riddle-answer-input"
-                                className="block font-[Noto_Sans_Armenian,Poppins,sans-serif] text-[15px] font-semibold text-[#14315C] mb-2.5"
-                            >
-                                Գրիր քո պատասխանը այստեղ՝
-                            </label>
-                            <textarea
-                                id="riddle-answer-input"
-                                value={userAnswer}
-                                onChange={(e) => setUserAnswer(e.target.value)}
-                                placeholder="Փորձիր ինքդ գուշակել, ապա ստուգիր..."
-                                rows={4}
-                                className="w-full box-border resize-y rounded-xl border border-[#c7cee0] bg-white p-3.5 font-[Noto_Sans_Armenian,Poppins,sans-serif] text-[16px] text-[#333] leading-[1.6] outline-none transition-colors duration-300 focus:border-[#14315C]"
-                            />
-
-                            {item.answer && (
-                                <div className="mt-4">
-                                    {showAnswer ? (
-                                        <p className="font-[Noto_Sans_Armenian,Poppins,sans-serif] text-[17px] text-[#14315C]">
-                                            <strong>Ճիշտ պատասխանը՝ </strong>{item.answer}
-                                        </p>
-                                    ) : (
-                                        <button
-                                            onClick={() => setShowAnswer(true)}
-                                            className="bg-[#14315C] text-white border-none px-[25px] py-3 rounded-xl font-semibold cursor-pointer transition-all duration-300 hover:bg-[#d35400]"
-                                        >
-                                            Ցույց տալ պատասխանը
-                                        </button>
-                                    )}
-                                </div>
-                            )}
+            {isAdmin && (
+                <div className={styles.adminSection}>
+                    <button className={styles.publishBtn} onClick={() => isFormVisible ? handleCancelEdit() : setIsFormVisible(true)}>
+                        {isFormVisible ? 'Փակել ֆորման' : '+ Նոր նյութ ավելացնել'}
+                    </button>
+                    {isFormVisible && (
+                        <div className={styles.adminFormContainer}>
+                            <h3 className={styles.adminFormContainerH3}>{editingId ? 'Խմբագրել նյութը' : 'Ավելացնել նոր նյութ'}</h3>
+                            <form onSubmit={handleFormSubmit} className={styles.form}>
+                                <select
+                                    className={styles.adminSelect}
+                                    value={formData.category}
+                                    onChange={e => dispatch({ type: 'SET_FORM_FIELD', field: 'category', value: e.target.value })}
+                                    required
+                                >
+                                    {literatureFormCategories.map(c => <option key={c.id} value={c.id}>{c.label}</option>)}
+                                </select>
+                                <input
+                                    type="text"
+                                    placeholder="Վերնագիր"
+                                    value={formData.title}
+                                    onChange={e => dispatch({ type: 'SET_FORM_FIELD', field: 'title', value: e.target.value })}
+                                    required
+                                    className={styles.formInput}
+                                />
+                                {formData.category !== 'riddles' && (
+                                    <>
+                                        <input
+                                            type="text"
+                                            placeholder="Հեղինակը (ընտրովի, ժողովրդական դեպքում թողնել դատարկ)"
+                                            value={formData.author}
+                                            onChange={e => dispatch({ type: 'SET_FORM_FIELD', field: 'author', value: e.target.value })}
+                                            className={styles.formInput}
+                                        />
+                                        <input
+                                            type="text"
+                                            placeholder="Կարճ նկարագրություն"
+                                            value={formData.excerpt}
+                                            onChange={e => dispatch({ type: 'SET_FORM_FIELD', field: 'excerpt', value: e.target.value })}
+                                            required
+                                            className={styles.formInput}
+                                        />
+                                        <textarea
+                                            placeholder="Բովանդակություն"
+                                            value={formData.content}
+                                            onChange={e => dispatch({ type: 'SET_FORM_FIELD', field: 'content', value: e.target.value })}
+                                            required
+                                            className={styles.formTextarea}
+                                        />
+                                    </>
+                                )}
+                                <label htmlFor="literature-file" className={styles.fileLabel}>
+                                    {formData.image ? formData.image.name : (editingId ? "Փոխել նկարը (ընտրովի)" : "Ընտրել նկարը")}
+                                </label>
+                                <input
+                                    id="literature-file"
+                                    type="file"
+                                    accept="image/*"
+                                    className={styles.fileInput}
+                                    onChange={e => dispatch({ type: 'SET_FORM_FIELD', field: 'image', value: e.target.files[0] })}
+                                    required={!editingId}
+                                />
+                                <button type="submit" className={styles.publishBtn}>
+                                    {editingId ? 'Պահպանել փոփոխությունները' : 'Հրապարակել'}
+                                </button>
+                                {editingId && <button type="button" onClick={handleCancelEdit} className={styles.cancelBtn}>Չեղարկել</button>}
+                            </form>
                         </div>
                     )}
                 </div>
-            </article>
+            )}
+
+            <div className={styles.categoryTabs}>
+                {literatureCategories.map(c => (
+                    <button
+                        key={c.id}
+                        className={`${styles.categoryTabBtn} ${activeCategory === c.id ? styles.categoryTabBtnActive : ''}`}
+                        onClick={() => dispatch({ type: 'SET_CATEGORY', payload: c.id })}
+                    >
+                        {c.label}
+                    </button>
+                ))}
+            </div>
+
+            <div className={styles.searchContainer}>
+                <FiSearch className={styles.searchIcon} />
+                <input
+                    className={styles.searchInput}
+                    type="text"
+                    placeholder="Որոնել վերնագրով կամ հեղինակով..."
+                    value={searchTerm}
+                    onChange={e => dispatch({ type: 'SET_SEARCH', payload: e.target.value })}
+                />
+                {searchTerm && (
+                    <button className={styles.clearSearchBtn} onClick={() => dispatch({ type: 'SET_SEARCH', payload: '' })} aria-label="Մաքրել որոնումը">
+                        <FiX />
+                    </button>
+                )}
+                {searchTerm && (
+                    <span className={styles.resultsCount}>{filteredItems.length} արդյունք</span>
+                )}
+            </div>
+
+            {filteredItems.length === 0 ? (
+                <p className={styles.noResults}>Նյութեր չեն գտնվել</p>
+            ) : (
+                <div className={styles.itemsGrid}>
+                    {filteredItems.map(item => (
+                        <article key={item._id} className={styles.itemCard}>
+                            {isAdmin && (
+                                <div className={styles.adminItemActions}>
+                                    <button className={styles.editDeleteBtn} onClick={() => handleEdit(item)}>✏️</button>
+                                    <button className={styles.editDeleteBtn} onClick={() => handleDelete(item._id)}>🗑️</button>
+                                </div>
+                            )}
+                            <img
+                                className={styles.itemImg}
+                                src={item.image.startsWith('http') ? item.image : `https://ik.imagekit.io/hmtd5pr9d/${item.image}`}
+                                alt={item.title}
+                                loading="lazy"
+                                onError={(e) => {
+                                    e.target.src = "https://via.placeholder.com/150";
+                                }}
+                            />
+                            <div className={styles.itemContent}>
+                                <span className={styles.itemCategoryTag}>{getCategoryLabel(item.category)}</span>
+                                <h2 className={styles.itemContentH2}>{item.title}</h2>
+                                {item.author && <span className={styles.itemAuthor}>{item.author}</span>}
+                                {item.excerpt && <p className={styles.itemContentP}>{item.excerpt}</p>}
+                                <Link to={`/literature/${item._id}`} className={styles.itemContentLink}>Կարդալ ավելին →</Link>
+                            </div>
+                        </article>
+                    ))}
+                </div>
+            )}
         </div>
     );
 };
 
-export default SingleLiterature;
+export default Literature;
