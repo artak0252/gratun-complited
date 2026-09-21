@@ -43,7 +43,10 @@ router.post('/', adminOnly, (req, res, next) => {
 }, async (req, res) => {
     try {
         const { title, category, author, excerpt, content, answer } = req.body;
-        if (!title || !category || !excerpt || !content || !req.file) {
+        // «Խաղեր և առաջադրանքներ» (riddles) կատեգորիայի համար բավական է
+        // միայն Վերնագիր և Նկար. excerpt/content այս դեպքում պարտադիր չեն
+        const isGamesTasks = category === 'riddles';
+        if (!title || !category || !req.file || (!isGamesTasks && (!excerpt || !content))) {
             return res.status(400).json({ message: 'Լրացրու բոլոր դաշտերը և ընտրիր նկար' });
         }
 
@@ -76,7 +79,8 @@ router.put('/:id', adminOnly, validateObjectId, (req, res, next) => {
 }, async (req, res) => {
     try {
         const { title, category, author, excerpt, content, answer } = req.body;
-        if (!title || !category || !excerpt || !content) {
+        const isGamesTasks = category === 'riddles';
+        if (!title || !category || (!isGamesTasks && (!excerpt || !content))) {
             return res.status(400).json({ message: 'Լրացրու բոլոր դաշտերը' });
         }
 

@@ -14,8 +14,20 @@ const literatureSchema = new mongoose.Schema({
         enum: ['poetry', 'fables', 'fairytales', 'childrens-poems', 'riddles']
     },
     author: { type: String, default: '', trim: true },
-    excerpt: { type: String, required: true, trim: true },
-    content: { type: String, required: true },
+    // excerpt և content պարտադիր են բոլոր կատեգորիաների համար, բացի
+    // «Խաղեր և առաջադրանքներ»-ից (riddles), որտեղ ադմինի ֆորման ունի
+    // միայն Վերնագիր և Նկար դաշտեր
+    excerpt: {
+        type: String,
+        required: function () { return this.category !== 'riddles'; },
+        trim: true,
+        default: ''
+    },
+    content: {
+        type: String,
+        required: function () { return this.category !== 'riddles'; },
+        default: ''
+    },
     // Միայն "Հանելուկներ" կատեգորիայի նյութերի համար օգտագործվող՝ ընտրովի պատասխան
     answer: { type: String, default: '', trim: true },
     image: { type: String, required: true },
