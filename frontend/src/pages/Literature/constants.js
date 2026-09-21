@@ -4,8 +4,8 @@ export const literatureCategories = [
     { id: 'poetry', label: 'Պոեզիա' },
     { id: 'fables', label: 'Առակներ' },
     { id: 'fairytales', label: 'Հեքիաթներ' },
-    { id: 'childrens-poems', label: 'Մանկական բանաստեղծություններ' },
-    { id: 'riddles', label: 'Հանելուկներ' },
+    { id: 'childrens-poems', label: 'Հանելուկներ' },
+    { id: 'riddles', label: 'Խաղեր և առաջադրանքներ' },
 ];
 
 // Ադմինի ֆորմայում "Բոլորը" ընտրանքը իմաստ չունի (նյութը պիտի ունենա կոնկրետ կատեգորիա)
