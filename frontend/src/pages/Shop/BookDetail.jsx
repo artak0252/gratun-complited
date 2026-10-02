@@ -1,4 +1,5 @@
 import React, { useReducer, useEffect, useContext } from 'react';
+import BookCover from '../../components/BookCover.jsx';
 import { useParams, Link } from 'react-router-dom';
 import api from '../../api/axiosInstance';
 import { CartContext } from '../../context/CartContext';
@@ -100,12 +101,13 @@ const BookDetail = () => {
 
                               <div className={styles.bookDetailCard}>
                                         <div className={styles.imageWrapper}>
-                                                  <img
+                                                  <BookCover
                                                             className={styles.bookDetailImg}
                                                             src={book.image.startsWith('http') ? book.image : `https://ik.imagekit.io/hmtd5pr9d/${book.image}`}
                                                             alt={book.title}
+                                                            loading="eager"
                                                             onError={(e) => {
-                                                                      e.target.src = "https://via.placeholder.com/150";
+                                                                      e.currentTarget.src = "https://via.placeholder.com/150";
                                                             }}
                                                   />
                                                   <button

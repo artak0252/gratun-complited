@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react';
+import BookCover from '../../components/BookCover.jsx';
 import { CartContext } from '../../context/CartContext';
 import toast from 'react-hot-toast';
 import api from '../../api/axiosInstance';
@@ -60,7 +61,7 @@ const Cart = () => {
                         <div className={styles.cartItemsList}>
                             {cartItems.map((item) => (
                                 <div key={item._id} className={styles.cartItemCard}>
-                                    <img src={item.image} alt={item.title} className={styles.cartItemImage} />
+                                    <BookCover src={item.image} alt={item.title} rounded="rounded-xl" className={styles.cartItemImage} />
                                     <div className={styles.cartItemDetails}>
                                         <h3 className={styles.cartItemDetailsH3}>{item.title}</h3>
                                         <p className={styles.cartItemAuthor}>{item.author}</p>

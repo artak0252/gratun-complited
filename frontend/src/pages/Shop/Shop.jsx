@@ -10,6 +10,7 @@ import { bookGenres } from './genreConstants';
 import GenreFilter from './GenreFilter';
 import { FiHeart } from 'react-icons/fi';
 import Seo from '../Seo/Seo';
+import BookCover from '../../components/BookCover.jsx';
 
 const initialState = {
     books: [],
@@ -194,16 +195,11 @@ const Shop = () => {
                                 </div>
                             )}
 
-                            <div className={styles.imageWrapper}>
-                                <img
-                                    src={book.image.startsWith('http') ? book.image : `https://ik.imagekit.io/hmtd5pr9d/${book.image}`}
-                                    alt={book.title}
-                                    loading="lazy"
-                                    onError={(e) => {
-                                        e.target.style.display = 'none';
-                                    }}
-                                    className={styles.bookCardImg}
-                                />
+                            <BookCover
+                                src={book.image.startsWith('http') ? book.image : `https://ik.imagekit.io/hmtd5pr9d/${book.image}`}
+                                alt={book.title}
+                                className="w-full mb-5"
+                            >
                                 <button
                                     className={`${styles.favBtn} ${isFavorite(book._id) ? styles.favBtnActive : ''}`}
                                     onClick={() => handleToggleFavorite(book)}
@@ -211,7 +207,7 @@ const Shop = () => {
                                 >
                                     <FiHeart />
                                 </button>
-                            </div>
+                            </BookCover>
                             <h3 className={styles.bookCardH3}>{book.title}</h3>
                             <p className={styles.bookCardP}>{book.author}</p>
                             <span className={styles.genreTag}>{bookGenres.find(g => g.id === book.genre)?.label || book.genre}</span>

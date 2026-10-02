@@ -1,4 +1,5 @@
 import React, { useReducer, useEffect, useState, useContext, useMemo } from 'react';
+import BookCover from '../../components/BookCover.jsx';
 import { Link } from 'react-router-dom';
 import api from '../../api/axiosInstance';
 import { AuthContext } from '../../context/AuthContext.jsx';
@@ -246,11 +247,12 @@ const ThematicBooks = () => {
                                                                       )}
                                                                       <div className={styles.imageSide}>
                                                                                 {item.image ? (
-                                                                                          <img
-                                                                                                    className={styles.bookCover}
+                                                                                          <BookCover
                                                                                                     src={item.image}
                                                                                                     alt={item.bookTitle}
-                                                                                                    loading="lazy"
+                                                                                                    bg="bg-white"
+                                                                                                    rounded="rounded-[10px]"
+                                                                                                    className={styles.bookCover}
                                                                                           />
                                                                                 ) : (
                                                                                           <div className={styles.bookCoverFallback}>

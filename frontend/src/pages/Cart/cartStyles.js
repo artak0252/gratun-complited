@@ -8,7 +8,7 @@ const styles = {
   cartContent: "flex gap-[30px] flex-wrap items-start",
   cartItemsList: "flex-[2] flex flex-col gap-5 min-w-[320px]",
   cartItemCard: "flex items-center bg-white border border-[#f1f5f9] p-[15px] rounded-[20px] gap-5 shadow-[0_10px_30px_rgba(0,0,0,0.03)] transition-all duration-300 hover:shadow-[0_10px_30px_rgba(0,0,0,0.08)] hover:-translate-y-[3px] max-md:flex-wrap",
-  cartItemImage: "w-20 h-[110px] object-contain bg-[#f1f5f9] rounded-xl p-1.5 box-border",
+  cartItemImage: "w-20 shrink-0",
   cartItemDetails: "flex-[2]",
   cartItemDetailsH3: "font-['Playfair_Display','Noto_Serif_Armenian',serif] text-[#1a1a1a] mb-[5px] text-[1.15rem]",
   cartItemAuthor: "text-[#718096] text-[0.9rem] mb-[5px]",

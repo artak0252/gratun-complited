@@ -26,7 +26,15 @@ const ReadingQuote = () => {
             // Ամեն անգամ, երբ բեռնվում է էջը, պատահականորեն ընտրում ենք
             // մեկ մեջբերում ամբողջ ցանկից, որ բլոկը միշտ փոխվի
             const randomIndex = Math.floor(Math.random() * quotes.length);
-            setQuote(quotes[randomIndex]);
+            const picked = quotes[randomIndex];
+            // Հեղինակի նկարը պահվում է մեջբերումների վրա, բայց միշտ չէ, որ ընտրված
+            // մեջբերումն է այն ունենում (օր.՝ Քամյուի դեպքում). ուստի նկարը վերցնում ենք
+            // նույն հեղինակի ցանկացած այլ մեջբերումից, որպեսզի ավատարի փոխարեն նկար երևա
+            const key = (picked.author || '').trim().toLowerCase();
+            const authorImage = picked.authorImage
+              || quotes.find(q => (q.author || '').trim().toLowerCase() === key && q.authorImage)?.authorImage
+              || '';
+            setQuote({ ...picked, authorImage });
           } else {
             setQuote(fallbackQuote);
           }
@@ -47,7 +55,7 @@ const ReadingQuote = () => {
       className="bg-[#E4E8F0] border-b-[5px] border-white px-[8%] py-[50px] box-border max-[700px]:px-[6%] max-[700px]:py-10"
       aria-label="Մեջբերում ընթերցանության մասին"
     >
-      <div className="flex items-center justify-center gap-[50px] max-w-[1300px] mx-auto max-[700px]:flex-col max-[700px]:text-center max-[700px]:gap-6">
+      <div className="flex flex-col items-center text-center gap-6 max-w-[860px] mx-auto">
         <div className="flex-none">
           {quote.authorImage ? (
             <img
@@ -61,7 +69,7 @@ const ReadingQuote = () => {
             </div>
           )}
         </div>
-        <div className="flex-[1_1_500px] max-w-[780px] relative max-[700px]:flex-[1_1_auto] max-[700px]:w-full max-[700px]:max-w-full">
+        <div className="relative w-full">
           <span className="font-['Playfair_Display','Noto_Serif_Armenian',serif] text-[64px] leading-[0] text-[#d35400] block mb-1.5">"</span>
           <p className="font-['Playfair_Display','Noto_Serif_Armenian',serif] italic font-semibold text-[22px] text-[#14315C] leading-[1.55] mb-4 max-[700px]:text-[19px]">
             {quote.text}

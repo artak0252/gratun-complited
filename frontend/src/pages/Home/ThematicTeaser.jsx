@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../../api/axiosInstance';
 import { FiBookOpen } from 'react-icons/fi';
+import BookCover from '../../components/BookCover.jsx';
 
 // Գլխավոր էջում ամբողջ տեքստը ցույց չենք տալիս, միայն մի հատված, որ բլոկը
 // չծանրանա. մնացածի համար "Կարդալ ավելին" հղումը տանում է /thematic էջին
@@ -49,14 +50,15 @@ const ThematicTeaser = () => {
       <div className="flex items-center justify-center gap-[50px] max-w-[1300px] mx-auto max-[700px]:flex-col max-[700px]:text-center max-[700px]:gap-6">
         <div className="flex-none">
           {item.image ? (
-            <img
-              className="w-[180px] h-[245px] rounded-[10px] object-cover border-4 border-white shadow-[0_8px_24px_rgba(20,49,92,0.25)] block"
+            <BookCover
               src={item.image}
               alt={item.bookTitle}
-              loading="lazy"
+              bg="bg-white"
+              rounded="rounded-[10px]"
+              className="w-[180px] border-4 border-white shadow-[0_8px_24px_rgba(20,49,92,0.25)]"
             />
           ) : (
-            <div className="w-[180px] h-[245px] rounded-[10px] bg-[#E4E8F0] border-4 border-white shadow-[0_8px_24px_rgba(20,49,92,0.15)] flex items-center justify-center text-[48px] text-[#14315C]">
+            <div className="w-[180px] aspect-[2/3] rounded-[10px] bg-[#E4E8F0] border-4 border-white shadow-[0_8px_24px_rgba(20,49,92,0.15)] flex items-center justify-center text-[48px] text-[#14315C]">
               <FiBookOpen />
             </div>
           )}

@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
+import BookCover from '../../components/BookCover.jsx';
 import axios from 'axios';
 import { CartContext } from '../../context/CartContext';
 import toast from 'react-hot-toast';
@@ -61,14 +62,13 @@ const RecommendedBooks = () => {
               key={book._id}
               className="relative bg-white border border-[rgba(220,213,200,0.5)] rounded-[10px] p-2.5 overflow-hidden flex flex-col items-center text-center h-full shadow-[0_6px_14px_rgba(58,50,44,0.1)] transition-[transform,box-shadow] duration-[250ms] hover:-translate-y-1 hover:shadow-[0_12px_22px_rgba(58,50,44,0.16)] max-md:flex-[0_0_130px] max-[480px]:flex-[0_0_115px] max-[480px]:p-2"
             >
-              <div className="w-full aspect-[3/4] overflow-hidden rounded-md mb-2 bg-[#E4E8F0]">
-                <img
-                  src={book.image.startsWith('http') ? book.image : `https://ik.imagekit.io/hmtd5pr9d/${book.image}`}
-                  alt={book.title}
-                  onError={(e) => { e.target.style.display = 'none'; }}
-                  className="w-full h-full object-cover object-[center_top] block"
-                />
-              </div>
+              <BookCover
+                src={book.image.startsWith('http') ? book.image : `https://ik.imagekit.io/hmtd5pr9d/${book.image}`}
+                alt={book.title}
+                bg="bg-[#E4E8F0]"
+                rounded="rounded-md"
+                className="w-full mb-2"
+              />
               <h3 className="font-[Georgia,'Noto_Serif_Armenian','Times_New_Roman',serif] text-[13px] font-bold text-[#14315C] my-[2px] leading-[1.3] max-[480px]:text-xs">
                 {book.title}
               </h3>
