@@ -14,13 +14,11 @@ import BlogShowcase from '../BlogShowcase/BlogShowcase';
 import Seo from '../Seo/Seo';
 import ReadingQuote from './ReadingQuote';
 import ThematicTeaser from './ThematicTeaser';
-import LiteraryNews from './LiteraryNews';
 
 const Home = () => {
   return (
     <>
       <Seo url="https://www.gratunhub.am/" />
-      <LiteraryNews />
       <ReadingQuote />
       <ThematicTeaser />
       <RecommendedBooks />

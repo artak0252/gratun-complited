@@ -53,9 +53,18 @@ const styles = {
   detailQuotesCount: "inline-block mt-4 text-xs font-bold text-[#6B3245] bg-[rgba(107,50,69,0.08)] px-3 py-1 rounded-full",
 
   detailQuotesGrid: "flex flex-col gap-[30px] max-w-[900px] mx-auto",
-  quoteCard: "relative bg-[#E4E8F0] rounded-3xl px-[6%] py-8 box-border transition-[0.3s] hover:shadow-[0_16px_32px_rgba(20,49,92,0.08)]",
+  quoteCard: "relative flex items-start gap-6 bg-[#E4E8F0] rounded-3xl px-[5%] py-7 box-border transition-[0.3s] hover:shadow-[0_16px_32px_rgba(20,49,92,0.08)] max-[600px]:flex-col max-[600px]:gap-4",
+  quoteImageWrap: "shrink-0 w-[110px] h-[110px] rounded-full overflow-hidden border-4 border-white shadow-[0_0_0_3px_#14315C] bg-white max-[600px]:w-[84px] max-[600px]:h-[84px]",
+  quoteImage: "w-full h-full object-cover object-top block",
+  quoteImageFallback: "w-full h-full flex items-center justify-center text-[40px] text-[#14315C] bg-[#E4E8F0]",
+  quoteBody: "flex-1 min-w-0",
   quoteMark: "font-['Playfair_Display','Noto_Serif_Armenian',serif] text-[46px] leading-[0] text-[#d35400] block mb-1.5",
-  quoteText: "font-['Playfair_Display','Noto_Serif_Armenian',serif] italic font-semibold text-lg text-[#14315C] leading-[1.55] max-[700px]:text-[16px]",
+  quoteText: "font-['Playfair_Display','Noto_Serif_Armenian',serif] italic font-semibold text-lg text-[#14315C] leading-[1.55] m-0 whitespace-pre-wrap max-[700px]:text-[16px]",
+  quoteTextClamped: "line-clamp-4",
+  readMoreLink: "inline-block mt-3 px-5 py-2 rounded-full bg-[#14315C] text-white text-[13px] font-semibold font-[Noto_Sans_Armenian,Poppins,sans-serif] no-underline transition-colors duration-200 hover:bg-[#d35400]",
+  fullQuoteWrap: "max-w-[760px] mx-auto bg-[#E4E8F0] rounded-3xl px-[6%] py-10 box-border flex flex-col items-center text-center",
+  fullQuoteText: "font-['Playfair_Display','Noto_Serif_Armenian',serif] italic font-semibold text-[22px] text-[#14315C] leading-[1.7] whitespace-pre-wrap max-[700px]:text-[18px]",
+  fullQuoteAuthor: "mt-6 inline-block font-['Playfair_Display','Noto_Serif_Armenian',serif] text-[18px] font-bold text-[#14315C] no-underline hover:text-[#d35400]",
   highlight: "bg-[#ffe6b3] text-inherit rounded-[3px] px-0.5",
 };
 

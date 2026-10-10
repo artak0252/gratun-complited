@@ -5,6 +5,7 @@ import api from '../../api/axiosInstance';
 import { AuthContext } from '../../context/AuthContext.jsx';
 import styles from '../Quotes/quotesStyles.js';
 import Seo from '../Seo/Seo';
+import QuoteCard from '../Quotes/QuoteCard';
 
 const SITE_URL = 'https://www.gratunhub.am';
 
@@ -209,16 +210,14 @@ const AuthorDetail = () => {
 
                               <div className={styles.detailQuotesGrid}>
                                         {data.quotes.map(quote => (
-                                                  <article key={quote._id} className={styles.quoteCard}>
+                                                  <QuoteCard key={quote._id} quote={quote} authorImage={data.authorImage} authorName={data.author}>
                                                             {isAdmin && (
                                                                       <div className={styles.adminQuoteActions}>
                                                                                 <button className={styles.editDeleteQuoteBtn} onClick={() => openEditForm(quote)}>✏️</button>
                                                                                 <button className={styles.editDeleteQuoteBtn} onClick={() => handleDelete(quote._id)}>🗑️</button>
                                                                       </div>
                                                             )}
-                                                            <span className={styles.quoteMark}>&#8221;</span>
-                                                            <p className={styles.quoteText}>{quote.text}</p>
-                                                  </article>
+                                                  </QuoteCard>
                                         ))}
                               </div>
                     </div>

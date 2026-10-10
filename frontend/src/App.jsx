@@ -15,6 +15,7 @@ import SinglePost from './pages/Blog/SinglePost';
 import Quotes from './pages/Quotes/Quotes';
 import Authors from './pages/Authors/Authors';
 import AuthorDetail from './pages/Authors/AuthorDetail';
+import SingleQuote from './pages/Quotes/SingleQuote';
 import Literature from './pages/Literature/Literature';
 import SingleLiterature from './pages/Literature/SingleLiterature';
 import Armenian from './pages/Armenian/Armenian';
@@ -24,7 +25,6 @@ import Login from './pages/Login/Login';
 import Register from './pages/Login/Register';
 import Header from './pages/Header/Header';
 import AnnouncementBar from './pages/AnnouncementBar/AnnouncementBar';
-import FreeCourseAd from './pages/FreeCourseAd/FreeCourseAd';
 import Footer from './pages/Footer/Footer';
 import Seo from './pages/Seo/Seo';
 
@@ -36,7 +36,6 @@ function App() {
           index.html-ի static tags-ի հետ կրկնապատկվելու։ */}
       <Seo />
       <Toaster />
-      <FreeCourseAd />
       <Header />
       <AnnouncementBar />
 
@@ -45,6 +44,7 @@ function App() {
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:id" element={<SinglePost />} />
         <Route path="/quotes" element={<Quotes />} />
+        <Route path="/quote/:id" element={<SingleQuote />} />
         <Route path="/quotes/:author" element={<AuthorDetail />} />
         <Route path="/authors" element={<Authors />} />
         <Route path="/authors/:author" element={<AuthorDetail />} />
