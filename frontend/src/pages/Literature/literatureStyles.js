@@ -1,5 +1,5 @@
 // Tailwind class-string map "Գրականություն" բաժնի համար.
-// Palette-ը նույնն է, ինչ Quotes/ThematicBooks էջերինը (navy #14315C + terracotta #d35400),
+// Palette-ը նույնն է, ինչ Quotes էջինը (navy #14315C + terracotta #d35400),
 // քանի որ Գրականությունը նավիգացիայում գտնվում է հենց այս երկուսի արանքում։
 const styles = {
     pageWrapper: "px-[8%] py-[60px] bg-[#fdfdfd] min-h-screen box-border max-[700px]:px-[6%] max-[700px]:py-10",
