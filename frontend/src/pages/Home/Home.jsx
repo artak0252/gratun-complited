@@ -18,7 +18,7 @@ const Home = () => {
   return (
     <>
       <Seo url="https://www.gratunhub.am/" />
-
+      <AnnouncementBar />
       <Swiper
         autoplay={{ delay: 5000, disableOnInteraction: false }}
         pagination={{ clickable: true }}
@@ -31,7 +31,7 @@ const Home = () => {
         <SwiperSlide><SlideThree /></SwiperSlide>
       </Swiper>
 
-      <AnnouncementBar />
+  
 
       <ReadingQuote />
       <RecommendedBooks />
