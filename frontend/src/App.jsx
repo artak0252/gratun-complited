@@ -18,8 +18,6 @@ import AuthorDetail from './pages/Authors/AuthorDetail';
 import SingleQuote from './pages/Quotes/SingleQuote';
 import Literature from './pages/Literature/Literature';
 import SingleLiterature from './pages/Literature/SingleLiterature';
-import Armenian from './pages/Armenian/Armenian';
-import SingleArmenian from './pages/Armenian/SingleArmenian';
 import Login from './pages/Login/Login';
 import Register from './pages/Login/Register';
 import Header from './pages/Header/Header';
@@ -49,8 +47,6 @@ function App() {
         <Route path="/authors/:author" element={<AuthorDetail />} />
         <Route path="/literature" element={<Literature />} />
         <Route path="/literature/:id" element={<SingleLiterature />} />
-        <Route path="/armenian" element={<Armenian />} />
-        <Route path="/armenian/:id" element={<SingleArmenian />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/shop/:id" element={<BookDetail />} />
         <Route path="/cart" element={<Cart />} />
