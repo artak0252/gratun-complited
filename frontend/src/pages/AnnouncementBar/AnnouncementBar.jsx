@@ -11,7 +11,7 @@ const AnnouncementBar = () => {
       <p className="m-0 flex flex-wrap items-center justify-center gap-2.5 text-white text-[15px] font-medium text-center max-[640px]:text-[13px]">
         Պատվիրի՛ր գրքեր, ստացի՛ր արագ առաքում: +37443736074
         <a
-          href="tel:043736074"
+          href="tel:+37443736074"
           className="inline-flex items-center gap-1.5 text-white font-semibold no-underline border-b border-[rgba(58,50,44,0.4)] transition-opacity duration-200 hover:opacity-70"
         >
           Պատվիրի՛ր զանգ հիմա <FiPhoneCall />

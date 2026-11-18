@@ -7,9 +7,9 @@ import 'swiper/css/navigation';
 import SlideOne from './SlideOne';
 import SlideTwo from './SlideTwo';
 import SlideThree from './SlideThree';
+import AnnouncementBar from '../AnnouncementBar/AnnouncementBar';
 import RecommendedBooks from '../RecommendedBooks/RecommendedBooks';
 import WhyGratun from './WhyGratun';
-import GenreShowcase from './GenreShowcase';
 import BlogShowcase from '../BlogShowcase/BlogShowcase';
 import Seo from '../Seo/Seo';
 import ReadingQuote from './ReadingQuote';
@@ -18,9 +18,7 @@ const Home = () => {
   return (
     <>
       <Seo url="https://www.gratunhub.am/" />
-      <ReadingQuote />
-      <RecommendedBooks />
-      <BlogShowcase />
+
       <Swiper
         autoplay={{ delay: 5000, disableOnInteraction: false }}
         pagination={{ clickable: true }}
@@ -33,6 +31,11 @@ const Home = () => {
         <SwiperSlide><SlideThree /></SwiperSlide>
       </Swiper>
 
+      <AnnouncementBar />
+
+      <ReadingQuote />
+      <RecommendedBooks />
+      <BlogShowcase />
       <WhyGratun />
     </>
   );
